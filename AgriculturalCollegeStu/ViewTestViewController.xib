@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ViewTestViewController">
+            <connections>
+                <outlet property="StuInfoView" destination="o12-jH-9YR" id="aiK-hG-F25"/>
+                <outlet property="massageLabel" destination="MtK-5h-t6M" id="Yo8-7X-MYN"/>
+                <outlet property="proportionLabel" destination="uEh-fq-5Ol" id="Jh7-fX-ncP"/>
+                <outlet property="topView" destination="pb4-VM-y09" id="brx-uK-Z2S"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="viewInfoBtn" destination="zed-QV-hyC" id="XfA-xS-m5W"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pb4-VM-y09">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
+                    <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="BbR-cO-KxS"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SI1-5j-OzJ">
+                    <rect key="frame" x="0.0" y="45" width="375" height="130"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00/00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uEh-fq-5Ol">
+                            <rect key="frame" x="147.5" y="27.5" width="80.5" height="35"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已交作业总生数/课程总学生数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MtK-5h-t6M">
+                            <rect key="frame" x="85.5" y="76" width="204" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zed-QV-hyC">
+                            <rect key="frame" x="136" y="94" width="104" height="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <inset key="imageEdgeInsets" minX="-5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="查看对错率" image="rate.png">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="ViewInfoAction:" destination="-1" eventType="touchUpInside" id="El8-IQ-o0v"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SRh-eC-gl1">
+                            <rect key="frame" x="0.0" y="129" width="375" height="1"/>
+                            <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="ZD9-Tz-GQ9"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="130" id="B10-Hm-QIo"/>
+                        <constraint firstItem="SRh-eC-gl1" firstAttribute="leading" secondItem="SI1-5j-OzJ" secondAttribute="leading" id="Fg7-zh-DHt"/>
+                        <constraint firstItem="zed-QV-hyC" firstAttribute="centerX" secondItem="SI1-5j-OzJ" secondAttribute="centerX" id="fla-x5-JBi"/>
+                        <constraint firstItem="uEh-fq-5Ol" firstAttribute="centerX" secondItem="SI1-5j-OzJ" secondAttribute="centerX" id="fnK-Rl-SO4"/>
+                        <constraint firstItem="MtK-5h-t6M" firstAttribute="centerY" secondItem="SI1-5j-OzJ" secondAttribute="centerY" constant="20" id="gRF-U0-BZx"/>
+                        <constraint firstItem="MtK-5h-t6M" firstAttribute="centerX" secondItem="SI1-5j-OzJ" secondAttribute="centerX" id="kqg-ub-Hpa"/>
+                        <constraint firstAttribute="trailing" secondItem="SRh-eC-gl1" secondAttribute="trailing" id="l0n-z1-myp"/>
+                        <constraint firstAttribute="bottom" secondItem="SRh-eC-gl1" secondAttribute="bottom" id="mFg-XR-cCZ"/>
+                        <constraint firstItem="uEh-fq-5Ol" firstAttribute="centerY" secondItem="SI1-5j-OzJ" secondAttribute="centerY" constant="-20" id="sWS-dh-gUC"/>
+                        <constraint firstItem="zed-QV-hyC" firstAttribute="top" secondItem="MtK-5h-t6M" secondAttribute="bottom" id="uPD-MI-BVg"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o12-jH-9YR">
+                    <rect key="frame" x="-0.5" y="175" width="375" height="492"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="o12-jH-9YR" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="1ZS-cf-ZrN"/>
+                <constraint firstItem="SI1-5j-OzJ" firstAttribute="top" secondItem="pb4-VM-y09" secondAttribute="bottom" id="25t-gx-s1U"/>
+                <constraint firstItem="SI1-5j-OzJ" firstAttribute="width" secondItem="pb4-VM-y09" secondAttribute="width" id="5aV-nG-QS9"/>
+                <constraint firstItem="pb4-VM-y09" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="FRp-LV-j6r"/>
+                <constraint firstItem="pb4-VM-y09" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="GHA-Ac-0rJ"/>
+                <constraint firstItem="o12-jH-9YR" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="LPf-N9-BNc"/>
+                <constraint firstItem="pb4-VM-y09" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="geC-nD-tUE"/>
+                <constraint firstItem="SI1-5j-OzJ" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="iBV-Ko-O9g"/>
+                <constraint firstAttribute="bottom" secondItem="o12-jH-9YR" secondAttribute="bottom" id="sdu-kX-axT"/>
+                <constraint firstItem="o12-jH-9YR" firstAttribute="top" secondItem="SI1-5j-OzJ" secondAttribute="bottom" id="tq8-sG-i2u"/>
+            </constraints>
+            <point key="canvasLocation" x="40.5" y="59.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="rate.png" width="22" height="22"/>
+    </resources>
+</document>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="410" id="QOo-MV-mQD" customClass="ChapterSuperCellB">
+            <rect key="frame" x="0.0" y="0.0" width="495" height="410"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QOo-MV-mQD" id="mWD-6v-OTL">
+                <rect key="frame" x="0.0" y="0.0" width="495" height="409"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CEm-LG-nj7">
+                        <rect key="frame" x="0.0" y="92" width="495" height="317"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="课程描述" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mUe-iR-mB0">
+                                <rect key="frame" x="8" y="8" width="396" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YKT-QD-6ll">
+                                <rect key="frame" x="8" y="34" width="479" height="283"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="mUe-iR-mB0" firstAttribute="top" secondItem="CEm-LG-nj7" secondAttribute="top" constant="8" id="7RY-Vd-jtu"/>
+                            <constraint firstItem="mUe-iR-mB0" firstAttribute="leading" secondItem="CEm-LG-nj7" secondAttribute="leading" constant="8" id="EYP-dq-mCy"/>
+                            <constraint firstAttribute="bottom" secondItem="YKT-QD-6ll" secondAttribute="bottom" id="Wnv-5X-lu4"/>
+                            <constraint firstAttribute="trailing" secondItem="YKT-QD-6ll" secondAttribute="trailing" constant="8" id="Y38-Je-Gbo"/>
+                            <constraint firstItem="YKT-QD-6ll" firstAttribute="leading" secondItem="CEm-LG-nj7" secondAttribute="leading" constant="8" id="bFn-kB-yUe"/>
+                            <constraint firstItem="YKT-QD-6ll" firstAttribute="top" secondItem="mUe-iR-mB0" secondAttribute="bottom" constant="8" id="dJ3-Fj-6ft"/>
+                            <constraint firstItem="mUe-iR-mB0" firstAttribute="width" secondItem="CEm-LG-nj7" secondAttribute="width" multiplier="0.8" id="ogS-Oh-GPB"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lQW-aQ-lJT">
+                        <rect key="frame" x="0.0" y="0.0" width="495" height="82"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IeK-dP-WPS">
+                                <rect key="frame" x="8" y="8" width="66" height="66"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="讲师姓名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wNa-jZ-of8">
+                                <rect key="frame" x="82" y="16" width="100" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="oJK-Ix-fFt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="讲师介绍" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MVF-WX-xem">
+                                <rect key="frame" x="82" y="49" width="396" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="MpH-vo-akD"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="MpH-vo-akD"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wNa-jZ-of8" firstAttribute="leading" secondItem="IeK-dP-WPS" secondAttribute="trailing" constant="8" id="9dF-e6-2w4"/>
+                            <constraint firstItem="MVF-WX-xem" firstAttribute="width" secondItem="lQW-aQ-lJT" secondAttribute="width" multiplier="0.8" id="CfR-Yp-lqZ"/>
+                            <constraint firstItem="IeK-dP-WPS" firstAttribute="width" secondItem="lQW-aQ-lJT" secondAttribute="height" multiplier="0.8" id="GFv-oQ-Ngp"/>
+                            <constraint firstItem="MVF-WX-xem" firstAttribute="leading" secondItem="IeK-dP-WPS" secondAttribute="trailing" constant="8" id="GUB-jY-PKD"/>
+                            <constraint firstItem="IeK-dP-WPS" firstAttribute="height" secondItem="lQW-aQ-lJT" secondAttribute="height" multiplier="0.8" id="Psq-VQ-oFF"/>
+                            <constraint firstItem="wNa-jZ-of8" firstAttribute="centerY" secondItem="IeK-dP-WPS" secondAttribute="centerY" constant="-16" id="S9G-Qe-031"/>
+                            <constraint firstItem="IeK-dP-WPS" firstAttribute="leading" secondItem="lQW-aQ-lJT" secondAttribute="leading" constant="8" id="UBP-fY-90a"/>
+                            <constraint firstItem="IeK-dP-WPS" firstAttribute="centerY" secondItem="lQW-aQ-lJT" secondAttribute="centerY" id="hRM-6T-3yB"/>
+                            <constraint firstItem="MVF-WX-xem" firstAttribute="centerY" secondItem="IeK-dP-WPS" secondAttribute="centerY" constant="16" id="yCt-6Q-Hzs"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="CEm-LG-nj7" secondAttribute="bottom" id="12v-mj-W3O"/>
+                    <constraint firstItem="lQW-aQ-lJT" firstAttribute="height" secondItem="mWD-6v-OTL" secondAttribute="height" multiplier="0.2" id="16e-aH-zod"/>
+                    <constraint firstItem="CEm-LG-nj7" firstAttribute="height" secondItem="mWD-6v-OTL" secondAttribute="height" multiplier="0.8" constant="-10" id="ABB-jx-juB"/>
+                    <constraint firstItem="CEm-LG-nj7" firstAttribute="leading" secondItem="mWD-6v-OTL" secondAttribute="leading" id="Acf-jk-X9M"/>
+                    <constraint firstItem="lQW-aQ-lJT" firstAttribute="top" secondItem="mWD-6v-OTL" secondAttribute="top" id="CVK-z0-pP1"/>
+                    <constraint firstItem="lQW-aQ-lJT" firstAttribute="leading" secondItem="mWD-6v-OTL" secondAttribute="leading" id="asR-AW-De5"/>
+                    <constraint firstItem="CEm-LG-nj7" firstAttribute="width" secondItem="mWD-6v-OTL" secondAttribute="width" id="hxj-py-9RV"/>
+                    <constraint firstItem="lQW-aQ-lJT" firstAttribute="width" secondItem="mWD-6v-OTL" secondAttribute="width" id="nsI-5t-Ry2"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <connections>
+                <outlet property="imgv_avatar" destination="IeK-dP-WPS" id="5wl-iE-ccJ"/>
+                <outlet property="lbl_info" destination="MVF-WX-xem" id="wy5-W2-WfU"/>
+                <outlet property="lbl_name" destination="wNa-jZ-of8" id="M2A-gE-7IP"/>
+                <outlet property="scl_courseDesc" destination="YKT-QD-6ll" id="Sqx-lZ-71Q"/>
+            </connections>
+            <point key="canvasLocation" x="319.5" y="333"/>
+        </tableViewCell>
+    </objects>
+</document>

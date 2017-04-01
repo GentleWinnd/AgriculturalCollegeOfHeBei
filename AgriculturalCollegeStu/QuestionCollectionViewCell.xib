@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="QuestionCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="346" height="179"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="346" height="179"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="m8W-HM-aaF">
+                        <rect key="frame" x="0.0" y="60" width="346" height="119"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </tableView>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="m8W-HM-aaF" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="414-ro-ep8"/>
+                <constraint firstAttribute="trailing" secondItem="m8W-HM-aaF" secondAttribute="trailing" id="N7D-hd-kFX"/>
+                <constraint firstAttribute="bottom" secondItem="m8W-HM-aaF" secondAttribute="bottom" id="SBu-UU-5o5"/>
+                <constraint firstItem="m8W-HM-aaF" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="60" id="wjP-LS-4ls"/>
+            </constraints>
+            <size key="customSize" width="346" height="179"/>
+            <connections>
+                <outlet property="QuestionInfoTable" destination="m8W-HM-aaF" id="2cz-qc-gVk"/>
+            </connections>
+            <point key="canvasLocation" x="211" y="17.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

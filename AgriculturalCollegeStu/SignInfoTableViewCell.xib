@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="124" id="KGk-i7-Jjw" customClass="SignInfoTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="533" height="124"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="533" height="123"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:00-10:50 数字媒体" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6cN-a4-NNR">
+                        <rect key="frame" x="20" y="8" width="143" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的签到：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tdV-4S-YeA">
+                        <rect key="frame" x="38" y="32" width="71.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="签到成功" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i0a-GQ-I2c">
+                        <rect key="frame" x="115.5" y="32" width="57.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="学员出勤：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xkb-Kx-5xh">
+                        <rect key="frame" x="38" y="55" width="71.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="90/100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DU4-yM-ccc">
+                        <rect key="frame" x="115.5" y="55" width="46" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="3tk-ej-hvM">
+                        <rect key="frame" x="174.5" y="61.5" width="100" height="4"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="DSz-J4-iOW"/>
+                            <constraint firstAttribute="height" constant="4" id="mPB-zP-0nR"/>
+                        </constraints>
+                        <color key="progressTintColor" red="0.2196078431372549" green="0.6470588235294118" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="trackTintColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
+                    </progressView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="学员签到：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uJv-3G-cDA">
+                        <rect key="frame" x="38" y="78" width="71.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="80/100" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcz-EL-1uS">
+                        <rect key="frame" x="115.5" y="78" width="46" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="lVJ-ei-NoT">
+                        <rect key="frame" x="174.5" y="84.5" width="100" height="4"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="4" id="PZg-cX-Gi2"/>
+                            <constraint firstAttribute="width" constant="100" id="cJv-9Z-zyf"/>
+                        </constraints>
+                        <color key="progressTintColor" red="1" green="0.62352941176470589" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="trackTintColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
+                    </progressView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10人" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FfR-Lv-IgY">
+                        <rect key="frame" x="115" y="101" width="29.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请假人数：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hSH-Cs-mBR">
+                        <rect key="frame" x="38" y="101" width="71.5" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="6cN-a4-NNR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="8CK-CL-CAT"/>
+                    <constraint firstItem="xkb-Kx-5xh" firstAttribute="leading" secondItem="tdV-4S-YeA" secondAttribute="leading" id="DpT-cz-Fq8"/>
+                    <constraint firstItem="DU4-yM-ccc" firstAttribute="centerY" secondItem="xkb-Kx-5xh" secondAttribute="centerY" id="HgJ-d9-QWa"/>
+                    <constraint firstItem="6cN-a4-NNR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="L8e-W4-IeA"/>
+                    <constraint firstItem="lcz-EL-1uS" firstAttribute="leading" secondItem="uJv-3G-cDA" secondAttribute="trailing" constant="6" id="OSv-wM-cEp"/>
+                    <constraint firstItem="FfR-Lv-IgY" firstAttribute="centerY" secondItem="hSH-Cs-mBR" secondAttribute="centerY" id="P5r-Cr-ijS"/>
+                    <constraint firstItem="DU4-yM-ccc" firstAttribute="leading" secondItem="xkb-Kx-5xh" secondAttribute="trailing" constant="6" id="RVX-c3-I7Z"/>
+                    <constraint firstItem="uJv-3G-cDA" firstAttribute="top" secondItem="xkb-Kx-5xh" secondAttribute="bottom" constant="6" id="Tll-PN-qhj"/>
+                    <constraint firstItem="tdV-4S-YeA" firstAttribute="top" secondItem="6cN-a4-NNR" secondAttribute="bottom" constant="6" id="buX-hA-Haq"/>
+                    <constraint firstItem="hSH-Cs-mBR" firstAttribute="leading" secondItem="tdV-4S-YeA" secondAttribute="leading" id="dNt-xn-e7H"/>
+                    <constraint firstItem="i0a-GQ-I2c" firstAttribute="leading" secondItem="tdV-4S-YeA" secondAttribute="trailing" constant="6" id="dcM-f5-AmG"/>
+                    <constraint firstItem="lVJ-ei-NoT" firstAttribute="leading" secondItem="lcz-EL-1uS" secondAttribute="trailing" constant="13" id="fAC-AA-sgw"/>
+                    <constraint firstAttribute="bottom" secondItem="hSH-Cs-mBR" secondAttribute="bottom" constant="5.5" id="g0S-an-wID"/>
+                    <constraint firstItem="FfR-Lv-IgY" firstAttribute="leading" secondItem="hSH-Cs-mBR" secondAttribute="trailing" constant="6" id="gLu-XH-Fm7"/>
+                    <constraint firstItem="3tk-ej-hvM" firstAttribute="centerY" secondItem="DU4-yM-ccc" secondAttribute="centerY" id="h2O-Nz-69i"/>
+                    <constraint firstItem="xkb-Kx-5xh" firstAttribute="top" secondItem="tdV-4S-YeA" secondAttribute="bottom" constant="6" id="hze-Uj-wKY"/>
+                    <constraint firstItem="tdV-4S-YeA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="30" id="kcQ-0T-ENd"/>
+                    <constraint firstItem="i0a-GQ-I2c" firstAttribute="centerY" secondItem="tdV-4S-YeA" secondAttribute="centerY" id="ljv-CR-NYj"/>
+                    <constraint firstItem="lcz-EL-1uS" firstAttribute="centerY" secondItem="uJv-3G-cDA" secondAttribute="centerY" id="nbG-0Y-tJr"/>
+                    <constraint firstItem="3tk-ej-hvM" firstAttribute="leading" secondItem="DU4-yM-ccc" secondAttribute="trailing" constant="13" id="ujQ-7O-3uO"/>
+                    <constraint firstItem="hSH-Cs-mBR" firstAttribute="top" secondItem="uJv-3G-cDA" secondAttribute="bottom" constant="6" id="vxV-ay-FeG"/>
+                    <constraint firstItem="lVJ-ei-NoT" firstAttribute="centerY" secondItem="lcz-EL-1uS" secondAttribute="centerY" id="xKS-Mc-cl1"/>
+                    <constraint firstItem="uJv-3G-cDA" firstAttribute="leading" secondItem="tdV-4S-YeA" secondAttribute="leading" id="ybz-lm-NYO"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="leavedCount" destination="FfR-Lv-IgY" id="zVa-VC-yUK"/>
+                <outlet property="signedState" destination="i0a-GQ-I2c" id="Tsx-k8-guw"/>
+                <outlet property="stuCome" destination="DU4-yM-ccc" id="bg9-4O-9BS"/>
+                <outlet property="stuComePro" destination="3tk-ej-hvM" id="FHb-HY-psz"/>
+                <outlet property="stuSigned" destination="lcz-EL-1uS" id="s9Q-ys-PxV"/>
+                <outlet property="stuSignedPro" destination="lVJ-ei-NoT" id="bXV-Zp-tEi"/>
+                <outlet property="timeLabel" destination="6cN-a4-NNR" id="0RI-Dr-ihq"/>
+            </connections>
+            <point key="canvasLocation" x="159.5" y="-28"/>
+        </tableViewCell>
+    </objects>
+</document>

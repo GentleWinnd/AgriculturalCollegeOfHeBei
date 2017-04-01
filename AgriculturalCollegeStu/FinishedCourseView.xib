@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FinishedCourseView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Mg-2O-Duq">
+                    <rect key="frame" x="0.0" y="200" width="375" height="467"/>
+                    <subviews>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="X4L-AV-uOZ">
+                            <rect key="frame" x="0.0" y="38" width="375" height="429"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Sp0-gA-p4B">
+                                <size key="itemSize" width="50" height="50"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mek-ed-bq2">
+                            <rect key="frame" x="0.0" y="37" width="375" height="1"/>
+                            <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="Inc-pi-vma"/>
+                            </constraints>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vzz-ND-Oie">
+                            <rect key="frame" x="300" y="8" width="67" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-4" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="-2" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="00/00" image="frame_4.png">
+                                <color key="titleColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="courseBtnAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="OFu-mv-CsQ"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="X4L-AV-uOZ" secondAttribute="bottom" id="1Xa-bg-XBa"/>
+                        <constraint firstAttribute="trailing" secondItem="vzz-ND-Oie" secondAttribute="trailing" constant="8" id="5Q5-ZA-uqm"/>
+                        <constraint firstItem="vzz-ND-Oie" firstAttribute="top" secondItem="2Mg-2O-Duq" secondAttribute="top" constant="8" id="7OM-Wh-veH"/>
+                        <constraint firstAttribute="trailing" secondItem="X4L-AV-uOZ" secondAttribute="trailing" id="E4E-5X-p5h"/>
+                        <constraint firstItem="X4L-AV-uOZ" firstAttribute="leading" secondItem="2Mg-2O-Duq" secondAttribute="leading" id="UKM-iD-fk2"/>
+                        <constraint firstItem="Mek-ed-bq2" firstAttribute="leading" secondItem="2Mg-2O-Duq" secondAttribute="leading" id="aS8-S7-FZe"/>
+                        <constraint firstItem="X4L-AV-uOZ" firstAttribute="top" secondItem="Mek-ed-bq2" secondAttribute="bottom" id="buP-xO-pat"/>
+                        <constraint firstAttribute="trailing" secondItem="Mek-ed-bq2" secondAttribute="trailing" id="kz7-5H-Oh3"/>
+                        <constraint firstItem="Mek-ed-bq2" firstAttribute="top" secondItem="vzz-ND-Oie" secondAttribute="bottom" constant="8" id="sev-6a-5bu"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g8D-Nb-G3Q">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="0.55372431506849318" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="2Mg-2O-Duq" firstAttribute="top" secondItem="g8D-Nb-G3Q" secondAttribute="bottom" id="55I-YV-Vej"/>
+                <constraint firstItem="2Mg-2O-Duq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="200" id="FGK-HV-HDh"/>
+                <constraint firstItem="g8D-Nb-G3Q" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Izv-kJ-Kz9"/>
+                <constraint firstItem="2Mg-2O-Duq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="RTC-0X-fqx"/>
+                <constraint firstAttribute="trailing" secondItem="2Mg-2O-Duq" secondAttribute="trailing" id="fDz-ND-gUG"/>
+                <constraint firstAttribute="trailing" secondItem="g8D-Nb-G3Q" secondAttribute="trailing" id="fUd-cO-Brx"/>
+                <constraint firstItem="g8D-Nb-G3Q" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="kUa-sI-mBh"/>
+                <constraint firstAttribute="bottom" secondItem="2Mg-2O-Duq" secondAttribute="bottom" id="qlj-sf-xvC"/>
+            </constraints>
+            <connections>
+                <outlet property="backViewTop" destination="FGK-HV-HDh" id="QoB-ii-y1d"/>
+                <outlet property="courseBtn" destination="vzz-ND-Oie" id="9pl-rQ-foK"/>
+                <outlet property="courseNumCollectionView" destination="X4L-AV-uOZ" id="Yh6-Hu-iuG"/>
+                <outlet property="tapView" destination="g8D-Nb-G3Q" id="hpK-do-aqG"/>
+            </connections>
+            <point key="canvasLocation" x="58.5" y="71.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="frame_4.png" width="20" height="20"/>
+    </resources>
+</document>

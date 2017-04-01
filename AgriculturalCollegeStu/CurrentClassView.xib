@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CurrentClassView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="currentClass.png" translatesAutoresizingMaskIntoConstraints="NO" id="lJP-v1-Iji">
+                    <rect key="frame" x="5" y="323.5" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="0a4-1l-wN4"/>
+                        <constraint firstAttribute="width" constant="20" id="M5l-Of-Yq9"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前课程:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cTW-WU-va3">
+                    <rect key="frame" x="28" y="325" width="65.5" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="数字面向对象处理与分析" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f18-ZI-Ovb">
+                    <rect key="frame" x="96.5" y="325" width="168.5" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AET-lG-D1R">
+                    <rect key="frame" x="287" y="323" width="83" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <inset key="titleEdgeInsets" minX="-51" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="61" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <state key="normal" title="重选课程" image="refresh.png">
+                        <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="selectedAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="0q3-65-KbP"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="f18-ZI-Ovb" firstAttribute="leading" secondItem="cTW-WU-va3" secondAttribute="trailing" constant="3" id="1lG-tl-lk4"/>
+                <constraint firstItem="cTW-WU-va3" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="20X-gJ-NQs"/>
+                <constraint firstItem="cTW-WU-va3" firstAttribute="leading" secondItem="lJP-v1-Iji" secondAttribute="trailing" constant="3" id="G7c-Ve-e4X"/>
+                <constraint firstItem="lJP-v1-Iji" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="Tnt-f9-Yac"/>
+                <constraint firstItem="AET-lG-D1R" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="cez-cF-DIi"/>
+                <constraint firstAttribute="trailing" secondItem="AET-lG-D1R" secondAttribute="trailing" constant="5" id="kNM-gV-a3M"/>
+                <constraint firstItem="lJP-v1-Iji" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="mi7-Yo-bps"/>
+                <constraint firstItem="f18-ZI-Ovb" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="yCN-67-3OU"/>
+            </constraints>
+            <connections>
+                <outlet property="courceName" destination="f18-ZI-Ovb" id="9dZ-1d-dAn"/>
+                <outlet property="selectedBtn" destination="AET-lG-D1R" id="v9w-Bf-ecD"/>
+            </connections>
+            <point key="canvasLocation" x="54.5" y="59.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="currentClass.png" width="21" height="21"/>
+        <image name="refresh.png" width="21" height="21"/>
+    </resources>
+</document>

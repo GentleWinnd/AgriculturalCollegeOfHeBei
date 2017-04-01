@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SourceSearchViewController">
+            <connections>
+                <outlet property="inputTextFeild" destination="XPf-qF-O8s" id="w5G-zm-27g"/>
+                <outlet property="resultTableView" destination="vph-jT-unQ" id="Ey9-BQ-i0L"/>
+                <outlet property="searchBtn" destination="60y-yv-FSg" id="fzV-7t-zTX"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LaE-nZ-IhM">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hHx-eX-Rf6">
+                            <rect key="frame" x="20" y="38.5" width="275" height="33"/>
+                            <subviews>
+                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="60y-yv-FSg">
+                                    <rect key="frame" x="12" y="4" width="30" height="25"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="25" id="1Rd-VU-QPo"/>
+                                        <constraint firstAttribute="width" constant="30" id="jEB-2h-gJl"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <state key="normal" image="search.png"/>
+                                    <connections>
+                                        <action selector="btnAction:" destination="-1" eventType="touchUpInside" id="SSC-B0-Kmk"/>
+                                    </connections>
+                                </button>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XPf-qF-O8s">
+                                    <rect key="frame" x="50" y="8" width="220" height="17"/>
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="i5M-Pr-FkT" id="5HB-bb-c39"/>
+                                    </connections>
+                                </textField>
+                            </subviews>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstItem="XPf-qF-O8s" firstAttribute="leading" secondItem="60y-yv-FSg" secondAttribute="trailing" constant="8" id="5Ky-3L-iIr"/>
+                                <constraint firstItem="60y-yv-FSg" firstAttribute="leading" secondItem="hHx-eX-Rf6" secondAttribute="leading" constant="12" id="OAd-5x-coP"/>
+                                <constraint firstAttribute="height" constant="33" id="VbZ-pU-ng7"/>
+                                <constraint firstAttribute="trailing" secondItem="XPf-qF-O8s" secondAttribute="trailing" constant="5" id="rGC-FJ-WYi"/>
+                                <constraint firstItem="60y-yv-FSg" firstAttribute="centerY" secondItem="hHx-eX-Rf6" secondAttribute="centerY" id="vgh-9a-IMA"/>
+                                <constraint firstItem="XPf-qF-O8s" firstAttribute="centerY" secondItem="hHx-eX-Rf6" secondAttribute="centerY" id="vjM-CY-4py"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Z2-S6-e1X">
+                            <rect key="frame" x="315" y="38.5" width="50" height="33"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="33" id="rtT-NY-fSt"/>
+                                <constraint firstAttribute="width" constant="50" id="sBw-vm-D9J"/>
+                            </constraints>
+                            <state key="normal" title="取消"/>
+                            <connections>
+                                <action selector="btnAction:" destination="-1" eventType="touchUpInside" id="N9f-IZ-ZGS"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="2Z2-S6-e1X" secondAttribute="trailing" constant="10" id="1YV-VC-5Lf"/>
+                        <constraint firstAttribute="height" constant="80" id="GtT-Zp-lln"/>
+                        <constraint firstItem="2Z2-S6-e1X" firstAttribute="leading" secondItem="hHx-eX-Rf6" secondAttribute="trailing" constant="20" id="J5a-9d-GuQ"/>
+                        <constraint firstItem="hHx-eX-Rf6" firstAttribute="centerY" secondItem="LaE-nZ-IhM" secondAttribute="centerY" constant="15" id="QSP-F7-LPN"/>
+                        <constraint firstItem="hHx-eX-Rf6" firstAttribute="leading" secondItem="LaE-nZ-IhM" secondAttribute="leading" constant="20" id="lU4-gY-C5b"/>
+                        <constraint firstItem="2Z2-S6-e1X" firstAttribute="centerY" secondItem="hHx-eX-Rf6" secondAttribute="centerY" id="rxO-ro-X6o"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vph-jT-unQ">
+                    <rect key="frame" x="0.0" y="80" width="375" height="587"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="LaE-nZ-IhM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="GYY-Ta-cJQ"/>
+                <constraint firstAttribute="trailing" secondItem="vph-jT-unQ" secondAttribute="trailing" id="LeZ-F4-tkS"/>
+                <constraint firstAttribute="bottom" secondItem="vph-jT-unQ" secondAttribute="bottom" id="SmS-He-xt5"/>
+                <constraint firstItem="vph-jT-unQ" firstAttribute="top" secondItem="LaE-nZ-IhM" secondAttribute="bottom" id="bec-n5-ijf"/>
+                <constraint firstItem="vph-jT-unQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="mMw-kA-4h7"/>
+                <constraint firstAttribute="trailing" secondItem="LaE-nZ-IhM" secondAttribute="trailing" id="pEL-v2-sJV"/>
+                <constraint firstItem="LaE-nZ-IhM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pMF-6Y-utU"/>
+            </constraints>
+            <point key="canvasLocation" x="46.5" y="67.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="search.png" width="24" height="24"/>
+    </resources>
+</document>

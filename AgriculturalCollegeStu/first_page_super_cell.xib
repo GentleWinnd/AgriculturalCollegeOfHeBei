@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view multipleTouchEnabled="YES" contentMode="scaleToFill" id="c83-Z2-5G9" customClass="FirstPageSuperCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="6FG-nn-ogN">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </tableView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="7RB-iI-Udw">
+                    <rect key="frame" x="169" y="315" width="37" height="37"/>
+                    <color key="color" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="6FG-nn-ogN" firstAttribute="height" secondItem="c83-Z2-5G9" secondAttribute="height" id="9Wi-tr-UZ6"/>
+                <constraint firstItem="6FG-nn-ogN" firstAttribute="leading" secondItem="c83-Z2-5G9" secondAttribute="leading" id="CqA-DS-1T0"/>
+                <constraint firstAttribute="bottom" secondItem="6FG-nn-ogN" secondAttribute="bottom" id="J0C-dL-ZWW"/>
+                <constraint firstItem="6FG-nn-ogN" firstAttribute="width" secondItem="c83-Z2-5G9" secondAttribute="width" id="jKQ-6P-dlR"/>
+                <constraint firstItem="6FG-nn-ogN" firstAttribute="top" secondItem="c83-Z2-5G9" secondAttribute="top" id="pUO-0e-hvg"/>
+                <constraint firstAttribute="trailing" secondItem="6FG-nn-ogN" secondAttribute="trailing" id="ppa-fV-9vJ"/>
+                <constraint firstItem="7RB-iI-Udw" firstAttribute="centerX" secondItem="c83-Z2-5G9" secondAttribute="centerX" id="qpu-uI-AMg"/>
+                <constraint firstItem="7RB-iI-Udw" firstAttribute="centerY" secondItem="c83-Z2-5G9" secondAttribute="centerY" id="vm3-sc-wO2"/>
+            </constraints>
+            <connections>
+                <outlet property="actvi_loading" destination="7RB-iI-Udw" id="ygF-kd-hwc"/>
+                <outlet property="contentTableView" destination="6FG-nn-ogN" id="slz-Jf-Flh"/>
+            </connections>
+            <point key="canvasLocation" x="16" y="165"/>
+        </view>
+    </objects>
+</document>

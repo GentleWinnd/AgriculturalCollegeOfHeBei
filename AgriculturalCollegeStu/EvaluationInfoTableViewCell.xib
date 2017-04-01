@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="124" id="KGk-i7-Jjw" customClass="EvaluationInfoTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="124"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="123.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rJQ-K9-NmU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="8"/>
+                        <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="71z-Yj-AaT"/>
+                        </constraints>
+                    </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headPortrait.png" translatesAutoresizingMaskIntoConstraints="NO" id="b71-Dx-ug4">
+                        <rect key="frame" x="3" y="14" width="28" height="28"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="28" id="VPK-Yv-199"/>
+                            <constraint firstAttribute="width" constant="28" id="Ypa-0a-lAF"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="张欣" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qm7-pl-Ebk">
+                        <rect key="frame" x="40" y="19" width="31" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016.12.30" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dei-RV-wpo">
+                        <rect key="frame" x="3" y="50" width="71" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="刘老师上课生动活波，有说有笑，学识渊博，有很好的教学素养，上课很认证，负责人，非常喜欢刘老师的上课纷纷" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTq-D0-1dl">
+                        <rect key="frame" x="6" y="72" width="314" height="47"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="XTq-D0-1dl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="46a-nj-mmU"/>
+                    <constraint firstItem="qm7-pl-Ebk" firstAttribute="centerY" secondItem="b71-Dx-ug4" secondAttribute="centerY" id="68r-vd-YbK"/>
+                    <constraint firstAttribute="trailing" secondItem="rJQ-K9-NmU" secondAttribute="trailing" id="Ccz-8k-4uk"/>
+                    <constraint firstItem="Dei-RV-wpo" firstAttribute="leading" secondItem="b71-Dx-ug4" secondAttribute="leading" id="MSr-By-emu"/>
+                    <constraint firstAttribute="bottom" secondItem="XTq-D0-1dl" secondAttribute="bottom" constant="4.5" id="MWR-SW-XM4"/>
+                    <constraint firstItem="rJQ-K9-NmU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="RJk-kV-lx8"/>
+                    <constraint firstAttribute="trailing" secondItem="XTq-D0-1dl" secondAttribute="trailing" id="SmG-DI-Xzd"/>
+                    <constraint firstItem="Dei-RV-wpo" firstAttribute="top" secondItem="b71-Dx-ug4" secondAttribute="bottom" constant="8" id="ZSg-AC-oc5"/>
+                    <constraint firstItem="rJQ-K9-NmU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="fR2-HX-zdu"/>
+                    <constraint firstItem="b71-Dx-ug4" firstAttribute="top" secondItem="rJQ-K9-NmU" secondAttribute="bottom" constant="6" id="gnf-vY-69G"/>
+                    <constraint firstItem="qm7-pl-Ebk" firstAttribute="leading" secondItem="b71-Dx-ug4" secondAttribute="trailing" constant="9" id="pHw-7d-f5x"/>
+                    <constraint firstItem="b71-Dx-ug4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="3" id="vxP-0V-CBt"/>
+                    <constraint firstItem="XTq-D0-1dl" firstAttribute="top" secondItem="Dei-RV-wpo" secondAttribute="bottom" constant="5" id="zzb-ad-YXv"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="dateLabel" destination="Dei-RV-wpo" id="t6r-Tf-COM"/>
+                <outlet property="evaluationInfo" destination="XTq-D0-1dl" id="bQO-rP-KWt"/>
+                <outlet property="headerPortriat" destination="b71-Dx-ug4" id="vh0-1T-V54"/>
+                <outlet property="stuName" destination="qm7-pl-Ebk" id="RGW-0M-lfY"/>
+            </connections>
+            <point key="canvasLocation" x="198" y="-199"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="headPortrait.png" width="113" height="115"/>
+    </resources>
+</document>

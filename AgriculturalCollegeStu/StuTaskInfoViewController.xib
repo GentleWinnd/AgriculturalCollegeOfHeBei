@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StuTaskInfoViewController">
+            <connections>
+                <outlet property="headPortrait" destination="R40-PN-31L" id="3Pq-SZ-oHx"/>
+                <outlet property="name" destination="D2t-z8-fjC" id="94L-OX-4eB"/>
+                <outlet property="taskInfoTab" destination="qlD-TP-Z1K" id="lta-Y9-leZ"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZCr-GQ-MZc">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headPortrait.png" translatesAutoresizingMaskIntoConstraints="NO" id="R40-PN-31L">
+                            <rect key="frame" x="8" y="15" width="50" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="RH0-2l-qRc"/>
+                                <constraint firstAttribute="height" constant="50" id="UdY-Fh-ERV"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                    <integer key="value" value="3"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="李秋水" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D2t-z8-fjC">
+                            <rect key="frame" x="68" y="31.5" width="46" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vyp-Jk-6Sp">
+                            <rect key="frame" x="5" y="79" width="370" height="1"/>
+                            <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.89803921568627454" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="voT-CI-QS0"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="80" id="5RA-FG-ULm"/>
+                        <constraint firstItem="R40-PN-31L" firstAttribute="leading" secondItem="ZCr-GQ-MZc" secondAttribute="leading" constant="8" id="QkU-tE-OpM"/>
+                        <constraint firstItem="D2t-z8-fjC" firstAttribute="centerY" secondItem="ZCr-GQ-MZc" secondAttribute="centerY" id="XfL-wv-eyU"/>
+                        <constraint firstAttribute="bottom" secondItem="Vyp-Jk-6Sp" secondAttribute="bottom" id="ZuY-sb-56q"/>
+                        <constraint firstAttribute="trailing" secondItem="Vyp-Jk-6Sp" secondAttribute="trailing" id="fzL-Xv-3Qr"/>
+                        <constraint firstItem="Vyp-Jk-6Sp" firstAttribute="leading" secondItem="ZCr-GQ-MZc" secondAttribute="leading" constant="5" id="lAV-fR-th7"/>
+                        <constraint firstItem="R40-PN-31L" firstAttribute="centerY" secondItem="ZCr-GQ-MZc" secondAttribute="centerY" id="pDo-41-uuX"/>
+                        <constraint firstItem="D2t-z8-fjC" firstAttribute="leading" secondItem="R40-PN-31L" secondAttribute="trailing" constant="10" id="sNB-bR-9na"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qlD-TP-Z1K">
+                    <rect key="frame" x="0.0" y="80" width="375" height="587"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="ZCr-GQ-MZc" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="H2e-PZ-tRP"/>
+                <constraint firstAttribute="bottom" secondItem="qlD-TP-Z1K" secondAttribute="bottom" id="JBO-X1-kT2"/>
+                <constraint firstItem="ZCr-GQ-MZc" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="baX-ee-oK8"/>
+                <constraint firstItem="ZCr-GQ-MZc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="dMO-v3-mqk"/>
+                <constraint firstItem="qlD-TP-Z1K" firstAttribute="top" secondItem="ZCr-GQ-MZc" secondAttribute="bottom" id="fGv-b5-79h"/>
+                <constraint firstItem="qlD-TP-Z1K" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="fSB-8F-wUd"/>
+                <constraint firstItem="qlD-TP-Z1K" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="p1p-Sx-kxZ"/>
+            </constraints>
+            <point key="canvasLocation" x="95" y="-201"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="headPortrait.png" width="113" height="115"/>
+    </resources>
+</document>

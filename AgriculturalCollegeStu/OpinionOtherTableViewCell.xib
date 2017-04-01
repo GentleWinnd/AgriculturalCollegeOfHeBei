@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OpinionOtherTableViewCell" id="KGk-i7-Jjw" customClass="OpinionOtherTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="149"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="8882" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Kl-Zc-iza">
+                        <rect key="frame" x="20" y="10" width="280" height="130"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="130" id="3ib-BV-baJ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="8Kl-Zc-iza" secondAttribute="trailing" constant="20" id="IaV-dg-env"/>
+                    <constraint firstItem="8Kl-Zc-iza" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="KLY-NB-cIF"/>
+                    <constraint firstItem="8Kl-Zc-iza" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="V1C-NQ-ft5"/>
+                    <constraint firstAttribute="bottom" secondItem="8Kl-Zc-iza" secondAttribute="bottom" constant="9" id="Y8U-nV-bMt"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="opinionTextView" destination="8Kl-Zc-iza" id="ejx-vY-XT7"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

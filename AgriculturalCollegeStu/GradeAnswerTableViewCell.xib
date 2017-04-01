@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="134" id="KGk-i7-Jjw" customClass="GradeAnswerTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="134"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="133.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第一题" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KUY-yF-lDX">
+                        <rect key="frame" x="6" y="8" width="46" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="46" id="ee3-5L-tAA"/>
+                            <constraint firstAttribute="height" constant="22" id="oFs-uP-LZI"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.2196078431372549" green="0.6470588235294118" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="数字统计分析的定义是什么" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goD-ly-VLK">
+                        <rect key="frame" x="60" y="10" width="184" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="状态：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vbk-cr-3Cw">
+                        <rect key="frame" x="60" y="33" width="40" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="完成" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqY-KU-WTo">
+                        <rect key="frame" x="102" y="33" width="27" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="分值：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P1B-M0-2ZO">
+                        <rect key="frame" x="139" y="33" width="40" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0F-ea-IKR">
+                        <rect key="frame" x="187" y="33" width="15" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPj-cd-W7O">
+                        <rect key="frame" x="6" y="54" width="76" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <inset key="titleEdgeInsets" minX="-42" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-122" maxY="0.0"/>
+                        <state key="normal" title="我的答案" image="error_s.png">
+                            <color key="titleColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="B.数字定义的分析理论,应用数据分析理论对于获取的数字进行解析" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g4u-3G-n0W">
+                        <rect key="frame" x="96" y="54" width="216" height="33.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5cm-CL-CLf">
+                        <rect key="frame" x="6" y="90.5" width="76" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <inset key="titleEdgeInsets" minX="-42" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="-122" maxY="0.0"/>
+                        <state key="normal" title="正确答案" image="right_s.png">
+                            <color key="titleColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A.数字定义的分析理论，是利用数据进行计算,并且进行分析" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nzz-Pw-NTH">
+                        <rect key="frame" x="96" y="90.5" width="216" height="33.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="nzz-Pw-NTH" secondAttribute="bottom" constant="9" id="3FE-w7-RIk"/>
+                    <constraint firstItem="5cm-CL-CLf" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iPj-cd-W7O" secondAttribute="bottom" constant="12" id="7Rf-yk-fGN"/>
+                    <constraint firstItem="KUY-yF-lDX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="FDf-oX-dAy"/>
+                    <constraint firstAttribute="trailing" secondItem="nzz-Pw-NTH" secondAttribute="trailing" constant="8" id="FFI-MU-PVg"/>
+                    <constraint firstItem="nzz-Pw-NTH" firstAttribute="leading" secondItem="g4u-3G-n0W" secondAttribute="leading" id="FgD-bl-waL"/>
+                    <constraint firstItem="nzz-Pw-NTH" firstAttribute="top" secondItem="5cm-CL-CLf" secondAttribute="top" id="GnN-xo-CiX"/>
+                    <constraint firstAttribute="trailing" secondItem="g4u-3G-n0W" secondAttribute="trailing" constant="8" id="Jq1-hF-WiX"/>
+                    <constraint firstItem="g4u-3G-n0W" firstAttribute="top" secondItem="iPj-cd-W7O" secondAttribute="top" id="Lh9-99-oVm"/>
+                    <constraint firstItem="mqY-KU-WTo" firstAttribute="leading" secondItem="Vbk-cr-3Cw" secondAttribute="trailing" constant="2" id="N1K-Dr-72z"/>
+                    <constraint firstItem="mqY-KU-WTo" firstAttribute="bottom" secondItem="Vbk-cr-3Cw" secondAttribute="bottom" id="Nnd-rk-cVk"/>
+                    <constraint firstItem="g4u-3G-n0W" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="88" id="OmC-Am-mvo"/>
+                    <constraint firstItem="P1B-M0-2ZO" firstAttribute="top" secondItem="Vbk-cr-3Cw" secondAttribute="top" id="Sf9-7U-HUq"/>
+                    <constraint firstItem="D0F-ea-IKR" firstAttribute="top" secondItem="Vbk-cr-3Cw" secondAttribute="top" id="TTn-3n-4GV"/>
+                    <constraint firstItem="P1B-M0-2ZO" firstAttribute="bottom" secondItem="Vbk-cr-3Cw" secondAttribute="bottom" id="U36-jj-YDI"/>
+                    <constraint firstItem="goD-ly-VLK" firstAttribute="leading" secondItem="KUY-yF-lDX" secondAttribute="trailing" constant="8" id="WCr-Zr-QHj"/>
+                    <constraint firstItem="nzz-Pw-NTH" firstAttribute="top" secondItem="g4u-3G-n0W" secondAttribute="bottom" constant="3" id="XN2-vh-Bf8"/>
+                    <constraint firstItem="mqY-KU-WTo" firstAttribute="top" secondItem="Vbk-cr-3Cw" secondAttribute="top" id="eTB-rC-cBy"/>
+                    <constraint firstItem="D0F-ea-IKR" firstAttribute="bottom" secondItem="Vbk-cr-3Cw" secondAttribute="bottom" id="fiz-Uw-jE1"/>
+                    <constraint firstItem="P1B-M0-2ZO" firstAttribute="leading" secondItem="mqY-KU-WTo" secondAttribute="trailing" constant="10" id="gHS-4V-6vc"/>
+                    <constraint firstItem="Vbk-cr-3Cw" firstAttribute="top" secondItem="goD-ly-VLK" secondAttribute="bottom" constant="5" id="jqx-uF-DSn"/>
+                    <constraint firstItem="iPj-cd-W7O" firstAttribute="top" secondItem="Vbk-cr-3Cw" secondAttribute="bottom" constant="5" id="p62-1S-uJm"/>
+                    <constraint firstItem="iPj-cd-W7O" firstAttribute="leading" secondItem="KUY-yF-lDX" secondAttribute="leading" id="sef-co-lSd"/>
+                    <constraint firstItem="KUY-yF-lDX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="v8W-8u-kXL"/>
+                    <constraint firstItem="D0F-ea-IKR" firstAttribute="leading" secondItem="P1B-M0-2ZO" secondAttribute="trailing" constant="8" id="wtC-zS-xjh"/>
+                    <constraint firstItem="goD-ly-VLK" firstAttribute="centerY" secondItem="KUY-yF-lDX" secondAttribute="centerY" id="wvG-cW-Egg"/>
+                    <constraint firstItem="5cm-CL-CLf" firstAttribute="leading" secondItem="KUY-yF-lDX" secondAttribute="leading" id="xB1-dy-jnQ"/>
+                    <constraint firstItem="Vbk-cr-3Cw" firstAttribute="leading" secondItem="goD-ly-VLK" secondAttribute="leading" id="yZO-n8-nkG"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="MineAnswer" destination="g4u-3G-n0W" id="Mye-Ql-Vug"/>
+                <outlet property="correctAnswer" destination="nzz-Pw-NTH" id="Q8H-Kr-4DB"/>
+                <outlet property="finishedState" destination="mqY-KU-WTo" id="esy-qO-m1J"/>
+                <outlet property="gradelabel" destination="D0F-ea-IKR" id="OMe-nt-vOw"/>
+                <outlet property="questionName" destination="goD-ly-VLK" id="39W-1Y-oTL"/>
+                <outlet property="questionNum" destination="KUY-yF-lDX" id="r3i-Le-yMj"/>
+            </connections>
+            <point key="canvasLocation" x="214" y="7"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="error_s.png" width="18" height="18"/>
+        <image name="right_s.png" width="18" height="18"/>
+    </resources>
+</document>
