@@ -13,30 +13,6 @@
 @implementation UserData
 
 
-#pragma mark - save login data
-
-+ (void)saveLoginData:(NSDictionary *)loginData {
-    User *user = [[User alloc] init];
-    user.userName = [loginData valueForKey:USERNAME];
-    user.userPass = [loginData valueForKey:PASSWORD];
-    user.accessToken = [loginData valueForKey:ACCESS_TOKEN];
-    user.expiresIn = [[loginData valueForKey:EXPIRES_IN] intValue];
-    user.refreshToken = [loginData valueForKey:REFRESH_TOKEN];
-    user.accessTokenDate = [loginData valueForKey:ACCESS_TOKEN_DATE];
-    [self storeUserData:user];
-}
-
-#pragma mark -  save refresh token data
-
-+ (void)saveRefreshTokenData:(NSDictionary *)refreshData {
-    User *user = [self getUser];
-    user.accessToken = [refreshData valueForKey:ACCESS_TOKEN];
-    user.expiresIn = [[refreshData valueForKey:EXPIRES_IN] intValue];
-    user.refreshToken = [refreshData valueForKey:REFRESH_TOKEN];
-    user.accessTokenDate = [refreshData valueForKey:ACCESS_TOKEN_DATE];
-    [self storeUserData:user];
-}
-
 #pragma mark -  get
 
 #pragma mark -  get user
@@ -58,16 +34,6 @@
     user.userID = [userData valueForKey:USERID];
     user.nickName = [userData valueForKey:NICKNAME];
     
-    [self storeUserData:user];
-}
-
-
-#pragma mark -  save user info
-
-+ (void)saveUserInfo:(NSDictionary *)userInfo {
-    User *user = [self getUser];
-    user.userID = [userInfo valueForKey:@"id"];
-    user.userName = [userInfo valueForKey:@"userName"];
     [self storeUserData:user];
 }
 

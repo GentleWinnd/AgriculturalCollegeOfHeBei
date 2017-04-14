@@ -30,6 +30,7 @@
 #import "StuClassTestViewController.h"
 #import "EvaluationInfoViewController.h"
 #import "StuEvaluationViewController.h"
+#import "SponsorViewController.h"
 
 #import <WXOpenIMSDKFMWK/YWFMWK.h>
 #import <WXOpenIMSDKFMWK/YWServiceDef.h>
@@ -37,7 +38,7 @@
 #import "LogInViewController.h"
 
 #import "IMManager.h"
-#import "AccessTokenManager.h"
+#import "VerificationAccessToken.h"
 #import "NSString+Attribute.h"
 #import "SetNavigationItem.h"
 #import "RecentCourseManager.h"
@@ -68,17 +69,15 @@ static NSString  *thirdCellID = @"thirdCellID";
     
     NSString *accessToken = [UserData getAccessToken];
     if (accessToken) {
-        if ([AccessTokenManager accessTokenIsValid]) {
+        if ([VerificationAccessToken accessTokenIsValid]) {
             [IMManager tryLoginIMInViewController:self];
             
         } else {
-            [AccessTokenManager refreshToken:^(bool getToken) {
-                 [IMManager tryLoginIMInViewController:self];
-            } failure:^(NSError *error) {
-                LogInViewController *logView = [[LogInViewController alloc] init];
-                
-                [self presentViewController:logView animated:YES completion:nil];
-            }];
+            [VerificationAccessToken refreshToken:^(bool getToken) {
+                if (getToken) {//获取token成功
+                    [IMManager tryLoginIMInViewController:self];
+                }
+            } failure:nil ];
         }
     } else {
         LogInViewController *logView = [[LogInViewController alloc] init];
@@ -114,7 +113,18 @@ static NSString  *thirdCellID = @"thirdCellID";
     noticeView.refreshed = ^(){
         [self haveNewMessage];
     };
-    [self pushViewController:noticeView animated:YES hiddenTabbar:YES];
+//    [self pushViewController:noticeView animated:YES hiddenTabbar:YES];
+    
+     if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"AgriculturalCollegeOfHeBei://"]]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"AgriculturalCollegeOfHeBei://"] ];
+        NSLog(@"launch AppDemo2 success!");
+    } else {
+        NSLog(@"No such url.");
+        /// 跳到 appStore 某个 app
+        NSURL* urlAppStore = [NSURL URLWithString:@"https://itunes.apple.com/cn/app/tie-lu12306/id564818797?mt=8"];
+        [[UIApplication sharedApplication] openURL: urlAppStore];
+    }
+
 }
 
 #pragma mark - user login suceess
@@ -123,6 +133,8 @@ static NSString  *thirdCellID = @"thirdCellID";
     userRole = [UserData getUser].userRole;
     [self getClassDaySchedule];
     [self customNavigationBar];
+    [self initData];
+
     [classTable reloadData];
 }
 
@@ -141,9 +153,8 @@ static NSString  *thirdCellID = @"thirdCellID";
     [self observeNewNotice];
     [self judgeUserLoginState];
     
-    [self refreshedUserRole];
     [self initTableView];
-    [self initData];
+    [self refreshedUserRole];
 
 }
 
@@ -151,9 +162,16 @@ static NSString  *thirdCellID = @"thirdCellID";
 
 - (void)initData {
     userRole = [UserData getUser].userRole;
+    if (userRole == UserRoleStudent) {
+        itemsIconArray = @[@"signed",@"leave",@"sourseload",@"task",@"classchat",@"test",@"minegroupo",@"statisticaltab",@"evaluation",@"notice"];
+        itemsTitleAray = @[@"签到",@"请假审批",@"资源下载",@"作业",@"课堂交流",@"测验",@"我的群组",@"统计报表",@"教学评价",@"通知公告"];
+
+    } else {
+        itemsIconArray = @[@"signed",@"leave",@"sourseload",@"task",@"classchat",@"test",@"postQuestion@2x",@"minegroupo",@"statisticaltab",@"evaluation",@"notice"];
+        itemsTitleAray = @[@"签到",@"请假审批",@"资源下载",@"作业",@"课堂交流",@"测验",@"发起提问",@"我的群组",@"统计报表",@"教学评价",@"通知公告"];
+
+    }
    
-    itemsIconArray = @[@"signed",@"leave",@"sourseload",@"task",@"classchat",@"test",@"minegroupo",@"statisticaltab",@"evaluation",@"notice"];
-    itemsTitleAray = @[@"签到",@"请假审批",@"资源下载",@"作业",@"课堂交流",@"测验",@"我的群组",@"统计报表",@"教学评价",@"通知公告"];
     
     [self getToolsInfo];
     [self postCrashLog];
@@ -427,17 +445,33 @@ static NSString  *thirdCellID = @"thirdCellID";
         }//测验
             break;
         case 6:{
-            ChatGroupTableViewController *chatView = [[ChatGroupTableViewController alloc] init];
-            chatView.userRole = userRole;
-            chatView.isClassTribe = NO;
-            view = chatView;
+            
+            if (userRole == UserRoleStudent) {
+                ChatGroupTableViewController *chatView = [[ChatGroupTableViewController alloc] init];
+                chatView.userRole = userRole;
+                chatView.isClassTribe = NO;
+                view = chatView;
+
+            } else {//发起提问
+                SponsorViewController *sponsorView = [[SponsorViewController alloc] init];
+                view = sponsorView;
+            }
             
         }//我的群组
             break;
         case 7:{
-            StatisticalTabViewController *statisticalView = [[StatisticalTabViewController alloc] init];
-            statisticalView.userRole = userRole;
-            view = statisticalView;
+            if (userRole == UserRoleStudent) {
+                StatisticalTabViewController *statisticalView = [[StatisticalTabViewController alloc] init];
+                statisticalView.userRole = userRole;
+                view = statisticalView;
+            } else {
+                ChatGroupTableViewController *chatView = [[ChatGroupTableViewController alloc] init];
+                chatView.userRole = userRole;
+                chatView.isClassTribe = NO;
+                view = chatView;
+
+            }
+           
             
         }//统计报表
             break;
@@ -445,9 +479,12 @@ static NSString  *thirdCellID = @"thirdCellID";
 //            TeachingEvaluationViewController *teachingView = [[TeachingEvaluationViewController alloc] init];
 //            teachingView.userRole = userRole;
 //            view = teachingView;
+            
             if (userRole == UserRoleTeacher) {
-                EvaluationInfoViewController *evaluationView = [[EvaluationInfoViewController alloc] init];
-                view = evaluationView;
+                StatisticalTabViewController *statisticalView = [[StatisticalTabViewController alloc] init];
+                statisticalView.userRole = userRole;
+                view = statisticalView;
+                
             } else {
                 StuEvaluationViewController *stuView = [[StuEvaluationViewController alloc] init];
                 view = stuView;
@@ -456,13 +493,26 @@ static NSString  *thirdCellID = @"thirdCellID";
         }//教学评价
             break;
         case 9:{
-            NoticeViewController *noticeView = [[NoticeViewController alloc] init];
-            noticeView.userRole = userRole;
-            view = noticeView;
+            if (userRole == UserRoleStudent) {
+                NoticeViewController *noticeView = [[NoticeViewController alloc] init];
+                noticeView.userRole = userRole;
+                view = noticeView;
+            } else {
+                EvaluationInfoViewController *evaluationView = [[EvaluationInfoViewController alloc] init];
+                view = evaluationView;
+
+            }
+           
         }//通知公告
             break;
         case 10:{
-           
+            if (userRole == UserRoleStudent) {
+                
+            } else {
+                NoticeViewController *noticeView = [[NoticeViewController alloc] init];
+                noticeView.userRole = userRole;
+                view = noticeView;
+            }
             
         }
             break;

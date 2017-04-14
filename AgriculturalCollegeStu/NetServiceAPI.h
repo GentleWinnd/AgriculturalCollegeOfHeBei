@@ -166,7 +166,7 @@
                                          failure:(void(^)(NSError *error))failure;
 
 //refreshAccessToken
-+ (void)getRefreshTokenWithParameters:(id)parameters
++ (void)postRefreshTokenWithParameters:(id)parameters
                               success:(void(^)(id responseObject))success
                               failure:(void(^)(NSError *error))failure;
 /*************************courseData***********************/
@@ -322,6 +322,17 @@
                                      success:(void(^)(id responseObject))success
                                      failure:(void(^)(NSError *error))failure;
 
+///HomeWork/UploadAttachment 上传作业附件
++ (void)postUploadHomeWorkAttachmentsWithParameters:(id)parameters
+                                            success:(void(^)(id responseObject))success
+                                            failure:(void(^)(NSError *error))failure;
+
+
+///HomeWork/RemoveAttachment 移除作业的附件
++ (void)postRemoveHomeWorkAttachmentsWithParameters:(id)parameters
+                                            success:(void(^)(id responseObject))success
+                                            failure:(void(^)(NSError *error))failure;
+
 #pragma mark - get class Source
 
 + (void)getClassSourcesWithParameters:(id)parameters
@@ -375,6 +386,44 @@
 + (void)getClassDayScheduleRangeActivitysWithParameters:(id)parameters
                                                 success:(void(^)(id responseObject))success
                                                 failure:(void(^)(NSError *error))failure;
+#pragma mark - 获取统计报表列表
+///OfflineCourse/ListGroupByYear 获取统计报表列表
+
++ (void)getOfflineCourseListGroupByYearWithParameters:(id)parameters
+                                              success:(void(^)(id responseObject))success
+                                              failure:(void(^)(NSError *error))failure;
+
+//OfflineCourse/Stat 获取统计报表详情
+
++ (void)getOfflineCourseStatisticalDetailWithParameters:(id)parameters
+                                                success:(void(^)(id responseObject))success
+                                                failure:(void(^)(NSError *error))failure;
+
+//按月获取统计报表详情
++ (void)getOfflineCourseStatisticalDetailByMonthWithParameters:(id)parameters
+                                                       success:(void(^)(id responseObject))success
+                                                       failure:(void(^)(NSError *error))failure;
+
+
+#pragma mark - 发起提问
+
+///OfflineCourse/AskQuestionMemberStat 获取发起提问学生详情
+
++ (void)getOfflineCourseAskQuestionMemberStatWithParameters:(id)parameters
+                                                    success:(void(^)(id responseObject))success
+                                                    failure:(void(^)(NSError *error))failure;
+
+//OfflineCourse/AskQuestionEvaluation上传教师对于学生的评价
+
++ (void)postOfflineCourseAskQuestionEvaluationWithParameters:(id)parameters
+                                                     success:(void(^)(id responseObject))success
+                                                     failure:(void(^)(NSError *error))failure;
+
+//OfflineCourse/AskQuestionLaunchPush 发起提问
+
++ (void)postOfflineCoorseSponsorQuestionWithParameters:(id)parameters
+                                               success:(void(^)(id responseObject))success
+                                               failure:(void(^)(NSError *error))failure;
 @end
 
 

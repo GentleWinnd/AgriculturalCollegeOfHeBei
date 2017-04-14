@@ -239,10 +239,12 @@
 #pragma mark - 即时通信
 
 - (void)initIMAssage {
+    
     /*
      * App Key:23553490
      * App Secret:08a3759d6d0a8026f9d6d24d39b776b4
      */
+    
     dispatch_async(dispatch_queue_create("APP_EXPIRE_KILL", 0), ^{
         // 检查程序是否过期
         //MUPP_ALREADY_MODIFIED_TAG
@@ -264,18 +266,16 @@
 #pragma clang diagnostic pop
                 
                 return;
-            }
-            else
-            {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您使用的程序是测试版本，目前已经过期，请更新到最新版本"
-                                                                message:nil
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"确定"
-                                                      otherButtonTitles:nil];
-                [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:NO];
-                
-                sleep(10);
-                kill(getpid(), 9);
+            } else {
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您使用的程序是测试版本，目前已经过期，请更新到最新版本"
+//                                                                message:nil
+//                                                               delegate:nil
+//                                                      cancelButtonTitle:@"确定"
+//                                                      otherButtonTitles:nil];
+//                [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:NO];
+//                
+//                sleep(10);
+//                kill(getpid(), 9);
             }
         }
     });

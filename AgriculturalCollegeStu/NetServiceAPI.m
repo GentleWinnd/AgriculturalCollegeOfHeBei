@@ -427,13 +427,13 @@
 }
 
 // token from refresh token
-+ (void)getRefreshTokenWithParameters:(id)parameters
++ (void)postRefreshTokenWithParameters:(id)parameters
                               success:(void(^)(id responseObject))success
                               failure:(void(^)(NSError *error))failure {
-    NSString *sourceUrl = @"Passport/RefreshToken?";
+    NSString *sourceUrl = @"/Passport/RefreshToken";
     NSString *URLString = [NSString stringWithFormat:HOST_SERVICE,sourceUrl];
     
-    [KTMWebService CMGetWithURL:URLString parameters:parameters sucess:^(id responseObject) {
+    [KTMWebService CMPostWithURL:URLString parameters:parameters sucess:^(id responseObject) {
         if (success) {
             success(responseObject);
         }
@@ -1100,6 +1100,44 @@
     }];
 }
 
+///HomeWork/UploadAttachment 上传作业附件
++ (void)postUploadHomeWorkAttachmentsWithParameters:(id)parameters
+                                          success:(void(^)(id responseObject))success
+                                          failure:(void(^)(NSError *error))failure {
+    NSString *taskActionStr = @"HomeWork/UploadAttachment";
+    NSString *URLString = [NSString stringWithFormat:HOST_SERVICE, taskActionStr];
+    
+    [KTMWebService CMPostWithURL:URLString parameters:parameters sucess:^(id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+///HomeWork/RemoveAttachment 移除作业的附件
++ (void)postRemoveHomeWorkAttachmentsWithParameters:(id)parameters
+                                            success:(void(^)(id responseObject))success
+                                            failure:(void(^)(NSError *error))failure {
+    NSString *taskActionStr = @"HomeWork/RemoveAttachment";
+    NSString *URLString = [NSString stringWithFormat:HOST_SERVICE, taskActionStr];
+    
+    [KTMWebService CMPostWithURL:URLString parameters:parameters sucess:^(id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+
+
 #pragma mark - class source
 
 + (void)getClassSourcesWithParameters:(id)parameters
@@ -1268,6 +1306,130 @@
     NSString *URL = [NSString stringWithFormat:HOST_SERVICE,paraStr];
     
     [KTMWebService getWithURL:URL parameters:parameters sucess:^(id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+#pragma mark - 获取统计报表列表
+///OfflineCourse/ListGroupByYear 获取统计报表列表
+
++ (void)getOfflineCourseListGroupByYearWithParameters:(id)parameters
+                                              success:(void(^)(id responseObject))success
+                                              failure:(void(^)(NSError *error))failure {
+
+    NSString *URL = [NSString stringWithFormat:HOST_SERVICE,@"OfflineCourse/ListGroupByYear?"];
+    
+    [KTMWebService getWithURL:URL parameters:parameters sucess:^(id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+
+//OfflineCourse/Stat 获取统计报表详情
+
++ (void)getOfflineCourseStatisticalDetailWithParameters:(id)parameters
+                                                success:(void(^)(id responseObject))success
+                                                failure:(void(^)(NSError *error))failure {
+    
+    NSString *urlStr = [NSString stringWithFormat:@"OfflineCourse/Stat?Id=%@",parameters[@"Id"]];
+    NSString *URL = [NSString stringWithFormat:HOST_SERVICE,urlStr];
+    
+    [KTMWebService getWithURL:URL parameters:parameters sucess:^(id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+///OfflineCourse/StudentActivityDetailGroupByMonth 按月获取统计详情
+
++ (void)getOfflineCourseStatisticalDetailByMonthWithParameters:(id)parameters
+                                                       success:(void(^)(id responseObject))success
+                                                       failure:(void(^)(NSError *error))failure {
+    
+    NSString *urlStr = [NSString stringWithFormat:@"OfflineCourse/StudentActivityDetailGroupByMonth?Id=%@&StudentId=%@",parameters[@"Id"],parameters[@"StudentId"]];
+    
+    NSString *URL = [NSString stringWithFormat:HOST_SERVICE,urlStr];
+    
+    [KTMWebService getWithURL:URL parameters:parameters sucess:^(id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+/******************get sponsor students info *****************/
+#pragma mark - 发起提问
+
+///OfflineCourse/AskQuestionMemberStat 获取发起提问学生详情
+
++ (void)getOfflineCourseAskQuestionMemberStatWithParameters:(id)parameters
+                                                    success:(void(^)(id responseObject))success
+                                                    failure:(void(^)(NSError *error))failure {
+    
+    NSString *urlStr = [NSString stringWithFormat:@"OfflineCourse/AskQuestionMemberStat?OfflineCourseId=%@",parameters[@"OfflineCourseId"]];
+    
+    NSString *URL = [NSString stringWithFormat:HOST_SERVICE,urlStr];
+    
+    [KTMWebService getWithURL:URL parameters:parameters sucess:^(id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+//OfflineCourse/AskQuestionEvaluation上传教师对于学生的评价
+
++ (void)postOfflineCourseAskQuestionEvaluationWithParameters:(id)parameters
+                                                     success:(void(^)(id responseObject))success
+                                                     failure:(void(^)(NSError *error))failure {
+    
+    NSString *taskActionStr = @"OfflineCourse/AskQuestionEvaluation";
+    NSString *URLString = [NSString stringWithFormat:HOST_SERVICE, taskActionStr];
+    
+    [KTMWebService CMPostWithURL:URLString parameters:parameters sucess:^(id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+//OfflineCourse/AskQuestionLaunchPush 发起提问
++ (void)postOfflineCoorseSponsorQuestionWithParameters:(id)parameters
+                                               success:(void(^)(id responseObject))success
+                                               failure:(void(^)(NSError *error))failure {
+    
+    NSString *taskActionStr = @"OfflineCourse/AskQuestionLaunchPush";
+    NSString *URLString = [NSString stringWithFormat:HOST_SERVICE, taskActionStr];
+    
+    [KTMWebService CMPostWithURL:URLString parameters:parameters sucess:^(id responseObject) {
         if (success) {
             success(responseObject);
         }

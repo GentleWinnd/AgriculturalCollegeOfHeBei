@@ -20,6 +20,8 @@
 
 #define MainTextColor_DarkBlack [@"#333333" toColor]
 #define MaintextColor_LightBlack [@"#999999" toColor]
+#define MaintextColor_MiddleBlack [@"#666666" toColor]
+
 
 #define MainColor_Red [@"ff3b30" toColor]
 #define MainColor_Orange [@"#ff9f49" toColor]

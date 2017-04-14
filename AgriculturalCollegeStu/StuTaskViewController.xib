@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StuTaskViewController">
             <connections>
                 <outlet property="TPScrollView" destination="gae-dK-oxY" id="PwG-CV-a9n"/>
+                <outlet property="addAttementBtn" destination="408-QP-426" id="IP7-ZC-C3u"/>
+                <outlet property="attachmentView" destination="0jk-2I-iFl" id="agK-9P-6pr"/>
+                <outlet property="attachmentViewBottom" destination="OLV-aO-AuG" id="70B-SV-UHp"/>
+                <outlet property="attachmentsCollection" destination="YLN-6D-TRw" id="iwo-k0-z1n"/>
                 <outlet property="courseCollectionView" destination="NTg-fi-xxc" id="pIP-yC-OpH"/>
                 <outlet property="finishedRateBtn" destination="Tow-Mq-DR0" id="NDE-dS-HPu"/>
+                <outlet property="postQuestionBt" destination="BaP-aZ-1ns" id="nOe-yN-PY4"/>
                 <outlet property="selecteCourceBtn" destination="lsi-29-5p4" id="KR3-x5-qTb"/>
                 <outlet property="selectedCource" destination="eb2-Ig-ErV" id="fVp-sV-hqq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -111,6 +117,67 @@
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                         </collectionView>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0jk-2I-iFl">
+                            <rect key="frame" x="0.0" y="487" width="375" height="180"/>
+                            <subviews>
+                                <button opaque="NO" tag="1122" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BaP-aZ-1ns">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="38"/>
+                                    <color key="backgroundColor" red="0.2196078431372549" green="0.6470588235294118" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="38" id="ZIy-Ed-Mab"/>
+                                    </constraints>
+                                    <state key="normal" image="ic_attachment_up.png"/>
+                                    <state key="selected" image="ic_attachment_down.png"/>
+                                    <connections>
+                                        <action selector="attachmentBtnClick:" destination="-1" eventType="touchUpInside" id="gVG-Uq-Afc"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" tag="2211" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="408-QP-426">
+                                    <rect key="frame" x="281" y="74" width="86" height="86"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="408-QP-426" secondAttribute="height" multiplier="1:1" id="pgE-0f-Abo"/>
+                                    </constraints>
+                                    <state key="normal" image="attachment_add.png"/>
+                                    <connections>
+                                        <action selector="attachmentBtnClick:" destination="-1" eventType="touchUpInside" id="Fii-Jv-erD"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="作业附件" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MMb-Dh-10f">
+                                    <rect key="frame" x="8" y="46" width="61.5" height="8"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" red="0.12549019607843137" green="0.12549019607843137" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="YLN-6D-TRw">
+                                    <rect key="frame" x="0.0" y="62" width="273" height="110"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yiw-zg-DvM">
+                                        <size key="itemSize" width="50" height="50"/>
+                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </collectionViewFlowLayout>
+                                </collectionView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="408-QP-426" firstAttribute="bottom" secondItem="YLN-6D-TRw" secondAttribute="bottom" constant="-12" id="11S-vd-i56"/>
+                                <constraint firstAttribute="trailing" secondItem="BaP-aZ-1ns" secondAttribute="trailing" id="8JV-wa-o5p"/>
+                                <constraint firstAttribute="trailing" secondItem="BaP-aZ-1ns" secondAttribute="trailing" id="AvH-Zg-nFa"/>
+                                <constraint firstItem="YLN-6D-TRw" firstAttribute="top" secondItem="MMb-Dh-10f" secondAttribute="bottom" constant="8" id="Ic0-ka-TxZ"/>
+                                <constraint firstAttribute="height" constant="180" id="LWW-sC-Pvd"/>
+                                <constraint firstItem="BaP-aZ-1ns" firstAttribute="top" secondItem="0jk-2I-iFl" secondAttribute="top" id="LyO-Ja-en5"/>
+                                <constraint firstItem="MMb-Dh-10f" firstAttribute="top" secondItem="BaP-aZ-1ns" secondAttribute="bottom" constant="8" id="MY5-bf-9WW"/>
+                                <constraint firstItem="408-QP-426" firstAttribute="top" secondItem="YLN-6D-TRw" secondAttribute="top" constant="12" id="P2C-h6-VEH"/>
+                                <constraint firstItem="BaP-aZ-1ns" firstAttribute="leading" secondItem="0jk-2I-iFl" secondAttribute="leading" id="PPg-qH-fCl"/>
+                                <constraint firstItem="MMb-Dh-10f" firstAttribute="leading" secondItem="0jk-2I-iFl" secondAttribute="leading" constant="8" id="VPd-My-JfT"/>
+                                <constraint firstAttribute="bottom" secondItem="YLN-6D-TRw" secondAttribute="bottom" constant="8" id="bee-kI-chH"/>
+                                <constraint firstItem="BaP-aZ-1ns" firstAttribute="leading" secondItem="0jk-2I-iFl" secondAttribute="leading" id="enX-Au-SMk"/>
+                                <constraint firstAttribute="trailing" secondItem="408-QP-426" secondAttribute="trailing" constant="8" id="lbh-QX-FuN"/>
+                                <constraint firstItem="408-QP-426" firstAttribute="leading" secondItem="YLN-6D-TRw" secondAttribute="trailing" constant="8" id="o64-NQ-HE5"/>
+                                <constraint firstItem="YLN-6D-TRw" firstAttribute="leading" secondItem="0jk-2I-iFl" secondAttribute="leading" id="rMw-cY-N0O"/>
+                            </constraints>
+                        </view>
                     </subviews>
                     <constraints>
                         <constraint firstItem="NTg-fi-xxc" firstAttribute="top" secondItem="dXP-h2-d98" secondAttribute="bottom" id="D77-2q-VbN"/>
@@ -119,7 +186,9 @@
                         <constraint firstAttribute="bottom" secondItem="NTg-fi-xxc" secondAttribute="bottom" id="XUh-us-PT2"/>
                         <constraint firstItem="dXP-h2-d98" firstAttribute="top" secondItem="gae-dK-oxY" secondAttribute="top" id="fJG-Lb-DNL"/>
                         <constraint firstItem="NTg-fi-xxc" firstAttribute="centerX" secondItem="gae-dK-oxY" secondAttribute="centerX" id="fmX-Lv-qtX"/>
+                        <constraint firstAttribute="trailing" secondItem="0jk-2I-iFl" secondAttribute="trailing" id="nPr-xe-WL0"/>
                         <constraint firstItem="dXP-h2-d98" firstAttribute="leading" secondItem="gae-dK-oxY" secondAttribute="leading" id="oGo-Ce-uUs"/>
+                        <constraint firstItem="0jk-2I-iFl" firstAttribute="leading" secondItem="gae-dK-oxY" secondAttribute="leading" id="pns-bA-kNu"/>
                         <constraint firstAttribute="trailing" secondItem="dXP-h2-d98" secondAttribute="trailing" id="wyY-uI-1QU"/>
                     </constraints>
                 </scrollView>
@@ -128,6 +197,7 @@
             <constraints>
                 <constraint firstItem="gae-dK-oxY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2ET-WU-YVW"/>
                 <constraint firstItem="gae-dK-oxY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="FIe-4g-leY"/>
+                <constraint firstAttribute="bottom" secondItem="0jk-2I-iFl" secondAttribute="bottom" id="OLV-aO-AuG"/>
                 <constraint firstAttribute="trailing" secondItem="gae-dK-oxY" secondAttribute="trailing" id="t5Y-NV-dRH"/>
                 <constraint firstAttribute="bottom" secondItem="gae-dK-oxY" secondAttribute="bottom" id="zYd-0F-60k"/>
             </constraints>
@@ -135,7 +205,10 @@
         </view>
     </objects>
     <resources>
+        <image name="attachment_add.png" width="86" height="86"/>
         <image name="frame_4.png" width="20" height="20"/>
+        <image name="ic_attachment_down.png" width="43" height="25"/>
+        <image name="ic_attachment_up.png" width="43" height="25"/>
         <image name="refresh.png" width="21" height="21"/>
         <image name="tab_right_n.png" width="28" height="28"/>
     </resources>

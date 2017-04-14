@@ -8,7 +8,7 @@
 
 #import "LogInViewController.h"
 #import "NSString+Extension.h"
-#import "AccessTokenManager.h"
+#import "VerificationAccessToken.h"
 #import "MBProgressManager.h"
 #import "NSString+Date.h"
 #import "TabbarManager.h"
@@ -75,8 +75,11 @@
             User *user = [[User alloc] init];
             user.accessToken = responseObject[@"AccessToken"];
             user.accessTokenDate = [NSString dateFromSSSDateString:responseObject[@"Expires"]];
+            user.expiresIn = 5*60*60*24;
+
             user.userName = self.userNameTextField.text;
             user.userPass = self.userPWTextField.text;
+            
             
             NSDictionary *userInfo = [NSDictionary safeDictionary:responseObject[@"DataObject"][@"UserInfo"]];
             user.nickName = [NSString safeString:userInfo[@"FullName"]];
@@ -94,6 +97,7 @@
             [UserData storeUserData:user];
             
             [TabbarManager setSelectedIndex:0];
+            
             [self dismissViewControllerAnimated:YES completion:nil];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTICE_USERROLE_CHANGED object:nil];
@@ -122,11 +126,11 @@
 #pragma mark - loginIM
 
 - (void)loginIM {
-    if ([AccessTokenManager accessTokenIsValid]) {
+    if ([VerificationAccessToken accessTokenIsValid]) {
         [IMManager tryLoginIMInViewController:self];
         
     } else {
-        [AccessTokenManager refreshToken:^(bool getToken) {
+        [VerificationAccessToken refreshToken:^(bool getToken) {
             [IMManager tryLoginIMInViewController:self];
         } failure:^(NSError *error) {
             

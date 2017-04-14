@@ -64,7 +64,6 @@ static NSString  *cellID = @"feilCellID";
 #pragma mark - initdata
 
 - (void)initData {
-    self.sourceArray = [NSMutableArray arrayWithObjects:@"图像处理之数字化.PDF",@"线性代数笔记.word",@"图像高斯模糊算法.PDF",@"数字图形合成复习要点.PDF",@"高等数学复习要点.PDF",@"数字图像模拟.PDF",@"图文处理.PDF", nil];
     self.currentSourceType = @"";
     self.selectedFeilInfo = [NSMutableDictionary dictionaryWithCapacity:0];
     self.SType = SourceTypeAll;
