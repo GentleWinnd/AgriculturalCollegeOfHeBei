@@ -6,9 +6,8 @@
 //  Copyright © 2016年 xingxuenet. All rights reserved.
 //
 
-#import "HOMEBaseModel.h"
 
-@interface FaceCourseModel : HOMEBaseModel
+@interface FaceCourseModel : NSObject
 
 @property (retain, nonatomic) NSString *Id;
 @property (retain, nonatomic) NSString *Name;

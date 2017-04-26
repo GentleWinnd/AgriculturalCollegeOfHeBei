@@ -6,9 +6,8 @@
 //  Copyright (c) 2015年 Mahaomeng. All rights reserved.
 //
 
-#import "HOMEBaseModel.h"
 
-@interface FirstPageContentModel : HOMEBaseModel
+@interface FirstPageContentModel : NSObject
 
 @property (nonatomic, copy) NSString *Id;
 @property (nonatomic, copy) NSString *Name;

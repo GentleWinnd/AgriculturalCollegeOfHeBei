@@ -9,7 +9,6 @@
 #import "ClassVideoViewController.h"
 #import "CourseInfoTableViewController.h"
 #import "HaventSignUpViewController.h"
-#import "VideoPageController.h"
 #import "ClassVTableViewCell.h"
 #import "ClassVHeaderView.h"
 #import "FirstPageContentModel.h"

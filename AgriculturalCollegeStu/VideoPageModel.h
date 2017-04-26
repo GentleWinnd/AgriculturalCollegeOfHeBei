@@ -6,10 +6,9 @@
 //  Copyright © 2016年 xingxuenet. All rights reserved.
 //
 
-#import "HOMEBaseModel.h"
 #import "VideoView.h"
 
-@interface VideoPageModel : HOMEBaseModel
+@interface VideoPageModel : NSObject
 
 @property (nonatomic, copy) NSString *parentCategoryId;
 

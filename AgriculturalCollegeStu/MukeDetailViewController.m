@@ -16,6 +16,9 @@
 #import "NSDictionary+Extension.h"
 #import "NSArray+Extension.h"
 #import "SetNavigationItem.h"
+#import "HOMELabel.h"
+
+
 #define SCROLL_TAG 778
 #define BTN_TAG 7834
 

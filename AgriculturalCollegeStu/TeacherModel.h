@@ -6,9 +6,8 @@
 //  Copyright © 2016年 xingxuenet. All rights reserved.
 //
 
-#import "HOMEBaseModel.h"
 
-@interface TeacherModel : HOMEBaseModel
+@interface TeacherModel : NSObject
 
 @property (retain, nonatomic) NSString *FullName;
 @property (retain, nonatomic) NSString *Description;

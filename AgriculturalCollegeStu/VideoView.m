@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "VideoView.h"
-#import "VideoPageController.h"
 #import "Header_key.h"
 
 @interface VideoView ()

@@ -8,7 +8,6 @@
 
 #import "HaventSignUpTableViewCell.h"
 #import "MukeDetailViewController.h"
-#import "UserCenterViewController.h"
 #import "MBProgressManager.h"
 #import "UserData.h"
 
@@ -35,8 +34,8 @@
     }
     NSString *accessToken = [UserData getAccessToken];
     if (!accessToken) {
-        UserCenterViewController *uvc = [[UserCenterViewController alloc]initWithFlag:YES];
-        [_superViewController.navigationController pushViewController:uvc animated:YES];
+//        UserCenterViewController *uvc = [[UserCenterViewController alloc]initWithFlag:YES];
+//        [_superViewController.navigationController pushViewController:uvc animated:YES];
         [Progress progressShowcontent:@"暂未开放，敬请期待！"];
     } else {
         if (_subCourseArr && _superViewController && sender.backgroundColor != RGB_COLOR(131, 176, 17)) {

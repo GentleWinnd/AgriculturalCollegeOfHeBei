@@ -247,29 +247,7 @@ static NSString *lineViewID = @"lineViewId";
           
           courseCell.userInteractionEnabled = NO;
           
-          /*
-           {
-           "Id": "ad9842db-805f-4e36-8101-029f1dfa447e",
-           "StartDate": "2017-01-14T10:00:00",
-           "EndDate": "2017-01-14T12:00:00",
-           "LessonTime": "2017-01-14 10:00~12:00",
-           "DayOfWeekNum": 6,
-           "DayOfWeek": "Saturday",
-           "LessonTimeRange": "3,4",
-           "Dependent": {
-           "DependentId": "f91d3009-e0e1-466e-93b0-268f50e66f4e",
-           "DependentType": "Batch",
-           "DependentName": "作物育种学"
-           }
-           },         */
-          BOOL NoWeek = YES;
-          
-          //        if (indexPath.row<8) {
-          //            NoWeek = indexPath.row%6==0||indexPath.row%7==0?NO:YES;
-          //        } else {
-          //            int rate = indexPath.row/8;
-          //            NoWeek = (indexPath.row-8*rate)%6==0||(indexPath.row-8*rate)%7==0?NO:YES;
-          //        }
+        BOOL NoWeek = YES;
           
           if (classesArray.count>0 && NoWeek) {
               NSString *name = [self getCourseWithIndexPath:indexPath];

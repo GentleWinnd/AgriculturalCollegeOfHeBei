@@ -17,7 +17,6 @@
 #import "CLVideoCollectionViewCell.h"
 #import "BaseTableViewCell.h"
 #import "FirstPageContentModel.h"
-#import "VideoPageController.h"
 #import "HaventSignUpViewController.h"
 
 @interface ClassVTableViewCell : BaseTableViewCell

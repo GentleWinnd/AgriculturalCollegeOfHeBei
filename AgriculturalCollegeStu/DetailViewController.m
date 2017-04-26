@@ -11,8 +11,6 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "AppDelegate.h"
 
-#import "UserCenterViewController.h"
-
 #define SCROLL_TAG 778
 static const NSInteger kBtnTag = 7294;
 
@@ -195,9 +193,9 @@ static const NSInteger kBtnTag = 7294;
 -(void)onFavorateBtnClick:(UIButton *)sender
 {
     ([_userDefaults objectForKey:USERINFO] ==nil) ? ({
-        UserCenterViewController *uvc = [[UserCenterViewController alloc]initWithFlag:YES];
-        __weak typeof(self) myself = self;
-        uvc.favoriteBlock = ^(){
+//        UserCenterViewController *uvc = [[UserCenterViewController alloc]initWithFlag:YES];
+//        __weak typeof(self) myself = self;
+//        uvc.favoriteBlock = ^(){
 //            myself.AFNManager.responseSerializer = [AFHTTPResponseSerializer serializer];
 //            [myself.AFNManager GET:[NSString stringWithFormat:URL_CHECK_FAVORITE, [myself.userDefaults objectForKey:USERINFO][@"AccessToken"], myself.subId] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
@@ -223,8 +221,8 @@ static const NSInteger kBtnTag = 7294;
 //            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 //                ALERT_HOME(nil, error.localizedDescription);
 //            }];
-        };
-        [self.navigationController pushViewController:uvc animated:YES];
+//        };
+//        [self.navigationController pushViewController:uvc animated:YES];
     }) : ({
         NSDictionary *para = @{
                                @"CourseId": _subId,

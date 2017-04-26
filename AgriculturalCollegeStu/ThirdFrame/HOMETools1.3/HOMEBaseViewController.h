@@ -12,14 +12,8 @@
  */
 #import "HOMEHeader.h"
 #import "HOMETools.h"
-#import "HOMEButon.h"
-#import "HOMETextField.h"
-#import "UIColor+homecate.h"
 #import "NSString+PinyinCategory.h"
-#import "NSDate+HOMECategory.h"
 #import "NSString+HOMECategory.h"
-#import "HOMEEdgeView.h"
-#import "HOMELabel.h"
 /*
  ====================================================================================================//三方内容
  */
@@ -27,6 +21,7 @@
 #import "UIKit+AFNetworking.h"
 #import "MJRefresh.h"
 #import "MJNIndexView.h"
+#import "HOMELabel.h"
 //#import "MobClick.h"
 
 static const CGFloat kTitleFont = 19;

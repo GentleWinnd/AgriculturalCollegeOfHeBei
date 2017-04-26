@@ -6,9 +6,8 @@
 //  Copyright © 2016年 xingxuenet. All rights reserved.
 //
 
-#import "HOMEBaseModel.h"
 
-@interface ChapterModel : HOMEBaseModel
+@interface ChapterModel : NSObject
 
 @property (retain, nonatomic) NSString *Name;
 @property (assign, nonatomic) BOOL isGroup;

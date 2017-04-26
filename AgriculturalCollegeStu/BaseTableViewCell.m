@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "BaseTableViewCell.h"
-#import "VideoPageController.h"
 #import "ListPageViewController.h"
 
 @interface  BaseTableViewCell()
@@ -33,12 +32,12 @@
     UIStoryboard* storyboard =
     [UIStoryboard storyboardWithName:@"video_page" bundle:[NSBundle mainBundle]];
     
-    VideoPageController *videoPageController = (VideoPageController *)[storyboard instantiateViewControllerWithIdentifier:@"video_page_controller"];
-    videoPageController.parentVc = myParentViewController;
-    videoPageController.courseId = courseId;
-    videoPageController.pageCategoryId = categoryId;
-    videoPageController.courseCover = cover;
-    videoPageController.isFromCache = NO;
+//    VideoPageController *videoPageController = (VideoPageController *)[storyboard instantiateViewControllerWithIdentifier:@"video_page_controller"];
+//    videoPageController.parentVc = myParentViewController;
+//    videoPageController.courseId = courseId;
+//    videoPageController.pageCategoryId = categoryId;
+//    videoPageController.courseCover = cover;
+//    videoPageController.isFromCache = NO;
     
     CATransition *animation = [CATransition animation];
     animation.duration = 0.5;
@@ -66,7 +65,7 @@
      oglFlip 上下翻转效果 */
     
     [myParentViewController.view.window.layer addAnimation:animation forKey:nil];
-    [myParentViewController presentViewController:videoPageController animated:NO completion:nil];
+//    [myParentViewController presentViewController:videoPageController animated:NO completion:nil];
     
 }
 

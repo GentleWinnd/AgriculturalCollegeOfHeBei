@@ -6,11 +6,10 @@
 //  Copyright (c) 2015年 Mahaomeng. All rights reserved.
 //
 
-#import "HOMEBaseModel.h"
 
 @class Lecturer;
 
-@interface SubTableViewModel : HOMEBaseModel
+@interface SubTableViewModel : NSObject
 
 @property (nonatomic, copy) NSString *Cover;
 

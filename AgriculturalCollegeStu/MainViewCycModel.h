@@ -6,9 +6,8 @@
 //  Copyright (c) 2015年 Mahaomeng. All rights reserved.
 //
 
-#import "HOMEBaseModel.h"
 
-@interface MainViewCycModel : HOMEBaseModel
+@interface MainViewCycModel : NSObject
 
 @property (nonatomic, copy) NSString *Id;
 @property (nonatomic, copy) NSString *Title;

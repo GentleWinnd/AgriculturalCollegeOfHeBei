@@ -6,11 +6,9 @@
 //  Copyright © 2016年 xingxuenet. All rights reserved.
 //
 
-#import "HOMEBaseModel.h"
 #import "VideoEpisodesModel.h"
 
-@interface VideoEpisodesModel : HOMEBaseModel
-
+@interface VideoEpisodesModel : NSObject
 
 @property (copy, nonatomic) NSString *Id;
 @property (copy, nonatomic) NSString *Title;
