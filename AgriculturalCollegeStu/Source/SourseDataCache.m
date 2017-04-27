@@ -64,6 +64,12 @@
     }
     return plistPath;
 }
+#pragma mark - getUserId
+
++ (NSString *)getUserId {
+    NSString *userId = [UserData getUser].userID;
+    return [NSString stringWithFormat:@"user_%@",userId];
+}
 
 /***********************video data**********************/
 

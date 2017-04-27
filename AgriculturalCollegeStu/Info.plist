@@ -29,6 +29,14 @@
 				<string>wb2953634432</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.supadata.WeiZhiBo</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>AgriculturalCollegeOfHeBei</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
@@ -68,5 +76,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>LSapplicationQueriesSchemes</key>
+	<array>
+		<string>WeiZhiBoOfSupadata</string>
+	</array>
 </dict>
 </plist>

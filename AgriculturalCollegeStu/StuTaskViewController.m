@@ -6,28 +6,48 @@
 //  Copyright © 2016年 YH. All rights reserved.
 //
 #define COURSE @"Items"
+#define ANSWER @"Answer"
+#define ATTACHMENTS @"AttachmentItems"
+#define ATTACHMENR_ID @"AttachmentId"
+#define ATTACHMENT_URL @"AttachmentUrl"
+#define DESCRIPTION @"Description"
+#define ASSIGNMENT_KEY @"Key"
+#define LOCAL_ATTACHMENT @"local"
+#define ATTACHMENT_IMAGE @"attachmentImage"
 
 #import "StuTaskViewController.h"
 #import "CourseInfoCollectionViewCell.h"
 #import "TPKeyboardAvoidingScrollView.h"
 #import "ClassScheduleViewController.h"
 #import "UIViewController+BackButtonHandler.h"
+#import "AttachmentCollectionViewCell.h"
+#import "JKImagePickerController.h"
 #import "SetNavigationItem.h"
 #import "FinishedCourseView.h"
 #import "HintMassageView.h"
 #import "MBProgressManager.h"
 #import "RecentCourseManager.h"
+#import "UIImageView+WebCache.h"
 #import "UserData.h"
 
 
-@interface StuTaskViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,HintViewDelegate, UIGestureRecognizerDelegate>
+@interface StuTaskViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,HintViewDelegate, UIGestureRecognizerDelegate, JKImagePickerControllerDelegate>{
+    NSInteger currentIndex;
+}
 @property (strong, nonatomic) IBOutlet UILabel *selectedCource;
 @property (strong, nonatomic) IBOutlet UIButton *selecteCourceBtn;
 @property (strong, nonatomic) IBOutlet UIButton *finishedRateBtn;
 @property (strong, nonatomic) IBOutlet UICollectionView *courseCollectionView;
 @property (strong, nonatomic) SetNavigationItem *setNav;
 @property (strong, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *TPScrollView;
-@property (strong, nonatomic) NSMutableArray *answersInfo;
+
+@property (strong, nonatomic) IBOutlet UIButton *postQuestionBt;//height:38
+@property (strong, nonatomic) IBOutlet UIButton *addAttementBtn;
+@property (strong, nonatomic) IBOutlet UICollectionView *attachmentsCollection;
+@property (strong, nonatomic) IBOutlet UIView *attachmentView;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *attachmentViewBottom;
+
+@property (strong, nonatomic) NSMutableArray *answersInfoArray;
 @property (strong, nonatomic) NSDictionary *allAssignmentInfo;
 @property (copy, nonatomic) NSString *courseId;
 @property (copy, nonatomic) NSString *courseName;
@@ -36,6 +56,7 @@
 
 @end
 static NSString *cellID= @"cellID";
+static NSString *attachmentCellID= @"AttachmentCellID";
 
 @implementation StuTaskViewController
 
@@ -79,17 +100,21 @@ static NSString *cellID= @"cellID";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     _TPScrollView.scrollEnabled = NO;
+    currentIndex = 0;
     [self setNavigationBar];
     [self initData];
     [self creatCustomCollectioView];
+    [self customAttachmentCollectioView];
     
 }
 
 - (void)initData {
-
-    self.answersInfo = [NSMutableArray arrayWithCapacity:0];
+    self.answersInfoArray = [NSMutableArray arrayWithCapacity:0];
     [self getRecentCourse];
     [self getSchollAssignment];
+    self.attachmentViewBottom.constant = -142;
+    
+    
 }
 - (void)getRecentCourse {
     [RecentCourseManager getRecentCourseSuccess:^(NSDictionary *coursesInfo) {
@@ -109,15 +134,18 @@ static NSString *cellID= @"cellID";
     }
     MBProgressManager *progress = [[MBProgressManager alloc] init];
     [progress loadingWithTitleProgress:@"努力加载中..."];
-    NSString *testID = @"23c6434e-1dac-44f0-868e-de938be3100a";
+//    NSString *testID = @"23c6434e-1dac-44f0-868e-de938be3100a";
     
     [NetServiceAPI getSchoolAssignmentWithParameters:@{@"Activty":self.courseId} success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue] == 1) {
             _allAssignmentInfo = [NSDictionary safeDictionary:responseObject[@"HomeWorkDetailsModel"]];
-            for (NSDictionary *dic in _allAssignmentInfo[@"Items"]) {
-                [self.answersInfo addObject:@{@"Key":dic[@"Key"],
-                                              @"Answer":@""}];
-            }
+//            for (NSDictionary *dic in _allAssignmentInfo[@"Items"]) {
+//                [self.answersInfo addObject:@{@"Key":dic[@"Key"],
+//                                              @"Answer":@""}];
+//            }
+            
+            [_answersInfoArray addObjectsFromArray:[NSArray safeArray:_allAssignmentInfo[@"Items"]]];
+            
             
             [self updateCourseFinishedState];
             [_courseCollectionView reloadData];
@@ -173,17 +201,66 @@ static NSString *cellID= @"cellID";
 - (NSString *)joinAllAssignmentAnswers {
     
     NSString *joinAnswer = @"";
-    for (int i=0;i<_answersInfo.count;i++) {
+    for (int i=0;i<_answersInfoArray.count;i++) {
         if (i == 0) {
-            joinAnswer = [NSString stringWithFormat:@"%@^^%@",_answersInfo[i][@"Key"],_answersInfo[i][@"Answer"] ];
+            joinAnswer = [NSString stringWithFormat:@"%@^^%@",_answersInfoArray[i][@"Key"],_answersInfoArray[i][@"Answer"] ];
             
         } else {
-            joinAnswer = [NSString stringWithFormat:@"%@||%@^^%@",joinAnswer,_answersInfo[i][@"Key"],_answersInfo[i][@"Answer"] ];
+            joinAnswer = [NSString stringWithFormat:@"%@||%@^^%@",joinAnswer,_answersInfoArray[i][@"Key"],_answersInfoArray[i][@"Answer"] ];
         }
     }
     return joinAnswer;
 }
 
+#pragma mark - add attachment button
+
+- (IBAction)attachmentBtnClick:(UIButton *)sender {
+    if (sender.tag == 1122) {//uploadattachment
+        [UIView animateWithDuration:1 animations:^{
+           
+            if (!sender.selected) {//弹出
+                self.attachmentViewBottom.constant = 0;
+                [_attachmentsCollection reloadData];
+            } else {//收起
+                self.attachmentViewBottom.constant = -142;
+                
+                NSArray *attacheMents = [NSArray safeArray:[self getCurrentAssignmentInfo][ATTACHMENTS]];
+                if (attacheMents.count >0) {
+                    [self uploadAttachmentData];
+                }
+            }
+ 
+        }];
+        sender.selected = !sender.selected;
+    } else {//前往相册
+        [self composePicAdd];
+        
+    }
+}
+
+- (NSDictionary *)getCurrentAssignmentInfo {
+    if (_answersInfoArray.count == 0) {
+        return nil;
+    }
+    NSDictionary *assignInfo = [NSDictionary safeDictionary:_answersInfoArray[currentIndex]];
+    return assignInfo;
+}
+
+
+#pragma mark - 创建collectionView
+- (void)customAttachmentCollectioView {
+    
+    UICollectionViewFlowLayout *layOut = [[UICollectionViewFlowLayout alloc] init];
+    [layOut setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    self.attachmentsCollection.collectionViewLayout = layOut;
+    self.attachmentsCollection.delegate = self;
+    self.attachmentsCollection.dataSource = self;
+    layOut.minimumInteritemSpacing = 1;
+    layOut.minimumLineSpacing = 1;
+    self.attachmentsCollection.backgroundColor = [UIColor whiteColor];
+    [self.attachmentsCollection registerNib:[UINib nibWithNibName:@"AttachmentCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:attachmentCellID];
+    
+}
 
 #pragma mark - 创建collectionView
 - (void)creatCustomCollectioView {
@@ -205,32 +282,69 @@ static NSString *cellID= @"cellID";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return  [_allAssignmentInfo[COURSE] count];
+    if (collectionView == self.attachmentsCollection) {
+        NSArray *attachments = [NSArray safeArray:[self getCurrentAssignmentInfo][ATTACHMENTS]];
+        return  attachments.count;
+    } else {
+        return  [_answersInfoArray count];
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CourseInfoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
-    cell.courseLabel.text = _allAssignmentInfo[COURSE][indexPath.row][@"Description"];
-    
-    cell.getAnswer = ^(NSString *answer){
-        if (answer.length>0) {
-            NSMutableDictionary *answerDic = [NSMutableDictionary dictionaryWithDictionary:self.answersInfo[indexPath.row]];
-            [answerDic setValue:answer forKey:@"Answer"];
-            [self.answersInfo replaceObjectAtIndex:indexPath.row withObject:answerDic];
-            [self updateCourseFinishedState];
+    UICollectionViewCell *cell;
+    if (collectionView == self.attachmentsCollection) {
+        AttachmentCollectionViewCell *ACell = [collectionView dequeueReusableCellWithReuseIdentifier:attachmentCellID forIndexPath:indexPath];
+        NSArray *attachments = [NSArray safeArray:[self getCurrentAssignmentInfo][ATTACHMENTS]];
+        NSDictionary *attachInfo = [NSDictionary safeDictionary:attachments[indexPath.row]];
+        
+        NSString *imageUrl = [NSString safeString:attachInfo[ATTACHMENT_URL]];
+        if (imageUrl.length == 0) {
+            ACell.attachmentType.image = [UIImage imageWithData:attachInfo[ATTACHMENT_IMAGE]];
+        } else {
+            NSURL *url = [NSURL URLWithString:imageUrl];
+            [ACell.attachmentType sd_setImageWithURL:url];
         }
-    };
+        ACell.deletedAttachment = ^(){
+            
+            [self removeHomeWorkAttachments:[self getCurrentAssignmentInfo][ASSIGNMENT_KEY] attachmentId:attachInfo[ATTACHMENR_ID]];
+            [self dealAttachmentImage:indexPath images:nil];
+            
+        };
+        cell = ACell;
+    } else {
+        CourseInfoCollectionViewCell *CCell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
+        CCell.courseLabel.text = [NSString safeString:_answersInfoArray[indexPath.row][@"Description"]];
+        CCell.answerTextView.text = [NSString safeString:_answersInfoArray[indexPath.row][ANSWER]];
+        CCell.getAnswer = ^(NSString *answer){
+            if (answer.length>0) {
+                [self setAnswerWithIndexPath:indexPath answer:answer];
+
+            }
+        };
+        cell = CCell;
+    }
     
     return cell;
 }
 
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(1, 1, 0, 1);
+    if (collectionView == self.attachmentsCollection) {
+        return UIEdgeInsetsMake(0, 0, 0, 0);
+    } else {
+        return UIEdgeInsetsMake(1, 1, 0, 1);
+
+    }
 }
 
 //通过协议方法设置单元格尺寸
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(WIDTH, 300);
+    if (collectionView == self.attachmentsCollection) {
+        return CGSizeMake(90 , 90);
+
+    } else {
+        return CGSizeMake(WIDTH, 300);
+
+    }
 }
 
 
@@ -238,6 +352,43 @@ static NSString *cellID= @"cellID";
     
     
     return YES;
+}
+
+- (void)setAnswerWithIndexPath:(NSIndexPath *)indexPath answer:(NSString *)answer {
+    
+    NSMutableDictionary *assignInfo = [NSMutableDictionary dictionaryWithDictionary:_answersInfoArray[indexPath.row]];
+    [assignInfo setValue:answer forKey:ANSWER];
+    [_answersInfoArray replaceObjectAtIndex:indexPath.row withObject:assignInfo];
+    [self updateCourseFinishedState];
+
+}
+
+- (void)dealAttachmentImage:(NSIndexPath *)indexPath images:(NSArray *)images {
+    NSMutableDictionary *assignInfo = [NSMutableDictionary dictionaryWithDictionary:_answersInfoArray[currentIndex]];
+    NSMutableArray *attachments = [NSMutableArray arrayWithArray:[NSArray safeArray:assignInfo[ATTACHMENTS]]];
+   
+    if (images.count>0) {
+        for (UIImage *image in images) {
+            NSDictionary *attachInfo = @{ATTACHMENT_IMAGE:UIImageJPEGRepresentation(image, 0.5)};
+            [attachments addObject:attachInfo];
+        }
+    } else {
+//        NSMutableDictionary *attachmentInfo = [NSMutableDictionary dictionaryWithDictionary:[NSDictionary safeDictionary:attachments[indexPath.row]]];
+//
+//        [attachmentInfo removeObjectForKey:ATTACHMENT_URL];
+//        [attachmentInfo removeObjectForKey:ATTACHMENT_IMAGE];
+//        [attachments replaceObjectAtIndex:indexPath.row withObject:attachmentInfo];
+        if (indexPath.row>attachments.count-1) {
+            return;
+        }
+
+        [attachments removeObjectAtIndex:indexPath.row];
+    }
+  
+    [assignInfo setValue:attachments forKey:ATTACHMENTS];
+    [_answersInfoArray replaceObjectAtIndex:currentIndex withObject:assignInfo];
+    
+    [_attachmentsCollection reloadData];
 }
 
 
@@ -255,9 +406,9 @@ static NSString *cellID= @"cellID";
     } else {//作业完成率
         [UIView animateWithDuration:0.3 animations:^{
             FinishedCourseView *finisedView = [[NSBundle mainBundle] loadNibNamed:@"FinishedCourseView" owner:nil options:nil].lastObject;
-            [finisedView.courseBtn setTitle:[NSString stringWithFormat:@"%tu/%tu",self.answersInfo.count,[_allAssignmentInfo[COURSE] count]] forState:UIControlStateNormal];
+            [finisedView.courseBtn setTitle:[NSString stringWithFormat:@"%tu/%tu",[self getFinishedNumber],[_answersInfoArray count]] forState:UIControlStateNormal];
             finisedView.courseNumber = [_allAssignmentInfo[COURSE] count];
-            finisedView.finishedNum = self.answersInfo.count;
+            finisedView.finishedNum = [self getFinishedNumber];
             finisedView.finishedArray = [self getFinishedNumbersIndex];
             finisedView.selectedNum = ^(NSInteger index) {
                 _courseCollectionView.contentOffset = CGPointMake(WIDTH * index, 0);
@@ -282,7 +433,7 @@ static NSString *cellID= @"cellID";
 - (NSInteger)getFinishedNumber {
     [self.view endEditing:YES];
     NSInteger num=0;
-    for (NSDictionary *dic in _answersInfo) {
+    for (NSDictionary *dic in _answersInfoArray) {
         if ([dic[@"Answer"] length] >0) {
             num++;
         }
@@ -293,7 +444,7 @@ static NSString *cellID= @"cellID";
 - (NSArray *)getFinishedNumbersIndex {
     NSInteger index=0;
     NSMutableArray *indexArray = [NSMutableArray arrayWithCapacity:0];
-    for (NSDictionary *dic in self.answersInfo) {
+    for (NSDictionary *dic in self.answersInfoArray) {
         if ([dic[@"Answer"] length] >0) {
             [indexArray addObject:[NSNumber numberWithInteger:index]];
         }
@@ -339,14 +490,137 @@ static NSString *cellID= @"cellID";
 //        self.navigationController.interactivePopGestureRecognizer.delegate = self;
 //    }
 }
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
         return NO;
     }
     // add whatever logic you would otherwise have
     return YES;
 }
+
+/*************get image************/
+
+- (void)composePicAdd {
+    JKImagePickerController *imagePickerController = [[JKImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.showsCancelButton = YES;
+    imagePickerController.allowsMultipleSelection = YES;
+    imagePickerController.minimumNumberOfSelection = 1;
+    imagePickerController.maximumNumberOfSelection = 9;
+//    imagePickerController.selectedAssetArray = self.attachmentsArray;
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
+    [self presentViewController:navigationController animated:YES completion:NULL];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationSelectedImage:) name:@"sendSelectedImages" object:nil];
+    
+}
+
+- (void)notificationSelectedImage:(NSNotification *)notice {
+
+    if (notice.userInfo.count>0) {
+        [self dealAttachmentImage:nil images:[NSArray safeArray:notice.userInfo[@"image"]]];
+    }
+  
+}
+
+#pragma mark - JKImagePickerControllerDelegate
+
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAsset:(JKAssets *)asset isSource:(BOOL)source {
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+- (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source {
+
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+    }];
+}
+
+- (void)imagePickerControllerDidCancel:(JKImagePickerController *)imagePicker {
+    [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+}
+
+#pragma mark - upload homework attaments
+
+- (void)uploadAttachmentData {
+    NSString *imageStr ;
+    if (_allAssignmentInfo.count == 0) {
+        [Progress progressShowcontent:@"此课程暂无作业" currView:self.view];
+    }
+    
+    NSDictionary *assignInfo = [NSDictionary safeDictionary:_answersInfoArray[currentIndex]];
+    NSArray *attachments = [NSArray safeArray:assignInfo[ATTACHMENTS]];
+    
+    
+    if (attachments.count == 0) {
+//        [Progress progressShowcontent:@"请选择作业附件" currView:self.view];
+        return;
+    }
+    BOOL haveAttach = NO;
+    for (NSDictionary *attachDic in attachments) {
+        if ([attachments indexOfObject:attachDic] == 0) {
+            NSData *imageData = attachDic[ATTACHMENT_IMAGE];
+            if (imageData) {
+                imageStr = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+                haveAttach = YES;
+            }
+        } else {
+            NSData *imageData = attachDic[ATTACHMENT_IMAGE];
+            if (imageData) {
+                imageStr = [NSString stringWithFormat:@"||%@",[imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength]];
+                haveAttach = YES;
+            }
+        }
+    }
+    if (haveAttach == NO) {
+        return;
+    }
+  
+    NSDictionary *parameter =@{@"ActivityId":self.courseId,
+                               @"HomeWorkDataId":_allAssignmentInfo[@"HomeWorkDataId"],
+                               @"Key":assignInfo[ASSIGNMENT_KEY],
+                               @"FileExt":@"png",
+                               @"AttachmentBase64String":imageStr};
+    
+    [NetServiceAPI postUploadHomeWorkAttachmentsWithParameters:parameter success:^(id responseObject) {
+    
+        if ([responseObject[@"state"] integerValue] == 1) {
+            
+        } else {
+            [Progress progressPlease:@"作业附件上传失败了" showView:self.view];
+        }
+    } failure:^(NSError *error) {
+        [KTMErrorHint showNetError:error inView:self.view];
+    }];
+
+}
+
+#pragma mark - 删除附件
+
+- (void)removeHomeWorkAttachments:(NSString *)assignKey attachmentId:(NSString *)attachmentId{
+
+    if (attachmentId == nil) {
+        return;
+    }
+    NSDictionary *parameter = @{@"HomeWorkDataId":_allAssignmentInfo[@"HomeWorkDataId"],
+                                @"Key":assignKey,
+                                @"AttachmentId":attachmentId};
+    
+    [NetServiceAPI postRemoveHomeWorkAttachmentsWithParameters:parameter success:^(id responseObject) {
+        
+        if ( [responseObject[@"State"] integerValue] == 1) {
+            [Progress progressShowcontent:@"删除成功" currView:self.view];
+        } else {
+            [Progress progressShowcontent:[NSString safeString:responseObject[@"Message"]] currView:self.view];
+        }
+    } failure:^(NSError *error) {
+        [KTMErrorHint showNetError:error inView:self.view];
+    }];
+
+}
+
 
 //- (void)viewWillDisappear:(BOOL)animated {
 //    [super viewWillDisappear:animated];

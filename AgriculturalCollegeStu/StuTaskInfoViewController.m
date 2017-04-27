@@ -54,7 +54,6 @@ static NSString *cellID = @"taskCellID";
 #pragma mark - initdata
 
 - (void)initData {
-//    self.questionArray = [NSMutableArray arrayWithObjects:@{@"question":@"1.数字图像定理的定义是什么？",@"answer":@"图像数字化是将模拟图像转换为数字图像。图像数字化是进行数字图像处理的前提。图像数字化必须以图像的电子化作为基础，把模拟图像转变成电子信号，随后才将其转换成数字图像信号"},@{@"question":@"2.什么是现行模型?",@"answer":@"线性模型作为一种非常重要的数学模型，通常可以分为方差分析模型、协方差分析模型、线性回归模型、方差分量模型等，根据表现形式又可以分为一般线性模型、广义线性模型、一般线性混合模型、广义线性混合模型"},@{@"question":@"3.高斯曲线的应用?",@"answer":@"高斯函数广泛应用于统计学领域，用于表述正态分布，在信号处理领域，用于定义高斯滤波器，在图像处理领域，二维高斯核函数常用于高斯模糊Gaussian Blur，在数学领域，主要是用于解决热力方程和扩散方程，以及定义Weiertrass Transform"}, nil];
     [RecentCourseManager getRecentCourseSuccess:^(NSDictionary *coursesInfo) {
         if (coursesInfo == nil) return ;
         self.ActivityId = coursesInfo[@"RecentestActivity"][@"Id"];
@@ -82,10 +81,6 @@ static NSString *cellID = @"taskCellID";
 #pragma mark - get school assignment
 
 - (void)getSchollAssignment {
-//    if (_ActivityId == nil) {
-//        [Progress progressShowcontent:@"获取最近课程失败，请在课表获取"];
-//        return;
-//    }
 
     MBProgressManager *progress = [[MBProgressManager alloc] init];
     [progress loadingWithTitleProgress:@"努力加载中..."];

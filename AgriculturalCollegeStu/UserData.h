@@ -10,7 +10,7 @@
 #import "User.h"
 
 
-#define USERNAME @"username" //token
+#define USERNAME @"username"
 #define USERID @"id"
 #define PASSWORD @"password"
 #define NICKNAME @"nickName"
@@ -19,26 +19,12 @@
 
 @interface UserData : NSObject
 
-#pragma mark - save
-/**
- * save login data
- */
-+ (void)saveLoginData:(NSDictionary *)loginData;
-
-/**
- * save refresh token data
- */
-+ (void)saveRefreshTokenData:(NSDictionary *)refreshData;
-
-#pragma mark - get
-
 /**
  * get user
  */
 + (User *)getUser;
 + (void)saveUserData:(NSDictionary *)userData;
 
-+ (void)saveUserInfo:(NSDictionary *)userInfo;
 
 + (NSString *)getAccessToken;
 
@@ -76,23 +62,8 @@
  */
 + (NSString *)getUserPassword;
 
-/**
- * saved user role
- */
+#pragma mark -  saved user role
 
-+ (void)savedUserRole:(UserRole )role;
-
-/**
- * save user quit time
- */
-+ (void)savedUserQuitTimer:(NSDate *)quitTime;
-
-/**
- * get user quit time
- */
-+ (NSDate *)getUserQuitTime;
-
-+ (void)saveUserHeaderPortrait:(NSData*)imageData;
-
++ (void)saveUserHeaderPortrait:(NSData *)imageData;
 
 @end

@@ -9,6 +9,7 @@
 #import "StatisticalTabViewController.h"
 #import "StatisticalContentTableViewCell.h"
 #import "ClassLogSheetViewController.h"
+#import "StatisticalByYearViewController.h"
 
 @interface StatisticalTabViewController ()<UITableViewDelegate, UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *statisticalTab;
@@ -27,7 +28,6 @@ static NSString *cellID = @"cellID";
     _statisticalTab.delegate = self;
     _statisticalTab.dataSource = self;
     
-    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -42,14 +42,19 @@ static NSString *cellID = @"cellID";
 
     StatisticalContentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     
+    
+    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    ClassLogSheetViewController *classLogSheet = [[ClassLogSheetViewController alloc] init];
-    classLogSheet.userRole = self.userRole;
-    [self.navigationController pushViewController:classLogSheet animated:YES];
+    StatisticalByYearViewController *yearView = [[StatisticalByYearViewController alloc] init];
+    yearView.roler = self.userRole;
+    [self.navigationController pushViewController:yearView animated:YES];
+    
+    
+    
 }
 
 

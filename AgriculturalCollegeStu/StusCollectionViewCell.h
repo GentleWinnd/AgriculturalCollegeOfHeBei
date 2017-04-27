@@ -13,5 +13,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *headPortriat;
 
 @property (strong, nonatomic) IBOutlet UILabel *stuName;
+@property (strong, nonatomic) IBOutlet UILabel *askNumber;
 
 @end

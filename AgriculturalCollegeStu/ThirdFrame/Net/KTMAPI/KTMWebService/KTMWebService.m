@@ -9,7 +9,7 @@
 #import "KTMWebService.h"
 #import "AFNetworking.h"
 #import "UserData.h"
-#import "AccessTokenManager.h"
+#import "VerificationAccessToken.h"
 
 @implementation KTMWebService
 
@@ -18,7 +18,7 @@
              sucess:(void(^)(id responseObject))success
             failure:(void(^)(NSError *error))failure {
     
-    if ([AccessTokenManager accessTokenIsValid]) { // access token 有效
+    if ([VerificationAccessToken accessTokenIsValid]) { // access token 有效
         [self tokenPostWithURL:URLString parameters:parametes sucess:^(id responseObject) {
             if (success) {
                 success(responseObject);
@@ -31,7 +31,7 @@
         
     } else { // access token 无效
         
-        [AccessTokenManager refreshToken:^(bool getToken) {
+        [VerificationAccessToken refreshToken:^(bool getToken) {
             if (getToken) {
                 [self tokenPostWithURL:URLString parameters:parametes sucess:^(id responseObject) {
                     if (success) {
@@ -56,7 +56,7 @@
             sucess:(void(^)(id responseObject))success
            failure:(void(^)(NSError *error))failure {
     
-    if ([AccessTokenManager accessTokenIsValid]) { // access token 有效
+    if ([VerificationAccessToken accessTokenIsValid]) { // access token 有效
         [self tokenGetWithURL:URLString parameters:parametes sucess:^(id responseObject) {
             if (success) {
                 success(responseObject);
@@ -68,7 +68,7 @@
         }];
         
     } else { // access token 无效
-        [AccessTokenManager refreshToken:^(bool getToken) {
+        [VerificationAccessToken refreshToken:^(bool getToken) {
             if (getToken) {
                 [self tokenGetWithURL:URLString parameters:parametes sucess:^(id responseObject) {
                     if (success) {

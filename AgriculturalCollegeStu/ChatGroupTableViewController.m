@@ -54,7 +54,7 @@ UIActionSheetDelegate>
     
     [self.refreshControl addTarget:self action:@selector(requestData) forControlEvents:UIControlEventValueChanged];
     if (_isClassTribe) {
-        [self getClassAndGroupDayScheduleList];
+        [self getOfflineCourseList];
     } else {
         [self getAllGroupList];
 
@@ -80,6 +80,25 @@ UIActionSheetDelegate>
     }];
 
 }
+
+- (void)getOfflineCourseList {
+    MBProgressManager *progress = [[MBProgressManager alloc] init];
+    [progress loadingWithTitleProgress: @"加载中..."];
+    [NetServiceAPI getAllOfflineCourseWithParameters:nil success:^(id responseObject) {
+        if ( [responseObject[@"State"] integerValue]== 1) {
+            [_allTribeAray  addObjectsFromArray:[NSArray safeArray:responseObject[@"OfflineCourses"]]];
+            [self reloadData];
+        } else {
+            
+        }
+        [progress hiddenProgress];
+    } failure:^(NSError *error) {
+        [KTMErrorHint showNetError:error inView:self.view];
+        [progress hiddenProgress];
+    }];
+    
+}
+
 
 #pragma mark - get group list
 

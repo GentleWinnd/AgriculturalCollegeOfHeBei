@@ -10,10 +10,11 @@ typedef void(^getInputAnswer)(NSString *answer);
 
 #import <UIKit/UIKit.h>
 
-@interface CourseInfoCollectionViewCell : UICollectionViewCell
+@interface CourseInfoCollectionViewCell : UICollectionViewCell<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *courseLabel;
 @property (strong, nonatomic) IBOutlet UITextView *answerTextView;
 @property (strong, nonatomic) IBOutlet UILabel *placeHolderView;
 @property (copy, nonatomic) getInputAnswer getAnswer;
+@property (copy, nonatomic) NSString *answerStr;
 
 @end

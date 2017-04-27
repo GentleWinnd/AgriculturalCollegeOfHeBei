@@ -30,16 +30,7 @@ static NSString *cellID = @"cellID";
 #pragma mark - setNaiv
 
 - (void)setNavigationBar {
-    NSString *title;
-    NSString *subTitle;
-    if (self.userRole == UserRoleTeacher) {
-        title = @"课程记录表";
-        subTitle = @"";
-    } else {
-        title = @"课程记录表";
-        subTitle = @"";
-    }
-    [[SetNavigationItem shareSetNavManager] setNavTitle:self withTitle:title subTitle:subTitle];
+    [[SetNavigationItem shareSetNavManager] setNavTitle:self withTitle:@"教学统计" subTitle:@""];
     
 }
 
@@ -121,22 +112,6 @@ static NSString *cellID = @"cellID";
     
     return cell;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

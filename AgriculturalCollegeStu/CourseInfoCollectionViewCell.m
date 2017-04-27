@@ -41,6 +41,14 @@
     return YES;
 }
 
+- (void)setAnswerStr:(NSString *)answerStr {
+
+    if (answerStr) {
+        self.answerTextView.text = answerStr;
+        _placeHolderView.alpha = 0;//开始编辑时
+
+    }
+}
 
 
 

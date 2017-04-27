@@ -10,7 +10,7 @@
 #import "BaseViewController.h"
 
 @interface SourceLoadViewController : BaseViewController
+
 @property (nonatomic, assign) UserRole userRole;
 
-@property (nonatomic, strong) NSMutableArray *sourceArray;
 @end
