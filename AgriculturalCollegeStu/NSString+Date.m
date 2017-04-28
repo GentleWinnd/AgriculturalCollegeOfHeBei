@@ -32,6 +32,29 @@
     return [self stringFromCompleteDate:date];
 }
 
++ (NSString *)stringMDFromTDateString:(NSString *)dateStr {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *date = [formatter dateFromString:dateStr];
+    
+    NSDateFormatter *AFormatter = [[NSDateFormatter alloc] init];
+    [AFormatter setDateFormat:@"MM-dd"];
+    return [AFormatter stringFromDate:date];
+
+}
+
++ (NSString *)stringHMFromTDateString:(NSString *)dateStr {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *date = [formatter dateFromString:dateStr];
+    
+    NSDateFormatter *AFormatter = [[NSDateFormatter alloc] init];
+    [AFormatter setDateFormat:@"HH:mm"];
+    return [AFormatter stringFromDate:date];
+    
+}
+
+
 //数字转日期
 + (NSString *)stringFromCompleteDateWithMillisecond:(NSInteger)millisecond {
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:(NSTimeInterval)(millisecond/1000)];

@@ -62,7 +62,10 @@
     alertCount.layer.cornerRadius = 8;
     alertCount.layer.masksToBounds = YES;
     alertCount.textAlignment = NSTextAlignmentCenter;
-    [alertBtn addSubview:alertCount];
+    if ([title intValue]>0) {
+        [alertBtn addSubview:alertCount];
+  
+    }
     
     [self setNavLeftItem:VC withCustomView:alertBtn];
 }

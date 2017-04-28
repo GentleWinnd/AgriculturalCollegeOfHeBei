@@ -113,18 +113,6 @@ static NSString  *thirdCellID = @"thirdCellID";
     noticeView.refreshed = ^(){
         [self haveNewMessage];
     };
-//    [self pushViewController:noticeView animated:YES hiddenTabbar:YES];
-    
-     if([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"AgriculturalCollegeOfHeBei://"]]) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"AgriculturalCollegeOfHeBei://"] ];
-        NSLog(@"launch AppDemo2 success!");
-    } else {
-        NSLog(@"No such url.");
-        /// 跳到 appStore 某个 app
-        NSURL* urlAppStore = [NSURL URLWithString:@"https://itunes.apple.com/cn/app/tie-lu12306/id564818797?mt=8"];
-        [[UIApplication sharedApplication] openURL: urlAppStore];
-    }
-
 }
 
 #pragma mark - user login suceess
@@ -186,7 +174,15 @@ static NSString  *thirdCellID = @"thirdCellID";
     @WeakObj(label);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [RecentCourseManager getRecentCourseInView:nil success:^(NSDictionary *coursesInfo) {
-            labelWeak.text = [NSString stringWithFormat:@"%@",coursesInfo[COURSE_RECENTACTICE_DEPENDENT][COURSE_RECENTACTICE_DEPENDENT_NAME]];
+            /*
+             "StartDate": "2017-01-06T10:00:00",
+             "EndDate": "2017-01-06T12:00:00",
+             */
+            NSString *startD = [NSString  stringFromTDateString:[NSString safeString:coursesInfo[@"StartDate"]]];
+            NSString *endD = [NSString stringFromTDateString:[NSString safeString:coursesInfo[@"EndDate"]]];
+            
+            NSString *timeStr = [NSString stringWithFormat:@"%@ %@~%@",[NSString stringMDFromTDateString:startD],[NSString stringHMFromTDateString:startD],[NSString stringHMFromTDateString:endD]];
+            labelWeak.text = [NSString stringWithFormat:@"%@ %@",timeStr,coursesInfo[COURSE_RECENTACTICE_DEPENDENT][COURSE_RECENTACTICE_DEPENDENT_NAME]];
 
         } failure:^(NSString *failMessage) {
              labelWeak.text = @"获取最近的课程失败了😭";

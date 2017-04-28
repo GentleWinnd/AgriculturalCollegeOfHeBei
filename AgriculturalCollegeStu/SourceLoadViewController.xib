@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -79,14 +79,15 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zf3-4r-qTk">
                             <rect key="frame" x="55" y="9" width="307" height="33"/>
                             <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search.png" translatesAutoresizingMaskIntoConstraints="NO" id="x1y-tA-mGh">
+                                    <rect key="frame" x="9" y="6" width="24" height="25"/>
+                                </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IsV-lx-FOB">
                                     <rect key="frame" x="3" y="4" width="294" height="25"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="QOC-bM-ClS"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                    <inset key="imageEdgeInsets" minX="-240" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    <state key="normal" image="search.png"/>
                                     <connections>
                                         <action selector="topBtnAction:" destination="-1" eventType="touchUpInside" id="EJd-6A-vsn"/>
                                     </connections>
@@ -96,6 +97,9 @@
                             <constraints>
                                 <constraint firstItem="IsV-lx-FOB" firstAttribute="centerY" secondItem="zf3-4r-qTk" secondAttribute="centerY" id="F0h-3i-sNd"/>
                                 <constraint firstAttribute="height" constant="33" id="IOH-Gx-FAr"/>
+                                <constraint firstItem="x1y-tA-mGh" firstAttribute="leading" secondItem="IsV-lx-FOB" secondAttribute="leading" constant="6" id="Jyj-47-lGM"/>
+                                <constraint firstItem="x1y-tA-mGh" firstAttribute="top" secondItem="IsV-lx-FOB" secondAttribute="top" constant="2" id="Wa7-lb-r4Q"/>
+                                <constraint firstItem="x1y-tA-mGh" firstAttribute="bottom" secondItem="IsV-lx-FOB" secondAttribute="bottom" constant="2" id="YhD-Cq-xDx"/>
                                 <constraint firstAttribute="trailing" secondItem="IsV-lx-FOB" secondAttribute="trailing" constant="10" id="bSM-IJ-WFA"/>
                                 <constraint firstItem="IsV-lx-FOB" firstAttribute="leading" secondItem="zf3-4r-qTk" secondAttribute="leading" constant="3" id="ika-uk-tIp"/>
                             </constraints>

@@ -47,5 +47,8 @@
  @return date
  */
 + (NSDate *)dateFromSSSDateString:(NSString *)dateStr;
-
+//MM-dd
++ (NSString *)stringMDFromTDateString:(NSString *)dateStr;
+//HH-mm
++ (NSString *)stringHMFromTDateString:(NSString *)dateStr;
 @end

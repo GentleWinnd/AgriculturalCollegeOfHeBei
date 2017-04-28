@@ -185,7 +185,7 @@ static NSString *lineViewID = @"lineViewId";
 
 - (void)getAllClassCourse {
     MBProgressManager *progress = [[MBProgressManager alloc] init];
-    [progress loadingWithTitleProgress:@"加载中。。。"];
+    [progress loadingWithTitleProgress:@"加载中..."];
     [NetServiceAPI getAllOfflineCourseWithParameters:nil success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue] == 1) {
             [classesArray removeAllObjects];
