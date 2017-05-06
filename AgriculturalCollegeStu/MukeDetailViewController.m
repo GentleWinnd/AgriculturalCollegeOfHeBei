@@ -302,18 +302,16 @@
     _btn = [UIButton buttonWithType:UIButtonTypeCustom];
     _btn.frame = _player.view.frame;
     [_btn addTarget:self action:@selector(onPlayBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_btn setImage:[UIImage imageNamed:@"play_icon"] forState:UIControlStateNormal];
+    [_btn setImage:[UIImage imageNamed:@"paly_icon"] forState:UIControlStateNormal];
     [_videoView addSubview:_btn];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlayerLoadStateDidChange) name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
 }
 
 -(void)onPlayBtnClick:(UIButton *)sender {
     _player.contentURL = [NSURL URLWithString:videoUrl];
     [_player play];
     sender.hidden = _player.isPreparedToPlay;
-//    if (_player.isPreparedToPlay == NO) {
-//        [Progress progressShowcontent:@"非视频资源，不能播放"];
-//    }
-
+  
 }
 
 -(void)customButton {
@@ -502,20 +500,9 @@
         button.frame = CGRectMake(0, 0, WIDTH, 44);
         
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(myint, myint, WIDTH -myint *2, 44 -2 *myint)];
-        NSInteger num = 0;
-        for (NSDictionary *dic in _dataArr2) {
-            for (NSDictionary *dict in dic[@"Subjects"]) {
-                if (num ==section) {
-                    label.text = dict[@"Name"];
-                    num =0;
-                    break;
-                }
-                num ++;
-            }
-            if (label.text.length >0) {
-                break;
-            }
-        }
+        
+        NSDictionary *contentDic = [NSDictionary safeDictionary:_dataArr2[section]];
+        label.text = [NSString safeString:contentDic[@"Name"]];
         label.font = [UIFont systemFontOfSize:15];
         label.textColor = MainTextColor_DarkBlack;
         [button addSubview:label];
@@ -548,7 +535,14 @@
     } else {
         [_mySections addObject:[NSNumber numberWithInteger:sender.tag -BTN_TAG]];
     }
-    [_tableView2 reloadData];
+    NSDictionary *contentDic = [NSDictionary safeDictionary:_dataArr2[sender.tag-BTN_TAG]];
+    NSArray *objArr = [NSArray safeArray:contentDic[@"Subjects"]];
+    if (objArr.count == 0) {
+        [Progress progressShowcontent:@"此课程无详情" currView:self.view];
+    } else {
+        [_tableView2 reloadData];
+
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -587,11 +581,7 @@
     if (tableView.tag == SCROLL_TAG +2) {
         return _dataArr1.count;
     }
-    NSInteger num =0;
-    for (NSDictionary *dic in _dataArr2) {
-        num += [dic[@"Subjects"] count];
-    }
-    return num;
+    return  _dataArr2.count;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -603,16 +593,8 @@
         }
     } else {
         if ([_mySections containsObject:[NSNumber numberWithInteger:section]]) {
-            NSInteger num = 0;
-            for (NSDictionary *dic in _dataArr2) {
-                for (NSDictionary *dict in dic[@"Subjects"]) {
-                    if (num ==section) {
-                        return [dict[@"Units"] count];
-                    }
-                    num ++;
-                }
-            }
-            return 0;
+            NSArray *subObjArr = [NSArray safeArray:[NSDictionary safeDictionary:_dataArr2[section]][@"Subjects"]];
+            return subObjArr.count;
         } return 0;
     }
 }
@@ -655,20 +637,14 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
         }
-        NSInteger num = 0;
-        for (NSDictionary *dic in _dataArr2) {
-            for (NSDictionary *dict in dic[@"Subjects"]) {
-                if (num ==indexPath.section) {
-                    cell.textLabel.text = dict[@"Units"][indexPath.row][@"Name"];
-                    cell.textLabel.font = [UIFont systemFontOfSize:14];
-                    cell.textLabel.textColor = MainTextColor_DarkBlack;
-                    return cell;
-                }
-                num ++;
-            }
-        }
+        
+        NSArray *subObjArr = [NSArray safeArray:[NSDictionary safeDictionary:_dataArr2[indexPath.section]][@"Subjects"]];
+        NSDictionary *contentDic = [NSDictionary safeDictionary:subObjArr[indexPath.row]];
+        
+        cell.textLabel.text = [NSString safeString:contentDic[@"Name"]];
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.textColor = MainTextColor_DarkBlack;
         return cell;
-
 
     }
 }
@@ -687,16 +663,10 @@
                         _player.contentURL = [NSURL URLWithString:dict[@"Units"][indexPath.row][@"Content"]];
                         _downLoadId = dict[@"Units"][indexPath.row][@"Id"];
                         [_player play];
-//                        if (_player.loadState == MPMovieLoadStateUnknown) {
-//                            [Progress progressShowcontent:@"非视频资源，不能播放"];
-//                        }
-//                        _btn.hidden = _player.isPreparedToPlay;
-
                     } else {
                         [Progress progressShowcontent:@"非视频资源，不能播放"];
                     }
                     
-//                    _btn.hidden = YES;
                     flag = YES;
                     break;
                 }
@@ -828,6 +798,42 @@
        [[NSNotificationCenter defaultCenter] postNotificationName:@"DeletedFVCourse" object:nil userInfo:@{@"courseID":_subId}]; 
     }
     
+}
+
+/**
+ *  视频播放状态改变
+ */
+- (void)moviePlayerLoadStateDidChange {
+    switch (_player.loadState){
+        case MPMovieLoadStatePlayable:{
+            /** 可播放 */;
+            NSLog(@"可以播放");
+            _btn.hidden = YES;
+        }
+            break;
+        case MPMovieLoadStatePlaythroughOK:{
+            /** 状态为缓冲几乎完成，可以连续播放 */;
+            NSLog(@"状态为缓冲几乎完成，可以连续播放");
+            _btn.hidden = YES;
+
+        }
+            break;
+        case MPMovieLoadStateStalled:{
+            /** 缓冲中 */
+            NSLog(@"缓冲中");
+            _btn.hidden = YES;
+
+        }
+            break;
+        case MPMovieLoadStateUnknown:{
+            /** 未知状态 */
+            _btn.hidden = NO;
+            [Progress progressShowcontent:@"非视频资源，不能播放"];
+            [_player pause];
+
+        }
+            break;
+    }
 }
 
 - (void)didReceiveMemoryWarning {

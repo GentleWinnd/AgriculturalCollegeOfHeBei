@@ -38,6 +38,7 @@
     BOOL inSignRange;
     int signedNum;
     BOOL isRefreshedLoacal;
+    BOOL requestNewPostion;
     NSDate *startCountDate;
     NSDate *timeToCountOff;
 }
@@ -116,6 +117,7 @@
        // selfWeak.localLabel.text = addressInfo;
         [locationInfoWeak setValue:addressInfo forKey:L_ADRESS_DETAIL];
     };
+    requestNewPostion = YES;
     localManager.localityTude = ^(NSString *longitude, NSString *latitude){
         [localManagerWeak stopUpdatingLocation];
 
@@ -142,7 +144,6 @@
         _signedStuCountView.hidden = NO;
         _subLineView.hidden = YES;
 
-
     } else {
         _subLineView.hidden = YES;
         _signedStuCountView.hidden = YES;
@@ -168,29 +169,42 @@
 
 - (void)getRecentCourseInfo {
     
-    [RecentCourseManager getRecentCourseSuccess:^(NSDictionary *coursesInfo) {
-        [courseInfo setValuesForKeysWithDictionary:coursesInfo];
-        [self getRecentActvity];
-
-    } failure:^(NSString *failMessage) {
-        [Progress progressShowcontent:failMessage];
+    [NetServiceAPI getRecentCourseWithParameters:nil success:^(id responseObject) {
+        if ([responseObject[@"State"] integerValue]!= 1) {
+            [Progress progressShowcontent:responseObject[@"Message"]];
+        } else {
+            [courseInfo setValuesForKeysWithDictionary:responseObject[@"RecentestActivity"]];
+            [self getRecentActvity];
+            
+        }
+    } failure:^(NSError *error) {
+        
+        [KTMErrorHint showNetError:error inView:self.view];
+        // NSLog(@"%@",error.description);
     }];
+    
 }
 
 #pragma mark - get recent activity
 
 - (void)getRecentActvity {
     
-    [RecentCourseManager getRecentSignedActivityInView:self.view success:^(NSDictionary *activitysInfo) {
+    NSDictionary *parameter =@{@"OfflineCourseId": @"00000000-0000-0000-0000-000000000000"};
+    [NetServiceAPI getRecentSignActiveWithParameters:parameter success:^(id responseObject) {
+        if ([responseObject[@"State"] integerValue]!= 1) {
+            [Progress progressShowcontent:responseObject[@"Message"]];
+        } else {
+            [activityInfo setValuesForKeysWithDictionary:[NSDictionary safeDictionary:responseObject[@"RecentestCheckInActivity"]]];
+            [self analysisCourseData];
+        }
         
-        [activityInfo setValuesForKeysWithDictionary:[NSDictionary safeDictionary:activitysInfo]];
-        [self analysisCourseData];
+    } failure:^(NSError *error) {
         
-    } failure:^(NSString *failMessage) {
-        
-        [Progress progressShowcontent:failMessage];
+        [KTMErrorHint showNetError:error inView:self.view];
+        // NSLog(@"%@",error.description);
     }];
 
+    
 }
 
 #pragma mark - verifyTheSignedLoacation
@@ -202,9 +216,10 @@
     [parameter setValue:activityInfo[@"Activity"][@"Id"] forKey:@"CheckInActivityId"];
     
     [NetServiceAPI getLocationInRangeWithParameters:parameter success:^(id responseObject) {
+        requestNewPostion = NO;
         if ([responseObject[@"State"] integerValue]!= 1) {
             self.localLabel.text = @"您不在签到范围内";
-            [Progress progressShowcontent:responseObject[@"Message"]];
+//            [Progress progressShowcontent:responseObject[@"Message"]];
             inSignRange = NO;
         } else {
             inSignRange = YES;
@@ -214,7 +229,8 @@
 //        NSLog(@"-----===%@",responseObject);
     } failure:^(NSError *error) {
         inSignRange = NO;
-        self.localLabel.text = @"位置获取中...";
+        requestNewPostion = NO;
+        self.localLabel.text = @"位置获取失败！！！";
 
         [KTMErrorHint showNetError:error inView:self.view];
         // NSLog(@"%@",error.description);
@@ -344,6 +360,7 @@
     
     if (sender.tag == 1) {//重新定位
         isRefreshedLoacal = NO;
+        _localLabel.text = @"位置获取中...";
         [localManager startUpdatingLocation];
     } else if (sender.tag == 2) {//重新选课
         ClassScheduleViewController *scheduleView = [[ClassScheduleViewController alloc] init];
@@ -359,16 +376,6 @@
     
     } else {//签到
         
-//        CGRect frame = self.view.bounds;
-//        frame.size.width = self.view.frame.size.width-80;
-//        frame.size.height = self.view.frame.size.height- 80;
-//        frame.origin.y = 40;
-//        SignedStuView *signStuView = [[NSBundle mainBundle] loadNibNamed:@"SignedStuView" owner:self options:nil].lastObject;
-//        signStuView.frame = frame;
-//        
-//        [self lew_presentPopupView:signStuView animation:[LewPopupViewAnimationFade new] dismissed:^{
-//            NSLog(@"动画结束");
-//        }];
         if (inSignRange) {
             [self signedTheCourse];
         } else {
@@ -421,23 +428,7 @@
 #pragma mark - 添加定时器
 
 - (void)setTimeStamp:(CGFloat)timeStamp isInSignTime:(BOOL) inTime{
-//    self.hourO.layer.cornerRadius = 3;
-//    if (_mzLabel == nil) {
-//        _mzLabel =[[MZTimerLabel alloc] initWithLabel:nil andTimerType:MZTimerLabelTypeTimer];
-//    }
-//   
-//    [_mzLabel setCountDownTime:timeStamp];
-//    @WeakObj(_mzLabel);
-//    @WeakObj(self);
     [self setCurrentViewStateIsInTime:inTime];
-//    [_mzLabel startWithEndingBlock:^(NSTimeInterval countTime) {
-//        [selfWeak setCurrentViewStateIsInTime:!inTime];
-//        [_mzLabelWeak setCountDownTime:3600];
-//        [_mzLabelWeak reset];
-//        [_mzLabelWeak start];
-//        
-//    }];
-//    [self addTimeObserver];
     [self start:timeStamp];
 }
 

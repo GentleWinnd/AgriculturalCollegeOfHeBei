@@ -15,6 +15,7 @@
 #define MainThemeColor_LightBlue [@"#a3bfdd" toColor]
 
 #define MainBackgroudColor_GrayAndWhite [@"#f8f8f8" toColor]
+#define MainLineColor_LightGray [@"f2f2f2" toColor]
 #define RulesLineColor_LightGray [@"#e5e5e5" toColor]
 #define RulesLineColor_DarkGray [@"#b2b2b2" toColor]
 

@@ -20,8 +20,52 @@
     self.selectedBtn.layer.borderWidth = 1;
     self.selectedBtn.layer.cornerRadius = 8;
     self.selectedBtn.layer.borderColor = RulesLineColor_LightGray.CGColor;
-    
 }
+
+- (void)setSType:(NSString *)SType{
+
+    self.logoImage.image = [UIImage imageNamed:[self getTheSourceIcon:SType]];
+    self.Stype = [self getTheSourceType:SType];
+
+}
+
+- (SourceType)getTheSourceType:(NSString  *)type {
+    SourceType STYpe;
+    
+    if ([type isEqualToString:@"Video"]) {//all range
+        STYpe = SourceTypeVedio;
+    } else if ([type isEqualToString:@"Image"]){//vedio range
+        STYpe = SourceTypeImage;
+    } else if ([type isEqualToString:@"Document"]){//image range
+        STYpe = SourceTypeFile;
+    } else if ([type isEqualToString:@"Flash"]){//file range
+        STYpe = SourceTypeFlash;
+    } else {//flash range
+        STYpe = SourceTypeOther;
+    }
+    
+    return STYpe;
+}
+
+- (NSString *)getTheSourceIcon:(NSString *)type {
+    
+    NSString * STYpe;
+    
+    if ([type isEqualToString:@"Video"]) {//all range
+        STYpe = @"mov";
+    } else if ([type isEqualToString:@"Image"]){//vedio range
+        STYpe = @"jpeg";
+    } else if ([type isEqualToString:@"Document"]){//image range
+        STYpe = @"text";
+    } else if ([type isEqualToString:@"Flash"]){//file range
+        STYpe = @"fla";
+    } else if ([type isEqualToString:@"Other"]){//flash range
+        STYpe = @"zip";
+    }
+    
+    return STYpe;
+}
+
 
 - (IBAction)btnAction:(UIButton *)sender {
     if (sender.tag == 1) {//下载

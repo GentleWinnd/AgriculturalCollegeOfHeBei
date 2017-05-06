@@ -113,6 +113,7 @@ static NSString  *thirdCellID = @"thirdCellID";
     noticeView.refreshed = ^(){
         [self haveNewMessage];
     };
+    [self pushViewController:noticeView animated:YES hiddenTabbar:YES];
 }
 
 #pragma mark - user login suceess
@@ -305,6 +306,12 @@ static NSString  *thirdCellID = @"thirdCellID";
         classView.theSelectedClass = ^(NSDictionary *courseDic) {
             if (courseDic != nil) {
                 cellWeak.massageLabel.text = [NSString stringWithFormat:@"%@",courseDic[COURSE_RECENTACTICE_DEPENDENT][COURSE_RECENTACTICE_DEPENDENT_NAME]];
+                NSString *startD = [NSString  stringFromTDateString:[NSString safeString:courseDic[@"StartDate"]]];
+                NSString *endD = [NSString stringFromTDateString:[NSString safeString:courseDic[@"EndDate"]]];
+                
+                NSString *timeStr = [NSString stringWithFormat:@"%@ %@~%@",[NSString stringMDFromTDateString:startD],[NSString stringHMFromTDateString:startD],[NSString stringHMFromTDateString:endD]];
+               cellWeak.massageLabel.text = [NSString stringWithFormat:@"%@ %@",timeStr,courseDic[COURSE_RECENTACTICE_DEPENDENT][COURSE_RECENTACTICE_DEPENDENT_NAME]];
+
                 [SourseDataCache saveRecentCourseInfo:courseDic];
                 
             }
@@ -354,14 +361,14 @@ static NSString  *thirdCellID = @"thirdCellID";
         imageView.image = [UIImage imageNamed:@"school_picture"];
         headerView = imageView;
     } else {
-        headerView.backgroundColor = MainBackgroudColor_GrayAndWhite;
+        headerView.backgroundColor = MainLineColor_LightGray;
     }
     return headerView;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     UIView *footerView = [[UIView alloc] initWithFrame:self.view.bounds];
-    footerView.backgroundColor = MainBackgroudColor_GrayAndWhite;
+    footerView.backgroundColor = MainLineColor_LightGray;
     
     return footerView;
 }

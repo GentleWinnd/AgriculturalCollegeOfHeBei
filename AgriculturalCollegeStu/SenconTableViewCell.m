@@ -71,10 +71,10 @@ static NSString *cellID = @"CellID";
 
 //通过协议方法设置单元格尺寸
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    NSInteger gap = 3*(_dayScheduleArray.count-1);
-//    float width = (WIDTH-gap)/_dayScheduleArray.count;
-    float width = (WIDTH-7)/4;
-    return CGSizeMake(width, width);
+    NSInteger gap = 2*(_dayScheduleArray.count-1);
+    float width = (WIDTH-gap)/_dayScheduleArray.count;
+//    float width = (WIDTH-7)/4;
+    return CGSizeMake(width, 120);
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {

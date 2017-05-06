@@ -9,6 +9,8 @@
 #define DATE_LABEL_TAG 11
 #define QUESTION_LIST @"Questions"
 #define QUESTION_OPTION_LIST @"QuestionOptionList"
+#define STU_SELE_ANSWER @"studentSelectedAnswers"
+#define QUESTION_TYPE @"QuestionType"
 
 #import "StuTestViewController.h"
 #import "QuestionCollectionViewCell.h"
@@ -20,7 +22,6 @@
 #import "SetNavigationItem.h"
 #import "RecentCourseManager.h"
 #import "CurrentClassView.h"
-#import "MZTimerLabel.h"
 #import "UserData.h"
 
 @interface StuTestViewController ()<UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HintViewDelegate>
@@ -30,9 +31,10 @@
 @property (strong, nonatomic) IBOutlet UIView *topView;
 
 @property (strong, nonatomic) HintMassageView *hintView;
-@property (strong, nonatomic) MZTimerLabel *mzLabel;
-@property (strong, nonatomic) NSMutableDictionary *answersInfo;
-@property (strong, nonatomic) NSDictionary *questionDic;
+
+
+@property (strong, nonatomic) NSMutableDictionary *questionDic;
+
 @property (copy, nonatomic) NSString *courseId;
 @property (copy, nonatomic) NSString *timeStr;
 @property (copy, nonatomic) NSString *courseName;
@@ -45,14 +47,14 @@ static NSString *cellID = @"questionCellID";
 @implementation StuTestViewController
 
 - (void)setNavigationBar {
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.frame = CGRectMake(0, 0, 120, 30);
-    rightBtn.tag = DATE_LABEL_TAG;
-    [rightBtn setTitleColor:MainThemeColor_Blue forState:UIControlStateNormal];
-    [rightBtn setTitle:@"倒计时：00:00:00" forState:UIControlStateNormal];
-    rightBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-    rightBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -18);
-    [[SetNavigationItem shareSetNavManager] setNavRightItem:self withCustomView:rightBtn];
+//    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    rightBtn.frame = CGRectMake(0, 0, 120, 30);
+//    rightBtn.tag = DATE_LABEL_TAG;
+//    [rightBtn setTitleColor:MainThemeColor_Blue forState:UIControlStateNormal];
+//    [rightBtn setTitle:@"倒计时：00:00:00" forState:UIControlStateNormal];
+//    rightBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+//    rightBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -18);
+//    [[SetNavigationItem shareSetNavManager] setNavRightItem:self withCustomView:rightBtn];
     [[SetNavigationItem shareSetNavManager] setNavTitle:self withTitle:@"测验" subTitle:@""];
 }
 
@@ -68,11 +70,8 @@ static NSString *cellID = @"questionCellID";
 }
 
 - (void)initData {
-//    _courseArray = [NSMutableArray arrayWithObjects:@{@"course":@"1、“大煮干丝”是哪个菜系的代表菜之一",@"answer":@[@"A四川菜系 ",@"B山东菜系 ",@"C广东菜系",@"D淮扬菜系",]},@{@"course":@"2、下列哪种邮件如果丢失了，邮局不负赔偿责任",@"answer":@[@"A.平信",@"B.挂号信",@"C.保价邮件",@"D.非保价邮包",]},@{@"course":@"3、下列地点与电影奖搭配不正确的是",@"answer":@[@"A.戛纳-金棕榈",@"B.亚洲-金马",@"C.洛杉矶-奥斯卡",@"D.中国-金鸡",]},@{@"course":@"4、下半旗是把旗子下降到",@"answer":@[@"A.旗杆的一半处",@"B.下降1米",@"C.下降1．5米",@"D.距离杆顶的1/3处",]},@{@"course":@" 5人体最大的解毒器官是",@"answer":@[@"A.胃",@"B.肾脏",@"C.肝脏",@"D.脾",]},@{@"course":@" 6、人体含水量百分比最高的器官是",@"answer":@[@"A.肝",@"B.肾",@"C.眼球"]}, @{@"course":@"7、“大煮干丝”是哪个菜系的代表菜之一",@"answer":@[@"A四川菜系 ",@"B山东菜系 ",@"C广东菜系",@"D淮扬菜系",]},@{@"course":@"8、下列哪种邮件如果丢失了，邮局不负赔偿责任",@"answer":@[@"A.平信",@"B.挂号信",@"C.保价邮件",@"D.非保价邮包",]},@{@"course":@"9、下列地点与电影奖搭配不正确的是",@"answer":@[@"A.戛纳-金棕榈",@"B.亚洲-金马",@"C.洛杉矶-奥斯卡",@"D.中国-金鸡",]},@{@"course":@"10、下半旗是把旗子下降到",@"answer":@[@"A.旗杆的一半处",@"B.下降1米",@"C.下降1．5米",@"D.距离杆顶的1/3处",]},@{@"course":@"11、人体最大的解毒器官是",@"answer":@[@"A.胃",@"B.肾脏",@"C.肝脏",@"D.脾",]},@{@"course":@"12、人体含水量百分比最高的器官是",@"answer":@[@"A.肝",@"B.肾",@"C.眼球"]},nil];
-    self.answersInfo = [NSMutableDictionary dictionaryWithCapacity:0];
+//    [self createDisplayLink];
     [self getRecentCourse];
-//    [self setTimeStamp:1800];
-    [self createDisplayLink];
     [self getClassExercises];
 }
 
@@ -87,63 +86,20 @@ static NSString *cellID = @"questionCellID";
     }];
 }
 
-
-/*
- "DataObject": {
- "UnitId": "f3f113c0-66f5-4216-a331-92c005cf4811",
- "Questions": [
- {
- "Id": "86119095-0d6c-4abf-b160-b0332a7e38b1",
- "Content": "细胞壁的主要作用是",
- "QuestionType": 1,
- "QtypeString": "单选题",
- "QScore": 2.0,
- "LastStudentAnswer": "65413328-62df-43b2-a25e-329596019935",
- "QuestionOptionList": [
- {
- "Id": "fef4381d-8112-4b83-b55f-e829db5ef51a",
- "ABCorderNum": "A",
- "Content": "运输",
- "OrderNum": 1
- },
- {
- "Id": "60d87800-2178-4cf2-8d5d-33f3e9c0af89",
- "ABCorderNum": "B",
- "Content": "分泌",
- "OrderNum": 2
- },
- {
- "Id": "65413328-62df-43b2-a25e-329596019935",
- "ABCorderNum": "C",
- "Content": "保护和支持",
- "OrderNum": 3
- },
- {
- "Id": "83ed6fbe-eecd-46fe-8dd3-619bdd8bebde",
- "ABCorderNum": "D",
- "Content": "传递",
- "OrderNum": 4
- }
- ]
- },
-*/
 #pragma mark - get exercise info
 
 - (void)getClassExercises {
     MBProgressManager *progress = [[MBProgressManager alloc] init];
     [progress loadingWithTitleProgress:@"加载中..."];
-//     self.courseId = @"23c6434e-1dac-44f0-868e-de938be3100a";
     if (self.courseId == nil) {
         return;
     }
     [NetServiceAPI getTheExerciseDetailsWithParameters:@{@"ActivityId":self.courseId} success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue] == 1) {
-            _questionDic = [[NSDictionary alloc] initWithDictionary:[NSDictionary safeDictionary:responseObject[@"DataObject"]]];
+            _questionDic = [[NSMutableDictionary alloc] initWithDictionary:[NSDictionary safeDictionary:responseObject[@"DataObject"]]];
             [self refreshedFinishedRate];
             [_quenstionInfoCollV reloadData];
-            for (NSDictionary *dic in _questionDic[@"Questions"]) {
-                [_answersInfo setValue:@"" forKey:dic[@"Id"]];
-            }
+          
         } else {
             [Progress progressShowcontent:responseObject[@"Message"]];
         
@@ -187,11 +143,14 @@ static NSString *cellID = @"questionCellID";
 
 - (NSString *)joinExerciseAnswer {
     NSString *answerStr;
+    NSArray *queArray = [NSArray safeArray:_questionDic[QUESTION_LIST]];
     int index=0;
-    for (NSString *key in [self.answersInfo allKeys]) {
-        NSArray * answers = [NSArray safeArray:self.answersInfo[key]];
+    for (NSDictionary *queInfo in queArray) {
+        
+        NSArray * answers = [NSArray safeArray:queInfo[STU_SELE_ANSWER]];
+        NSString *queId = [NSString safeString:queInfo[@"Id"]];
         NSInteger anIndex = 0;
-        if (index == [_answersInfo count]-2) {
+        if (index == [queArray count]-2) {
             for (NSDictionary *anInfo in answers) {
                 if ([NSString safeString:anInfo[@"Id"]].length>0) {
                     anIndex++;
@@ -202,9 +161,9 @@ static NSString *cellID = @"questionCellID";
                 for (NSDictionary *anInfo in answers) {
                     anStr = [NSString stringWithFormat:@"%@,%@",anStr,anInfo[@"Id"]];
                 }
-                 answerStr = [NSString stringWithFormat:@"%@^%@",key,anStr];
+                 answerStr = [NSString stringWithFormat:@"%@^%@",queId,anStr];
             } else {
-                  answerStr = [NSString stringWithFormat:@"%@^%@",key,[NSDictionary safeDictionary:answers[0]][@"Id"]];
+                  answerStr = [NSString stringWithFormat:@"%@^%@",queId,[NSDictionary safeDictionary:answers[0]][@"Id"]];
             }
 
           
@@ -219,9 +178,9 @@ static NSString *cellID = @"questionCellID";
                 for (NSDictionary *anInfo in answers) {
                     anStr = [NSString stringWithFormat:@"%@,%@",anStr,anInfo[@"Id"]];
                 }
-                answerStr = [NSString stringWithFormat:@"%@^%@|",key,anStr];
+                answerStr = [NSString stringWithFormat:@"%@^%@|",queId,anStr];
             } else {
-                answerStr = [NSString stringWithFormat:@"%@^%@|",key,[NSDictionary safeDictionary:answers[0]][@"Id"]];
+                answerStr = [NSString stringWithFormat:@"%@^%@|",queId,[NSDictionary safeDictionary:answers[0]][@"Id"]];
             }
         }
         ++index;
@@ -258,44 +217,6 @@ static NSString *cellID = @"questionCellID";
 
 }
 
-
-#pragma mark - 添加定时器
-
-- (void)setTimeStamp:(CGFloat)timeStamp{
-    
-    _mzLabel =[[MZTimerLabel alloc] initWithLabel:nil andTimerType:MZTimerLabelTypeTimer];
-    [_mzLabel setCountDownTime:timeStamp];
-//    @WeakObj(_mzLabel);
-//    @WeakObj(self);
-    [_mzLabel startWithEndingBlock:^(NSTimeInterval countTime) {
-
-//        [_mzLabelWeak setCountDownTime:3600];
-//        [_mzLabelWeak reset];
-//        [_mzLabelWeak start];
-        
-    }];
-    [self addTimeObserver];
-}
-
-#pragma mark - addTimeobsrever
-
-- (void)addTimeObserver {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(shouldChange:) name:@"surplusTime" object:nil];
-    
-}
-
-#pragma mark - notice
-
-- (void)shouldChange:(NSNotification *)notice {
-    dispatch_queue_t mainQueue = dispatch_get_main_queue();
-    dispatch_async(mainQueue, ^{
-        _timeStr = [notice.userInfo allValues].lastObject;
-        NSString *date =  [NSString stringWithFormat:@"倒计时：%@",[notice.userInfo allValues].lastObject];
-        UIButton *dateBtn = self.navigationItem.rightBarButtonItem.customView;
-        [dateBtn setTitle:date forState:UIControlStateNormal];
-    });
-}
-
 #pragma mark - 创建collectionView
 - (void)creatCustomCollectioView {
     UICollectionViewFlowLayout *layOut = [[UICollectionViewFlowLayout alloc] init];
@@ -325,18 +246,24 @@ static NSString *cellID = @"questionCellID";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     QuestionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
     cell.courseInfo = _questionDic[QUESTION_LIST][indexPath.row];
+    cell.answerArray = self.answersInfo[_questionDic[QUESTION_LIST][indexPath.row][@"Id"]];
+    @WeakObj(self)
     cell.selectedAnswer = ^(NSArray *item){
-        [self.answersInfo setValue:item forKey:_questionDic[QUESTION_LIST][indexPath.row][@"Id"]];
-        [self refreshedFinishedRate];
+        [self setSelectedAnswer:item indexPath:indexPath];
     };
     
     return cell;
 }
 
-#pragma mark UICollectionViewDelegate
--(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void)setSelectedAnswer:(NSArray *)seleArray indexPath:(NSIndexPath *)indexPath {
+    NSMutableArray *queArray = [NSMutableArray arrayWithArray:[NSArray safeArray:_questionDic[QUESTION_LIST]]];
+    NSMutableDictionary *queInfo = [NSMutableDictionary dictionaryWithDictionary:queArray[indexPath.row]];
+    
+    
+    
 
 }
+
 
 //通过协议方法设置单元格尺寸
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -350,6 +277,13 @@ static NSString *cellID = @"questionCellID";
     return YES;
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
+    int page = scrollView.contentOffset.x/WIDTH;
+    [self.finishedBtn setTitle:[NSString stringWithFormat:@"%d/%tu",page+1,[_questionDic[QUESTION_LIST] count]] forState:UIControlStateNormal];
+}
+
+
 - (IBAction)putupBtnAction:(UIButton *)sender {
     if (sender.tag == 1) {//提交作业
         [self postExerciseAnswers];
@@ -362,12 +296,11 @@ static NSString *cellID = @"questionCellID";
             finisedView.finishedNum = [self getFinishedNumber];
             finisedView.selectedNum = ^(NSInteger index) {
                 _quenstionInfoCollV.contentOffset = CGPointMake(WIDTH * index, 0);
+                [self.finishedBtn setTitle:[NSString stringWithFormat:@"%d/%tu",(int)index+1,[_questionDic[QUESTION_LIST] count]] forState:UIControlStateNormal];
             };
             
             [self.view addSubview:finisedView];
         }];
-        
-
     }
 }
 
@@ -379,9 +312,7 @@ static NSString *cellID = @"questionCellID";
     [_hintView.hintLabel setTitle:@"提交成功" forState:UIControlStateNormal];
     _hintView.delegate = self;
     [self.view addSubview:_hintView];
-    
 }
-
 
 #pragma mark - get finished question num
 - (NSInteger)getFinishedNumber {
@@ -415,7 +346,8 @@ static NSString *cellID = @"questionCellID";
 #pragma mark - refresh finished rate
 
 - (void )refreshedFinishedRate {
-    [self.finishedBtn setTitle:[NSString stringWithFormat:@"%tu/%tu",[self getFinishedNumber],[_questionDic[QUESTION_LIST] count]] forState:UIControlStateNormal];;
+//    [self.finishedBtn setTitle:[NSString stringWithFormat:@"%tu/%tu",[self getFinishedNumber],[_questionDic[QUESTION_LIST] count]] forState:UIControlStateNormal];
+    [self.finishedBtn setTitle:[NSString stringWithFormat:@"1/%tu",[_questionDic[QUESTION_LIST] count]] forState:UIControlStateNormal];
 }
 
 
@@ -458,12 +390,6 @@ static NSString *cellID = @"questionCellID";
 
 /*********************** timer **********************/
 
-- (void)createTimer {
-
-    NSTimer *timer = [NSTimer timerWithTimeInterval:5 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
-}
-
 - (void)createDisplayLink {
     _secondNum = 0;
     self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(handleDisplayLink:)];
@@ -481,16 +407,6 @@ static NSString *cellID = @"questionCellID";
     timeStr = [NSString stringWithFormat:@"倒计时：%2d:%2d:%2d",100,minute,second];
     UIButton *dateBtn = self.navigationItem.rightBarButtonItem.customView;
     [dateBtn setTitle:timeStr forState:UIControlStateNormal];
-
-//    if (_secondNum<60) {
-//        timeStr = [NSString stringWithFormat:@"00:00:%tu",_secondNum];
-//    } if (_secondNum <pow(60, 2)) {
-//         timeStr = [NSString stringWithFormat:@"00:00:%tu",_secondNum];
-//    } if (_secondNum <pow(60, 3)) {
-//        
-//    } else {
-//    
-//    }
     
 }
 

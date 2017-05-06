@@ -164,26 +164,6 @@ typedef enum : int {
 }
 
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
-    [self.navigationController setNavigationBarHidden:YES animated:animated];
-
-    [self requestTribe];
-    [self requestTribeMembers];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-
-    [self.navigationController setNavigationBarHidden:NO animated:animated];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)reloadData {
     self.tribeIDLabel.text = [NSString stringWithFormat:@"群号 %@", self.tribe.tribeId ?: @""];
     self.tribeNameLabel.text = self.tribe.tribeName;
@@ -280,7 +260,7 @@ typedef enum : int {
 
 #pragma mark - UITableView DataSource & Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger number = 3;
+    NSInteger number = 1;
     return number;
 }
 
@@ -290,39 +270,39 @@ typedef enum : int {
         case 0:
             number = 1;
             break;
-        case 1:
-        {
-            YWTribeMember *tribeMember = [self myTribeMember];
-            if (tribeMember) {
-                if (tribeMember.role == YWTribeMemberRoleOwner || tribeMember.role == YWTribeMemberRoleManager) {
-                    number = 2;
-                }
-                else {
-                    number = 1;
-                }
-
-                if ([[UIDevice currentDevice].systemVersion compare:@"7.0"] != NSOrderedAscending) {
-                    number++;
-                }
-            }
-            else {
-                number = 0;
-            }
-
-            break;
-        }
-        case 2:
-            number = 1;
+//        case 1:
+//        {
+//            YWTribeMember *tribeMember = [self myTribeMember];
+//            if (tribeMember) {
+//                if (tribeMember.role == YWTribeMemberRoleOwner || tribeMember.role == YWTribeMemberRoleManager) {
+//                    number = 2;
+//                }
+//                else {
+//                    number = 1;
+//                }
+//
+//                if ([[UIDevice currentDevice].systemVersion compare:@"7.0"] != NSOrderedAscending) {
+//                    number++;
+//                }
+//            }
+//            else {
+//                number = 0;
+//            }
+//
+//            break;
+//        }
+//        case 2:
+//            number = 1;
 
 //            number = 2;
 //            if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
 //                number ++;
 //            }
 
-            break;
-        case 3:
-            number = 1;
-            break;
+//            break;
+//        case 3:
+//            number = 1;
+//            break;
         default:
             break;
     }
@@ -331,32 +311,32 @@ typedef enum : int {
 
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return 85.0f;
-    }
+//    if (indexPath.section == 0) {
+//        return 85.0f;
+//    }
     return 44.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeDescriptionCell"];
-        [cell prepareForReuse];
-
-        UILabel *noticeLabel = [cell.contentView viewWithTag:2045];
-        noticeLabel.text = self.tribe.notice;
-
-        CGSize fittingSize;
-        cell.frame = tableView.frame;
-        [cell layoutIfNeeded];
-        noticeLabel.preferredMaxLayoutWidth = noticeLabel.frame.size.width;
-        fittingSize = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-
-        if (tableView.separatorStyle != UITableViewCellSeparatorStyleNone) {
-            fittingSize.height += 1.0 / [UIScreen mainScreen].scale;
-        }
-        return fittingSize.height;
-    }
+//    if (indexPath.section == 0) {
+//
+//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TribeDescriptionCell"];
+//        [cell prepareForReuse];
+//
+//        UILabel *noticeLabel = [cell.contentView viewWithTag:2045];
+//        noticeLabel.text = self.tribe.notice;
+//
+//        CGSize fittingSize;
+//        cell.frame = tableView.frame;
+//        [cell layoutIfNeeded];
+//        noticeLabel.preferredMaxLayoutWidth = noticeLabel.frame.size.width;
+//        fittingSize = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+//
+//        if (tableView.separatorStyle != UITableViewCellSeparatorStyleNone) {
+//            fittingSize.height += 1.0 / [UIScreen mainScreen].scale;
+//        }
+//        return fittingSize.height;
+//    }
     return 44.0f;
 }
 
@@ -365,14 +345,14 @@ typedef enum : int {
     UITableViewCell *cell;
 
     __weak typeof(self) weakSelf = self;
-    if (indexPath.section == 0) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"TribeDescriptionCell"
-                                               forIndexPath:indexPath];
-        UILabel *noticeLabel = [cell.contentView viewWithTag:2045];
-        noticeLabel.text = self.tribe.notice;
-        noticeLabel.preferredMaxLayoutWidth = noticeLabel.frame.size.width;
-    }
-    else if (indexPath.section == 1) {
+//    if (indexPath.section == 0) {
+//        cell = [tableView dequeueReusableCellWithIdentifier:@"TribeDescriptionCell"
+//                                               forIndexPath:indexPath];
+//        UILabel *noticeLabel = [cell.contentView viewWithTag:2045];
+//        noticeLabel.text = self.tribe.notice;
+//        noticeLabel.preferredMaxLayoutWidth = noticeLabel.frame.size.width;
+//    }
+//    else if (indexPath.section == 1) {
         cell = [tableView dequeueReusableCellWithIdentifier:@"RightDetailCell"
                                                forIndexPath:indexPath];
 
@@ -397,8 +377,8 @@ typedef enum : int {
             cell.textLabel.text = @"群信息编辑";
             cell.detailTextLabel.text = nil;
         }
-    }
-    else if (indexPath.section == 2) {
+//    }
+//    else if (indexPath.section == 2) {
 //        if (indexPath.row == 0) {
 //            cell = [tableView dequeueReusableCellWithIdentifier:@"RightDetailCell"
 //                                                   forIndexPath:indexPath];
@@ -477,8 +457,8 @@ typedef enum : int {
 //            label.text = kSPTribeProfileActionTitleExit;
 //        }
 //
-    }
-    else if (indexPath.section == 3) {
+//    }
+//    else if (indexPath.section == 3) {
 //        cell = [tableView dequeueReusableCellWithIdentifier:@"ButtonCell"
 //                                               forIndexPath:indexPath];
 //
@@ -496,14 +476,14 @@ typedef enum : int {
 //        else {
 //            label.text = kSPTribeProfileActionTitleExit;
 //        }
-    }
+//    }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    if (indexPath.section == 1) {
+//    if (indexPath.section == 1) {
         NSInteger numberOfRows = [self tableView:tableView numberOfRowsInSection:indexPath.section];
         if (indexPath.row == 0) {
             // 群成员列表
@@ -524,53 +504,53 @@ typedef enum : int {
             controller.tribe = self.tribe;
             [self.navigationController pushViewController:controller animated:YES];
         }
-    }
-    else if (indexPath.section == 2 && indexPath.row == 0) {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"群消息状态" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"接收",@"接收不推送",@"屏蔽", nil];
-        
-        [actionSheet showInView:self.view];
-    }
-    else if (indexPath.section == 2 && indexPath.row == 2) {
-        UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"修改群昵称"
-                                                                            message:@""
-                                                                     preferredStyle:UIAlertControllerStyleAlert];
-        __weak typeof(self) weakSelf = self;
-
-        __block UITextField *nickTextField = nil;
-        [controller addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.text = [weakSelf myTribeMember].nickname;
-            nickTextField = textField;
-        }];
-
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
-                                                               style:UIAlertActionStyleCancel
-                                                             handler:nil];
-
-        UIAlertAction *doneAction = [UIAlertAction actionWithTitle:@"修改"
-                                                             style:UIAlertActionStyleDefault
-                                                           handler:^(UIAlertAction * action) {
-                                                               [weakSelf modifyMyNickname:nickTextField.text];
-                                                           }];
-        [controller addAction:cancelAction];
-        [controller addAction:doneAction];
-
-        [self presentViewController:controller animated:YES completion:nil];
-    }
-    else if (indexPath.section == 3 && indexPath.row == 0) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        UILabel *label = (UILabel *)[cell.contentView viewWithTag:2046];
-        if ([label.text isEqualToString:kSPTribeProfileActionTitleJoin]) {
-            [self joinToTribe];
-        }
-        else if ([label.text isEqualToString:kSPTribeProfileActionTitleDisband]) {
-            [self disbandTribe];
-        }
-        else if ([label.text isEqualToString:kSPTribeProfileActionTitleExit]) {
-            [self exitFromTribe];
-        }
-    }
+//    }
+//    else if (indexPath.section == 2 && indexPath.row == 0) {
+//        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"群消息状态" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"接收",@"接收不推送",@"屏蔽", nil];
+//        
+//        [actionSheet showInView:self.view];
+//    }
+//    else if (indexPath.section == 2 && indexPath.row == 2) {
+//        UIAlertController *controller = [UIAlertController alertControllerWithTitle:@"修改群昵称"
+//                                                                            message:@""
+//                                                                     preferredStyle:UIAlertControllerStyleAlert];
+//        __weak typeof(self) weakSelf = self;
+//
+//        __block UITextField *nickTextField = nil;
+//        [controller addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+//            textField.text = [weakSelf myTribeMember].nickname;
+//            nickTextField = textField;
+//        }];
+//
+//        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消"
+//                                                               style:UIAlertActionStyleCancel
+//                                                             handler:nil];
+//
+//        UIAlertAction *doneAction = [UIAlertAction actionWithTitle:@"修改"
+//                                                             style:UIAlertActionStyleDefault
+//                                                           handler:^(UIAlertAction * action) {
+//                                                               [weakSelf modifyMyNickname:nickTextField.text];
+//                                                           }];
+//        [controller addAction:cancelAction];
+//        [controller addAction:doneAction];
+//
+//        [self presentViewController:controller animated:YES completion:nil];
+//    }
+//    else if (indexPath.section == 3 && indexPath.row == 0) {
+//        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//
+//        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+//        UILabel *label = (UILabel *)[cell.contentView viewWithTag:2046];
+//        if ([label.text isEqualToString:kSPTribeProfileActionTitleJoin]) {
+//            [self joinToTribe];
+//        }
+//        else if ([label.text isEqualToString:kSPTribeProfileActionTitleDisband]) {
+//            [self disbandTribe];
+//        }
+//        else if ([label.text isEqualToString:kSPTribeProfileActionTitleExit]) {
+//            [self exitFromTribe];
+//        }
+//    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -649,6 +629,29 @@ typedef enum : int {
 
 - (id<IYWTribeService>)ywTribeService {
     return [[self ywIMCore] getTribeService];
+}
+
+
+#pragma MARK -
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
+    [self requestTribe];
+    [self requestTribeMembers];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end

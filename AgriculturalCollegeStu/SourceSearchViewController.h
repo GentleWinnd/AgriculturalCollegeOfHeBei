@@ -12,6 +12,7 @@ typedef void(^returnSearchResult)(NSDictionary *sourceInfo);
 
 @interface SourceSearchViewController : BaseViewController
 @property (copy, nonatomic) returnSearchResult searchResult;
+@property (copy, nonatomic) NSString *courseId;
 
 
 @end

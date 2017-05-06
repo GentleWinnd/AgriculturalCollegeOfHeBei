@@ -36,7 +36,7 @@ static NSString *cellID = @"CellId";
     layOut.minimumInteritemSpacing = 1;
     layOut.minimumLineSpacing = 1;
     self.contentCollectionView.scrollEnabled = NO;
-    self.contentCollectionView.backgroundColor = RulesLineColor_LightGray;
+    self.contentCollectionView.backgroundColor = MainLineColor_LightGray;
     [self.contentCollectionView registerNib:[UINib nibWithNibName:@"ItemCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:cellID];
 }
 

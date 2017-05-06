@@ -67,7 +67,7 @@ static NSString  *cellID = @"feilCellID";
     self.currentSourceType = @"";
     self.selectedFeilInfo = [NSMutableDictionary dictionaryWithCapacity:0];
     self.SType = SourceTypeAll;
-    self.courseId = [RecentCourseManager getRecentCourseDataWithDateItem:DataItemCourseId];
+    self.courseId = [RecentCourseManager getRecentCourseDataWithDateItem:DataItemDependentId];
     self.courseName = [RecentCourseManager getRecentCourseDataWithDateItem:DataItemDependentName];
     [self getClassSourceWithSourceType:_currentSourceType];
 }
@@ -87,7 +87,7 @@ static NSString  *cellID = @"feilCellID";
         ClassScheduleViewController *scheduleView = [[ClassScheduleViewController alloc] init];
         scheduleView.theSelectedClass = ^(NSDictionary *classCourse){
             self.courseName = classCourse[COURSE_RECENTACTICE_DEPENDENT][COURSE_RECENTACTICE_DEPENDENT_NAME];
-            self.courseId = [NSString safeString:classCourse[COURSE_RECENTACTICE_ID]];
+            self.courseId = [NSString safeString:classCourse[COURSE_RECENTACTICE_DEPENDENT][COURSE_RECENTACTICE_DEPENDENT_ID]];
             classViewWeak.courceName.text = self.courseName;
             [self getClassSourceWithSourceType:_currentSourceType];
         };
@@ -99,7 +99,7 @@ static NSString  *cellID = @"feilCellID";
 #pragma mark - get class source
 - (void)getClassSourceWithSourceType:(NSString *)source {
     _currentSourceType = source;
-    NSDictionary *parameter = @{@"OfflineCourseId":@"a56106bc-ed87-4bf7-b368-1437428a0ccf",
+    NSDictionary *parameter = @{@"OfflineCourseId":self.courseId,
                                 @"Keyword":@"",
                                 @"ResourceType":source};
     MBProgressManager *progress = [[MBProgressManager alloc] init];
@@ -203,11 +203,10 @@ static NSString  *cellID = @"feilCellID";
         cell.leadingPace.constant = 3;
     }
     
-    cell.logoImage.image = indexPath.row == 1?[UIImage imageNamed:@"word"]:[UIImage imageNamed:@"PDF"];
     cell.feilName.text = self.urls[indexPath.row][@"Title"];
     cell.capacityTrail.text = [self caculateSourceSize:[self.urls[indexPath.row][@"FileSize"] integerValue]];
     cell.totalSize = [self.urls[indexPath.row][@"FileSize"] longLongValue];
-    cell.Stype =  [self getTheSourceType:self.urls[indexPath.row][@"ResourceType"]];
+    cell.SType =  [NSString safeString:self.urls[indexPath.row][@"ResourceType"]];
 
     cell.url = self.urls[indexPath.row][@"Url"];
     cell.selectedBtnType = ^(FeilBtn btnType, BOOL selected) {
@@ -367,24 +366,6 @@ static NSString  *cellID = @"feilCellID";
     self.rangeView.hidden = YES;
     self.backView.hidden = YES;
   
-}
-
-- (SourceType)getTheSourceType:(NSString  *)type {
-    SourceType STYpe;
-    
-    if ([type isEqualToString:@"Video"]) {//all range
-        STYpe = SourceTypeVedio;
-    } else if ([type isEqualToString:@"Image"]){//vedio range
-        STYpe = SourceTypeImage;
-    } else if ([type isEqualToString:@"Document"]){//image range
-        STYpe = SourceTypeFile;
-    } else if ([type isEqualToString:@"Flash"]){//file range
-        STYpe = SourceTypeFlash;
-    } else if ([type isEqualToString:@"Other"]){//flash range
-        STYpe = SourceTypeOther;
-    }
-    
-    return STYpe;
 }
 
 

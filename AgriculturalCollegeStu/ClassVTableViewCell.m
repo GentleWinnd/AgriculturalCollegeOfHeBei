@@ -20,8 +20,6 @@ static NSString *cellID = @"videoCellID";
     [super awakeFromNib];
     // Initialization code
     
-    
-    
     [self creatCustomCollectioView];
 }
 
@@ -45,7 +43,7 @@ static NSString *cellID = @"videoCellID";
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (_entity.Courses.count<5) {
+    if (_entity.Courses.count<=5) {
         return _entity.Courses.count;
     } else {
         return 5;
@@ -82,14 +80,6 @@ static NSString *cellID = @"videoCellID";
     pageCategoryId = _entity.Id;
     courseName = _entity.Courses[indexPath.row][@"Name"];
     
-    UIStoryboard* storyboard =
-    [UIStoryboard storyboardWithName:@"video_page" bundle:[NSBundle mainBundle]];
-    
-//    VideoPageController *videoPageController = (VideoPageController *)[storyboard instantiateViewControllerWithIdentifier:@"video_page_controller"];
-//    videoPageController.courseId = courseId;
-//    videoPageController.pageCategoryId = pageCategoryId;
-//    videoPageController.courseCover = courseCover;
-//    videoPageController.isFromCache = NO;
     HaventSignUpViewController *haventView = [[HaventSignUpViewController alloc] init];
     haventView.subId = courseId;
     haventView.subTitle = courseName;

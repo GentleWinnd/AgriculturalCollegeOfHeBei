@@ -88,14 +88,12 @@ static NSString *cellID = @"videoCellID";
 
     }];
 
-
 }
 
 - (void)getCategoryCourse {
     [_indicator startAnimating];
     NSDictionary *parameter = @{@"Count":@"50"};
     [NetServiceAPI getCourseListWithParameters:parameter success:^(id responseObject) {
-       // NSArray *arr = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
 
         for (NSDictionary *dic in responseObject) {
             
@@ -103,16 +101,7 @@ static NSString *cellID = @"videoCellID";
             [model setValuesForKeysWithDictionary:dic];
             [allContentArray addObject:model];
             
-            MainViewCycModel *cycModel = [[MainViewCycModel alloc]init];
-            
-            //int randomInd = (arc4random() % model.Courses.count) + 1;
-           // if(randomInd == 50) randomInd = 49;
-//            cycModel.Id = model.Courses[randomInd][@"Id"];
-//            cycModel.Cover = model.Courses[randomInd][@"Cover"];
-//            cycModel.Summary = model.Courses[randomInd][@"Description"];
-//            cycModel.Title = model.Courses[randomInd][@"Name"];
-//            [_focuslist addObject:cycModel];
-        }
+            }
         [_indicator stopAnimating];
         [self.view bringSubviewToFront:_classVideoTab];
         [_classVideoTab reloadData];
@@ -177,12 +166,6 @@ static NSString *cellID = @"videoCellID";
     FirstPageContentModel *model = allContentArray[section];
     headerView.titleLabel.text = model.Name;
     headerView.selectedBtn = ^(UIButton *selectedBtn){
-//        CourseInfoTableViewController *infoView = [[CourseInfoTableViewController alloc] init];
-//        infoView.categroyId = ((FirstPageContentModel *)CAContentList[section]).Id;
-//        infoView.courseName = ((FirstPageContentModel *)CAContentList[section]).Name;
-//
-//        [self.navigationController pushViewController:infoView animated:YES];
-//        [Progress progressShowcontent:@"暂无数据"];
         MoreCourseViewController *moreView = [[MoreCourseViewController alloc] init];
         moreView.allCourseArray = model.Courses;
         moreView.courseType = model.Name;
@@ -200,7 +183,7 @@ static NSString *cellID = @"videoCellID";
     cell.myParentViewController = self;
     cell.entity = allContentArray[indexPath.section];
     cell.delegate = self;
-    
+    [cell.classVideoInfo reloadData];
     return cell;
 }
 

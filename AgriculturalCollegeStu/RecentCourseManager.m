@@ -56,7 +56,8 @@
     if ([courseDic allKeys].count == 0) {
         return;
     }
-    NSDictionary *parameter =@{@"OfflineCourseId": courseDic[@"Dependent"][@"DependentId"]};
+//    NSDictionary *parameter =@{@"OfflineCourseId": courseDic[@"Dependent"][@"DependentId"]};
+    NSDictionary *parameter =@{@"OfflineCourseId": @"00000000-0000-0000-0000-000000000000"};
     [NetServiceAPI getRecentSignActiveWithParameters:parameter success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue]!= 1) {
             [Progress progressShowcontent:responseObject[@"Message"]];

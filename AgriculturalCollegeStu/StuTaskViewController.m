@@ -99,6 +99,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+
     _TPScrollView.scrollEnabled = NO;
     currentIndex = 0;
     [self setNavigationBar];
@@ -134,18 +135,12 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     }
     MBProgressManager *progress = [[MBProgressManager alloc] init];
     [progress loadingWithTitleProgress:@"努力加载中..."];
-//    NSString *testID = @"23c6434e-1dac-44f0-868e-de938be3100a";
     
     [NetServiceAPI getSchoolAssignmentWithParameters:@{@"Activty":self.courseId} success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue] == 1) {
+            
             _allAssignmentInfo = [NSDictionary safeDictionary:responseObject[@"HomeWorkDetailsModel"]];
-//            for (NSDictionary *dic in _allAssignmentInfo[@"Items"]) {
-//                [self.answersInfo addObject:@{@"Key":dic[@"Key"],
-//                                              @"Answer":@""}];
-//            }
-            
             [_answersInfoArray addObjectsFromArray:[NSArray safeArray:_allAssignmentInfo[@"Items"]]];
-            
             
             [self updateCourseFinishedState];
             [_courseCollectionView reloadData];
@@ -158,7 +153,6 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         [KTMErrorHint showNetError:error inView:self.view];
     }];
 }
-//$.post("/HomeWork/SubmitAnswer",{HomeWorkDataId:"01852f7b-1300-4b2d-a652-4b4fb8f43498",Items[0].Key:"44b33362-d37c-4ef6-8204-456a7db47903",Items[0].Answer:"test",Items[1].Key:"f03b6153-9efb-4e7a-a60f-8c7ac9505bf2",Items[1].Answer:"test"}
 
 - (void)putupStudentShcoolAssignment {
     if (self.allAssignmentInfo == nil) {
@@ -166,10 +160,11 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     }
     NSDictionary *CParameter = @{@"HomeWorkDataId":_allAssignmentInfo[@"HomeWorkDataId"]};
     NSMutableDictionary *parameter = [NSMutableDictionary dictionaryWithDictionary:CParameter];
-//    [parameter addEntriesFromDictionary:[self joinAllAssignmentAnswers]];
     [parameter setValue:[self joinAllAssignmentAnswers] forKey:@"StudentAnswers"];
+    
     MBProgressManager *progress = [[MBProgressManager alloc] init];
     [progress loadingWithTitleProgress:@"提交中..."];
+    
     [NetServiceAPI postStudentSchollAssignmentWithParameters:parameter success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue] == 1) {
             [Progress progressShowcontent:@"作业提交成功"];
@@ -187,17 +182,6 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 
 #pragma mark - join  assignment answer
 
-//- (NSDictionary *)joinAllAssignmentAnswers {
-//    
-//    NSMutableDictionary *joinAnswer = [NSMutableDictionary dictionaryWithCapacity:0];
-//    for (int i=0;i<_answersInfo.count;i++) {
-//        NSString *IDKey = [NSString stringWithFormat:@"Items[%d].Key",i];
-//        NSString *answerKey = [NSString stringWithFormat:@"Items[%d].Answer",i];
-//        [joinAnswer setValue:_answersInfo[i][@"Key"] forKey:IDKey];
-//        [joinAnswer setValue:_answersInfo[i][@"Answer"] forKey:answerKey];
-//    }
-//    return joinAnswer;
-//}
 - (NSString *)joinAllAssignmentAnswers {
     
     NSString *joinAnswer = @"";
@@ -226,7 +210,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
                 
                 NSArray *attacheMents = [NSArray safeArray:[self getCurrentAssignmentInfo][ATTACHMENTS]];
                 if (attacheMents.count >0) {
-                    [self uploadAttachmentData];
+//                    [self uploadAttachmentData];
                 }
             }
  
@@ -298,16 +282,15 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         NSDictionary *attachInfo = [NSDictionary safeDictionary:attachments[indexPath.row]];
         
         NSString *imageUrl = [NSString safeString:attachInfo[ATTACHMENT_URL]];
-        if (imageUrl.length == 0) {
+        NSData *imageData = attachInfo[ATTACHMENT_IMAGE];
+        if (imageData) {
             ACell.attachmentType.image = [UIImage imageWithData:attachInfo[ATTACHMENT_IMAGE]];
         } else {
             NSURL *url = [NSURL URLWithString:imageUrl];
             [ACell.attachmentType sd_setImageWithURL:url];
         }
         ACell.deletedAttachment = ^(){
-            
-            [self removeHomeWorkAttachments:[self getCurrentAssignmentInfo][ASSIGNMENT_KEY] attachmentId:attachInfo[ATTACHMENR_ID]];
-            [self dealAttachmentImage:indexPath images:nil];
+            [self removeHomeWorkAttachments:[self getCurrentAssignmentInfo][ASSIGNMENT_KEY] attachmentId:attachInfo[ATTACHMENR_ID] indexPath:indexPath];
             
         };
         cell = ACell;
@@ -315,6 +298,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         CourseInfoCollectionViewCell *CCell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
         CCell.courseLabel.text = [NSString safeString:_answersInfoArray[indexPath.row][@"Description"]];
         CCell.answerTextView.text = [NSString safeString:_answersInfoArray[indexPath.row][ANSWER]];
+        CCell.answerStr = [NSString safeString:_answersInfoArray[indexPath.row][ANSWER]];;
         CCell.getAnswer = ^(NSString *answer){
             if (answer.length>0) {
                 [self setAnswerWithIndexPath:indexPath answer:answer];
@@ -359,7 +343,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     NSMutableDictionary *assignInfo = [NSMutableDictionary dictionaryWithDictionary:_answersInfoArray[indexPath.row]];
     [assignInfo setValue:answer forKey:ANSWER];
     [_answersInfoArray replaceObjectAtIndex:indexPath.row withObject:assignInfo];
-    [self updateCourseFinishedState];
+//    [self updateCourseFinishedState];
 
 }
 
@@ -373,11 +357,6 @@ static NSString *attachmentCellID= @"AttachmentCellID";
             [attachments addObject:attachInfo];
         }
     } else {
-//        NSMutableDictionary *attachmentInfo = [NSMutableDictionary dictionaryWithDictionary:[NSDictionary safeDictionary:attachments[indexPath.row]]];
-//
-//        [attachmentInfo removeObjectForKey:ATTACHMENT_URL];
-//        [attachmentInfo removeObjectForKey:ATTACHMENT_IMAGE];
-//        [attachments replaceObjectAtIndex:indexPath.row withObject:attachmentInfo];
         if (indexPath.row>attachments.count-1) {
             return;
         }
@@ -389,6 +368,8 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     [_answersInfoArray replaceObjectAtIndex:currentIndex withObject:assignInfo];
     
     [_attachmentsCollection reloadData];
+    
+    [self uploadAttachmentData];
 }
 
 
@@ -412,6 +393,8 @@ static NSString *attachmentCellID= @"AttachmentCellID";
             finisedView.finishedArray = [self getFinishedNumbersIndex];
             finisedView.selectedNum = ^(NSInteger index) {
                 _courseCollectionView.contentOffset = CGPointMake(WIDTH * index, 0);
+                [_finishedRateBtn setTitle:[NSString stringWithFormat:@"%d/%tu",index+1,[_allAssignmentInfo[COURSE] count]] forState:UIControlStateNormal];
+
             };
 
             [self.view addSubview:finisedView];
@@ -421,12 +404,26 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     }
 }
 
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+
+    int page = scrollView.contentOffset.x/WIDTH;
+    for (UICollectionViewCell *cell in scrollView.subviews) {
+        if ([cell isKindOfClass:[CourseInfoCollectionViewCell class]]) {
+            [_finishedRateBtn setTitle:[NSString stringWithFormat:@"%d/%tu",page+1,[_allAssignmentInfo[COURSE] count]] forState:UIControlStateNormal];
+            currentIndex = page;
+            [self.attachmentsCollection reloadData];
+
+        }
+    }
+}
 
 #pragma mark - update finihsed rate
 
 - (void)updateCourseFinishedState {
 
-    [_finishedRateBtn setTitle:[NSString stringWithFormat:@"%tu/%tu",[self getFinishedNumber],[_allAssignmentInfo[COURSE] count]] forState:UIControlStateNormal];
+//    [_finishedRateBtn setTitle:[NSString stringWithFormat:@"%tu/%tu",[self getFinishedNumber],[_allAssignmentInfo[COURSE] count]] forState:UIControlStateNormal];
+    [_finishedRateBtn setTitle:[NSString stringWithFormat:@"%d/%tu",1,[_allAssignmentInfo[COURSE] count]] forState:UIControlStateNormal];
+
 }
 
 #pragma mark - get finished question num
@@ -587,9 +584,10 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     [NetServiceAPI postUploadHomeWorkAttachmentsWithParameters:parameter success:^(id responseObject) {
     
         if ([responseObject[@"state"] integerValue] == 1) {
-            
+            [Progress progressShowcontent:responseObject[@"Message"] currView:self.view];
+
         } else {
-            [Progress progressPlease:@"作业附件上传失败了" showView:self.view];
+            [Progress progressShowcontent:responseObject[@"Message"] currView:self.view];
         }
     } failure:^(NSError *error) {
         [KTMErrorHint showNetError:error inView:self.view];
@@ -599,7 +597,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 
 #pragma mark - 删除附件
 
-- (void)removeHomeWorkAttachments:(NSString *)assignKey attachmentId:(NSString *)attachmentId{
+- (void)removeHomeWorkAttachments:(NSString *)assignKey attachmentId:(NSString *)attachmentId indexPath:(NSIndexPath *)indexPath {
 
     if (attachmentId == nil) {
         return;
@@ -612,6 +610,8 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         
         if ( [responseObject[@"State"] integerValue] == 1) {
             [Progress progressShowcontent:@"删除成功" currView:self.view];
+            [self dealAttachmentImage:indexPath images:nil];
+
         } else {
             [Progress progressShowcontent:[NSString safeString:responseObject[@"Message"]] currView:self.view];
         }

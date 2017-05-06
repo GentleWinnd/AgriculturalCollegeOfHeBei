@@ -492,7 +492,7 @@
                                   success:(void(^)(id responseObject))success
                                   failure:(void(^)(NSError *error))failure {
     
-    NSString *sourseUrl = @"OfflineCourse/RecentestCheckInActivity?";
+    NSString *sourseUrl = [NSString stringWithFormat:@"OfflineCourse/RecentestCheckInActivity?OfflineCourseId=%@",[parameters allValues].lastObject];
     NSString *URL = [NSString stringWithFormat:HOST_SERVICE,sourseUrl];
     
     [KTMWebService getWithURL:URL parameters:parameters sucess:^(id responseObject) {

@@ -34,6 +34,8 @@ typedef void(^SelectedFeilBtnType)(FeilBtn btnType,BOOL selected);
 @property (assign, nonatomic) long long totalSize;
 @property (copy, nonatomic) SelectedFeilBtnType selectedBtnType;
 @property (assign, nonatomic) SourceType Stype;
+@property (assign, nonatomic) NSString * SType;
+
 @property (assign, nonatomic) BOOL isDownload;
 @property (strong, nonatomic) UIViewController *superViewM;
 

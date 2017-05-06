@@ -33,7 +33,7 @@ static NSString *CellID = @"cellID";
 
 #pragma mark - get class source
 - (void)getClassSourceWithKeyWord:(NSString *)word {
-    NSDictionary *parameter = @{@"OfflineCourseId":@"a56106bc-ed87-4bf7-b368-1437428a0ccf",
+    NSDictionary *parameter = @{@"OfflineCourseId":_courseId,
                                 @"Keyword":word,
                                 @"ResourceType":@""};
     MBProgressManager *progress = [[MBProgressManager alloc] init];
