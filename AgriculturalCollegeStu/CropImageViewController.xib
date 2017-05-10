@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CropImageViewController">
             <connections>
+                <outlet property="confirmbtn" destination="iCd-cu-nFq" id="yrx-6y-JIt"/>
                 <outlet property="finishedBtn" destination="8tA-b8-MJu" id="LJ2-Kv-tjl"/>
                 <outlet property="frontBtn" destination="owJ-uL-wwY" id="gRc-5O-BEh"/>
                 <outlet property="nextBtn" destination="75d-0G-cga" id="f7A-pf-xYu"/>
@@ -24,10 +25,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="owJ-uL-wwY">
-                    <rect key="frame" x="12" y="66" width="55" height="33"/>
+                    <rect key="frame" x="12" y="76" width="55" height="28"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="55" id="mS0-xI-det"/>
-                        <constraint firstAttribute="height" constant="33" id="r8Q-fo-3uX"/>
+                        <constraint firstAttribute="height" constant="28" id="r8Q-fo-3uX"/>
                     </constraints>
                     <state key="normal" title="上一张"/>
                     <connections>
@@ -35,7 +36,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="75d-0G-cga">
-                    <rect key="frame" x="308" y="66" width="55" height="33"/>
+                    <rect key="frame" x="308" y="76" width="55" height="28"/>
                     <state key="normal" title="下一张"/>
                     <connections>
                         <action selector="btnAction:" destination="-1" eventType="touchUpInside" id="TVm-Bf-Hao"/>
@@ -53,7 +54,7 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tcU-iq-ALG" customClass="TKImageView">
-                    <rect key="frame" x="0.0" y="99" width="375" height="504"/>
+                    <rect key="frame" x="0.0" y="116" width="375" height="487"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iCd-cu-nFq">
@@ -73,14 +74,14 @@
                 <constraint firstItem="75d-0G-cga" firstAttribute="height" secondItem="owJ-uL-wwY" secondAttribute="height" id="12D-vc-K0R"/>
                 <constraint firstAttribute="trailing" secondItem="75d-0G-cga" secondAttribute="trailing" constant="12" id="6Wf-P4-wmn"/>
                 <constraint firstItem="iCd-cu-nFq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="12" id="CW3-es-oG6"/>
-                <constraint firstItem="tcU-iq-ALG" firstAttribute="top" secondItem="owJ-uL-wwY" secondAttribute="bottom" id="GAM-rc-Jwc"/>
+                <constraint firstItem="tcU-iq-ALG" firstAttribute="top" secondItem="owJ-uL-wwY" secondAttribute="bottom" constant="12" id="GAM-rc-Jwc"/>
                 <constraint firstAttribute="trailing" secondItem="tcU-iq-ALG" secondAttribute="trailing" id="HjY-9X-O5f"/>
                 <constraint firstAttribute="bottom" secondItem="8tA-b8-MJu" secondAttribute="bottom" constant="22" id="MZP-B5-zgM"/>
                 <constraint firstItem="owJ-uL-wwY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="12" id="PVd-cV-hgX"/>
                 <constraint firstAttribute="trailing" secondItem="8tA-b8-MJu" secondAttribute="trailing" constant="12" id="UdG-AT-NHc"/>
                 <constraint firstItem="tcU-iq-ALG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Yhk-LL-ENu"/>
                 <constraint firstItem="75d-0G-cga" firstAttribute="width" secondItem="owJ-uL-wwY" secondAttribute="width" id="fO6-wb-kZk"/>
-                <constraint firstItem="owJ-uL-wwY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="66" id="mkz-Ak-IgN"/>
+                <constraint firstItem="owJ-uL-wwY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="76" id="mkz-Ak-IgN"/>
                 <constraint firstItem="8tA-b8-MJu" firstAttribute="centerY" secondItem="iCd-cu-nFq" secondAttribute="centerY" id="n6E-pf-g8d"/>
                 <constraint firstItem="8tA-b8-MJu" firstAttribute="top" secondItem="tcU-iq-ALG" secondAttribute="bottom" constant="12" id="vIe-vQ-eMz"/>
                 <constraint firstItem="75d-0G-cga" firstAttribute="centerY" secondItem="owJ-uL-wwY" secondAttribute="centerY" id="xbh-gk-mK4"/>

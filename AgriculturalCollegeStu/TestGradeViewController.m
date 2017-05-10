@@ -5,6 +5,10 @@
 //  Created by YH on 2016/12/15.
 //  Copyright © 2016年 YH. All rights reserved.
 //
+#define STU_SELE_ANSWER @"studentSelectedAnswers"
+#define QUESTION_TYPE @"QuestionType"
+#define QUESTION_LIST @"Questions"
+
 
 #import "TestGradeViewController.h"
 #import "GradeAnswerTableViewCell.h"
@@ -12,8 +16,8 @@
 #import "TestGradeView.h"
 
 
-
 @interface TestGradeViewController ()<UITableViewDelegate, UITableViewDataSource>
+@property (strong, nonatomic) NSArray *allOptions;
 
 @property (strong, nonatomic) IBOutlet UITableView *testResultTab;
 @end
@@ -29,9 +33,37 @@ static NSString *answerCellID = @"AnswerCellID";
     self.title = @"测验成绩";
     if (self.role == UserRoleTeacher) {
         [self getExerciseOfTeacher];
+    } else {
+        [self getClassExercises];
     }
     [self initTableView];
 }
+
+#pragma mark - get exercise info
+
+- (void)getClassExercises {
+    MBProgressManager *progress = [[MBProgressManager alloc] init];
+    [progress loadingWithTitleProgress:@"加载中..."];
+    if (self.courseId == nil) {
+        return;
+    }
+    [NetServiceAPI getTheExerciseDetailsWithParameters:@{@"ActivityId":self.courseId} success:^(id responseObject) {
+        if ([responseObject[@"State"] integerValue] == 1) {
+            _allOptions = [NSArray arrayWithArray:[NSArray safeArray:[NSDictionary safeDictionary:responseObject[@"DataObject"]][QUESTION_LIST]]];
+
+            [_testResultTab reloadData];
+        } else {
+            [Progress progressShowcontent:responseObject[@"Message"]];
+            
+        }
+        [progress hiddenProgress];
+    } failure:^(NSError *error) {
+        [progress hiddenProgress];
+        [KTMErrorHint showNetError:error inView:self.view];
+    }];
+    
+}
+
 
 - (void)getExerciseOfTeacher {
     MBProgressManager *progress = [[MBProgressManager alloc] init];
@@ -86,7 +118,7 @@ static NSString *answerCellID = @"AnswerCellID";
     gradeView.timeLabel.hidden = self.role == UserRoleStudent?NO:YES;
     gradeView.middleLine.hidden = self.role == UserRoleStudent?NO:YES;
     gradeView.useTimeLabel.hidden = self.role == UserRoleStudent?NO:YES;
-    gradeView.timeLabel.text = self.timeStr;
+//    gradeView.timeLabel.text = self.timeStr;
     gradeView.gradeLabel.text = [NSString stringWithFormat:@"%.2f分",[self caculatedAllGrade]];
     
     return gradeView;
@@ -104,7 +136,8 @@ static NSString *answerCellID = @"AnswerCellID";
         MStr = [self getAnswerContent:questionInfo[@"QuestionOptionList"] optionId:questionInfo[@"LastStudentAnswer"]];
         CStr = [self getAnswerContent:questionInfo[@"QuestionOptionList"] optionId:questionInfo[@"RightAnswer"]];
     } else {
-        MStr = [self getAnswerContent:questionInfo[@"QuestionOptionList"] optionId:[self getStuAnswer:[_answerInfo objectForKey:questionInfo[@"Id"]]]];
+        
+        MStr = [self getAnswerContent:questionInfo[@"QuestionOptionList"] optionId:questionInfo[@"LastStudentAnswer"]];
         CStr = [self getAnswerContent:questionInfo[@"QuestionOptionList"] optionId:questionInfo[@"RightAnswer"]];
     }
     cell.finishedState.text = MStr.length == 0?@"未完成":@"完成";
@@ -115,41 +148,58 @@ static NSString *answerCellID = @"AnswerCellID";
 }
 
 - (NSString *)getAnswerContent:(NSArray *)options optionId:(NSString *)optionId {
-    NSString *answerStr;
-    for (NSDictionary *optionInfo in options) {
-        if ([optionInfo[@"Id"] isEqualToString:optionId]) {
-            answerStr = [NSString stringWithFormat:@"%@:%@",optionInfo[@"ABCorderNum"],optionInfo[@"Content"]];
-            break;
+    NSString *answerStr = @"";
+    NSArray *finishedArray = [NSArray safeArray:[optionId componentsSeparatedByString:@","]];
+    for (NSString *finStr in finishedArray) {
+        for (NSDictionary *optionInfo in options) {
+            if ([optionInfo[@"Id"] isEqualToString:finStr]) {
+                answerStr = [NSString stringWithFormat:@"%@:%@\n%@",optionInfo[@"ABCorderNum"],optionInfo[@"Content"],answerStr];
+                break;
+            }
         }
     }
+   
     return answerStr;
 }
 
 - (float)caculatedAllGrade {
     float grade=0;
+    
     for (NSDictionary *questionDic in _allOptions) {
-        NSString *MAnswer = self.role == UserRoleTeacher?questionDic[@"LastStudentAnswer"]:[self getStuAnswer:_answerInfo[questionDic[@"Id"]]];
+        NSString *MAnswer = questionDic[@"LastStudentAnswer"];
+        NSArray *finishedArray = [NSArray safeArray:[MAnswer componentsSeparatedByString:@","]];
+
         NSString *answer = questionDic[@"RightAnswer"];
-        if ([MAnswer isEqualToString:answer]) {
+        NSArray *correctArray = [NSArray safeArray:[answer componentsSeparatedByString:@","]];
+        if ([finishedArray isEqualToArray:correctArray]) {
             grade+=[questionDic[@"QScore"] floatValue];
+
         }
+       
     }
+    
+//    //把数据源拿出来创建临时的数组，不要直接使用数据源
+//    NSArray *answer = @[@1, @2, @3];//答案数组
+//    NSArray *select = @[@1, @4];    //用户选的选项
+//    
+//    if ([answer isEqualToArray:select]) {
+//        //一样就是对的
+//        
+//    }else {
+//        //不一样就是错的
+//        //拿出来answer 和 select 中一样的
+//        NSArray *selectTure = [answer filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF in %@", select]];
+//        NSLog(@"用户选择对的 -> %@", selectTure);
+//        
+//        NSArray *selectWrong = [select filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"NOT (SELF in %@)", answer]];
+//        NSLog(@"用户选择是错的 -> %@", selectWrong);
+//        
+//        NSArray *unselectTure = [answer filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"NOT (SELF in %@)", selectTure]];
+//        NSLog(@"用户没选择的正确答案 -> %@", unselectTure);
+//        
+//    }
     return grade;
 }
-
-- (NSString *)getStuAnswer:(NSArray *)answers {
-    NSString *answerStr = @"";
-    for (NSDictionary *answerDic in answers) {
-        NSString *string = answerDic[@"Id"];
-        if (string.length>0) {
-            answerStr = [NSString stringWithFormat:@"%@%@",answerStr,string];
-  
-        }
-    }
-    return answerStr;
-
-}
-
 
 
 

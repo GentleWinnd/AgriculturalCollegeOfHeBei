@@ -19,10 +19,10 @@ typedef NS_ENUM(NSUInteger, TestQuestionType) {
 
 @interface QuestionCollectionViewCell : UICollectionViewCell
 
-@property (strong, nonatomic) NSDictionary *courseInfo;
+@property (strong, nonatomic) NSMutableDictionary *courseInfo;
 @property (copy, nonatomic) selectedAnswerItem selectedAnswer;
 
-@property (strong, nonatomic) NSMutableArray *answerArray;
+//@property (strong, nonatomic) NSMutableArray *answerArray;
 @property (assign, nonatomic) TestQuestionType QUEType;
 
 

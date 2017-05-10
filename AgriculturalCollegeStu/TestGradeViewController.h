@@ -11,8 +11,6 @@
 @interface TestGradeViewController : UIViewController
 @property (assign, nonatomic) UserRole role;
 @property (copy, nonatomic) NSString *timeStr;
-@property (strong, nonatomic) NSDictionary *answerInfo;
-@property (strong, nonatomic) NSArray *allOptions;
 @property (copy, nonatomic) NSString *courseId;
 @property (copy, nonatomic) NSString *studentId;
 

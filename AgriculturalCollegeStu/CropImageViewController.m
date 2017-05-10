@@ -30,6 +30,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *nextBtn;
 @property (strong, nonatomic) IBOutlet UIButton *finishedBtn;
 @property (strong, nonatomic) IBOutlet TKImageView *tkImageView;
+@property (strong, nonatomic) IBOutlet UIButton *confirmbtn;
 
 @end
 
@@ -40,11 +41,25 @@
     
     [super viewDidLoad];
     self.title = @"剪裁图片";
+    
+    [self setButtonFrame:_frontBtn];
+    [self setButtonFrame:_nextBtn];
+    [self setButtonFrame:_finishedBtn];
+    [self setButtonFrame:_confirmbtn];
+    
     currentIndex = 0;
     changeArray = [NSMutableArray arrayWithArray:self.imagesArr];
     [self setUpTKImageView];
     [self getImageWithAsset:self.imagesArr[0]];
     
+}
+
+- (void)setButtonFrame:(UIButton *)btn {
+
+    btn.layer.cornerRadius = 3;
+    btn.layer.borderColor = MainThemeColor_Blue.CGColor;
+    btn.layer.borderWidth = 1;
+
 }
 
 - (void)setUpTKImageView {
@@ -80,13 +95,10 @@
     } failureBlock:^(NSError *error) {
         
     }];
-
-
 }
 
 - (IBAction)btnAction:(UIButton *)sender {
     
-
     if (sender.tag == 1) {//上一张
         currentIndex--;
         if (currentIndex<0) {
@@ -115,10 +127,16 @@
         [self dismissViewControllerAnimated:YES completion:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"sendSelectedImages" object:nil userInfo:@{@"image":changeArray}];
     } else {//确定
+        if (currentIndex>self.imagesArr.count-1) {
+            [Progress progressShowcontent:@"没有更多的照片了" currView:self.view];
+            currentIndex = self.imagesArr.count-1;
+            return;
+        }
         
         [changeArray replaceObjectAtIndex:currentIndex withObject:[_tkImageView currentCroppedImage]];
         currentIndex++;
         if (currentIndex > self.imagesArr.count-1) {
+
             return;
         }
 
@@ -128,8 +146,11 @@
 
 
 - (void)viewWillDisappear:(BOOL)animated {
+    
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = NO;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 
 @end

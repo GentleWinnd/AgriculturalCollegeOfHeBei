@@ -22,6 +22,7 @@
 #import "SetNavigationItem.h"
 #import "RecentCourseManager.h"
 #import "CurrentClassView.h"
+#import "NSString+Extension.h"
 #import "UserData.h"
 
 @interface StuTestViewController ()<UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,HintViewDelegate>
@@ -97,6 +98,10 @@ static NSString *cellID = @"questionCellID";
     [NetServiceAPI getTheExerciseDetailsWithParameters:@{@"ActivityId":self.courseId} success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue] == 1) {
             _questionDic = [[NSMutableDictionary alloc] initWithDictionary:[NSDictionary safeDictionary:responseObject[@"DataObject"]]];
+            BOOL finished = [NSString safeNumber:_questionDic[@"ExistRecord"]];
+            if (finished) {
+                [_putupBtn setTitle:@"查看成绩" forState:UIControlStateNormal];
+            }
             [self refreshedFinishedRate];
             [_quenstionInfoCollV reloadData];
           
@@ -246,8 +251,7 @@ static NSString *cellID = @"questionCellID";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     QuestionCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
     cell.courseInfo = _questionDic[QUESTION_LIST][indexPath.row];
-    cell.answerArray = self.answersInfo[_questionDic[QUESTION_LIST][indexPath.row][@"Id"]];
-    @WeakObj(self)
+//    @WeakObj(self)
     cell.selectedAnswer = ^(NSArray *item){
         [self setSelectedAnswer:item indexPath:indexPath];
     };
@@ -258,9 +262,9 @@ static NSString *cellID = @"questionCellID";
 - (void)setSelectedAnswer:(NSArray *)seleArray indexPath:(NSIndexPath *)indexPath {
     NSMutableArray *queArray = [NSMutableArray arrayWithArray:[NSArray safeArray:_questionDic[QUESTION_LIST]]];
     NSMutableDictionary *queInfo = [NSMutableDictionary dictionaryWithDictionary:queArray[indexPath.row]];
-    
-    
-    
+    [queInfo setValue:seleArray forKey:STU_SELE_ANSWER];
+    [queArray replaceObjectAtIndex:indexPath.row withObject:queInfo];
+    [_questionDic setValue:queArray forKey:QUESTION_LIST];
 
 }
 
@@ -286,14 +290,19 @@ static NSString *cellID = @"questionCellID";
 
 - (IBAction)putupBtnAction:(UIButton *)sender {
     if (sender.tag == 1) {//提交作业
-        [self postExerciseAnswers];
+        BOOL finished = [NSString safeNumber:_questionDic[@"ExistRecord"]];
+        if (finished) {
+            [self hiddenSelfView];
+        } else {
+            [self postExerciseAnswers];
+        }
     } else {//查看
         [UIView animateWithDuration:0.3 animations:^{
             FinishedCourseView *finisedView = [[NSBundle mainBundle] loadNibNamed:@"FinishedCourseView" owner:nil options:nil].lastObject;
-            [finisedView.courseBtn setTitle:[NSString stringWithFormat:@"%tu/%tu",[self getFinishedNumber],[_questionDic[QUESTION_LIST] count]] forState:UIControlStateNormal];
+            [finisedView.courseBtn setTitle:[NSString stringWithFormat:@"%tu/%tu",[self getFinishedNumbersIndex].count,[_questionDic[QUESTION_LIST] count]] forState:UIControlStateNormal];
             finisedView.courseNumber = [_questionDic[QUESTION_LIST] count];
             finisedView.finishedArray = [self getFinishedNumbersIndex];
-            finisedView.finishedNum = [self getFinishedNumber];
+            finisedView.finishedNum = [self getFinishedNumbersIndex].count;
             finisedView.selectedNum = ^(NSInteger index) {
                 _quenstionInfoCollV.contentOffset = CGPointMake(WIDTH * index, 0);
                 [self.finishedBtn setTitle:[NSString stringWithFormat:@"%d/%tu",(int)index+1,[_questionDic[QUESTION_LIST] count]] forState:UIControlStateNormal];
@@ -314,28 +323,16 @@ static NSString *cellID = @"questionCellID";
     [self.view addSubview:_hintView];
 }
 
-#pragma mark - get finished question num
-- (NSInteger)getFinishedNumber {
-    NSInteger num=0;
-    for (NSArray *values in [self.answersInfo allValues]) {
-        for (NSDictionary *anInfo in values) {
-            if ([anInfo[@"Id"] length]>0) {
-                num++;
-            }
-        }
-    }
-    return num;
-}
 
 - (NSArray *)getFinishedNumbersIndex {
     NSInteger index=0;
     NSMutableArray *indexArray = [NSMutableArray arrayWithCapacity:0];
-    for (NSArray *values in [self.answersInfo allValues]) {
-            for (NSDictionary *anInfo in values) {
-                if ([anInfo[@"Id"] length]>0) {
-                    [indexArray addObject:[NSNumber numberWithInteger:index]];
-                }
-            }
+    NSArray *queArray = [NSArray safeArray:_questionDic[QUESTION_LIST]];
+    for (NSDictionary *valuesInfo in queArray) {
+        NSArray *answerArray = [NSArray safeArray:valuesInfo[STU_SELE_ANSWER]];
+        if ([answerArray count]>0) {
+            [indexArray addObject:[NSNumber numberWithInteger:index]];
+        }
         index++;
     }
     return indexArray;
@@ -356,8 +353,8 @@ static NSString *cellID = @"questionCellID";
 - (void)hiddenSelfView {
     TestGradeViewController *gradeView = [[TestGradeViewController alloc] init];
     gradeView.role = UserRoleStudent;
-    gradeView.answerInfo = self.answersInfo;
-    gradeView.allOptions = _questionDic[QUESTION_LIST];
+//    gradeView.allOptions = _questionDic[QUESTION_LIST];
+    gradeView.courseId = self.courseId;
     gradeView.timeStr = _timeStr;
     [self.navigationController pushViewController:gradeView animated:YES];
     
@@ -379,7 +376,7 @@ static NSString *cellID = @"questionCellID";
 }
 
 - (BOOL)navigationShouldPopOnBackButton {
-    if ([self getFinishedNumber] >0) {
+    if ([self getFinishedNumbersIndex].count >0) {
         [self createAlertView];
     } else {
         [self.navigationController popViewControllerAnimated:YES];

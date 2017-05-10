@@ -36,8 +36,8 @@
 
 
 /****************************NewAPI*************************/
-#define  HOST_SERVICE @"http://ndlms_service.urart.cc/%@"
-
+//#define  HOST_SERVICE @"http://ndlms_service.urart.cc/%@"
+#define  HOST_SERVICE @"http://ndapi.netmall.net.cn/%@"
 //about us
 #define HOST_ABOUTUS @"/http://nduserservice.urart.cc/AutoUpdate/GetNewestAutoUpdate?applicationName=NDIOSClient"
 

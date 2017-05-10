@@ -476,8 +476,6 @@
 		585F131F1E5C452A00002F80 /* KTMRefreshHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 585F131D1E5C452A00002F80 /* KTMRefreshHeader.m */; };
 		585FAA911E9DD06600C9E0C8 /* StatisticalStuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 585FAA8F1E9DD06600C9E0C8 /* StatisticalStuViewController.m */; };
 		585FAA921E9DD06600C9E0C8 /* StatisticalStuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 585FAA901E9DD06600C9E0C8 /* StatisticalStuViewController.xib */; };
-		585FAA941E9E0F4100C9E0C8 /* postQuestion@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 585FAA931E9E0F4100C9E0C8 /* postQuestion@3x.png */; };
-		585FAA961E9E0F4A00C9E0C8 /* postQuestion@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 585FAA951E9E0F4A00C9E0C8 /* postQuestion@2x.png */; };
 		585FAA9B1E9E116C00C9E0C8 /* SponsorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 585FAA991E9E116C00C9E0C8 /* SponsorViewController.m */; };
 		585FAA9C1E9E116C00C9E0C8 /* SponsorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 585FAA9A1E9E116C00C9E0C8 /* SponsorViewController.xib */; };
 		5872FDB71E344C4800077209 /* SelecteCalenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5872FDB61E344C4800077209 /* SelecteCalenderView.m */; };
@@ -1451,8 +1449,6 @@
 		585FAA8E1E9DD06600C9E0C8 /* StatisticalStuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticalStuViewController.h; sourceTree = "<group>"; };
 		585FAA8F1E9DD06600C9E0C8 /* StatisticalStuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticalStuViewController.m; sourceTree = "<group>"; };
 		585FAA901E9DD06600C9E0C8 /* StatisticalStuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatisticalStuViewController.xib; sourceTree = "<group>"; };
-		585FAA931E9E0F4100C9E0C8 /* postQuestion@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "postQuestion@3x.png"; sourceTree = "<group>"; };
-		585FAA951E9E0F4A00C9E0C8 /* postQuestion@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "postQuestion@2x.png"; sourceTree = "<group>"; };
 		585FAA981E9E116C00C9E0C8 /* SponsorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SponsorViewController.h; sourceTree = "<group>"; };
 		585FAA991E9E116C00C9E0C8 /* SponsorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SponsorViewController.m; sourceTree = "<group>"; };
 		585FAA9A1E9E116C00C9E0C8 /* SponsorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SponsorViewController.xib; sourceTree = "<group>"; };
@@ -2373,8 +2369,6 @@
 		5811E6EE1DFAA41100EC2B31 /* tabbarIcon */ = {
 			isa = PBXGroup;
 			children = (
-				585FAA951E9E0F4A00C9E0C8 /* postQuestion@2x.png */,
-				585FAA931E9E0F4100C9E0C8 /* postQuestion@3x.png */,
 				5811E6EF1DFAA41100EC2B31 /* classRoom_d@2x.png */,
 				5811E6F01DFAA41100EC2B31 /* classRoom_d@3x.png */,
 				5811E6F11DFAA41100EC2B31 /* classRoom_s@2x.png */,
@@ -4400,7 +4394,6 @@
 				581E95A11E078515002DF5A1 /* minegroupo@3x.png in Resources */,
 				58995AD41DFC431900E685EC /* StatisticalContentTableViewCell.xib in Resources */,
 				581E95711E0782ED002DF5A1 /* currentClass@3x.png in Resources */,
-				585FAA961E9E0F4A00C9E0C8 /* postQuestion@2x.png in Resources */,
 				58BDB9BE1E125B4100E5E272 /* right_green@2x.png in Resources */,
 				580FFA461DED244600CE64B4 /* video_episodes.xib in Resources */,
 				5822AC7B1E0A7B73000FDC1E /* plus@2x.png in Resources */,
@@ -4487,7 +4480,6 @@
 				581F472D1E0261A9000C5622 /* ViewTestViewController.xib in Resources */,
 				582B2EC01E558B9700D2383E /* ResourceManagerViewController.xib in Resources */,
 				5822AC791E0A7B73000FDC1E /* frame_4@2x.png in Resources */,
-				585FAA941E9E0F4100C9E0C8 /* postQuestion@3x.png in Resources */,
 				5818C11D1E03BE98006EA94E /* TeachingEvaluationViewController.xib in Resources */,
 				582498C21DFE9D2300CB77A4 /* ApprovalInfoTableViewCell.xib in Resources */,
 				582E8DDD1DFFDA390089F81C /* NoticeHeaderView.xib in Resources */,

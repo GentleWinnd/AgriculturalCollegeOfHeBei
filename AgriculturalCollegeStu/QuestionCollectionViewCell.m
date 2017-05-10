@@ -5,6 +5,8 @@
 //  Created by YH on 2016/12/16.
 //  Copyright © 2016年 YH. All rights reserved.
 //
+#define STU_SELE_ANSWER @"studentSelectedAnswers"
+
 #define QUE_TAG 10
 
 #import "QuestionCollectionViewCell.h"
@@ -14,6 +16,7 @@
 @interface QuestionCollectionViewCell()<UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *QuestionInfoTable;
+@property (strong, nonatomic) NSMutableDictionary *questionInfo;
 
 @end
 static NSString *CellID = @"answerCellID";
@@ -27,8 +30,11 @@ static NSString *CellID = @"answerCellID";
     [self initTableView];
 }
 
-- (void)setCourseInfo:(NSDictionary *)courseInfo {
-
+- (void)setCourseInfo:(NSMutableDictionary *)courseInfo {
+    
+    self.QUEType = [NSString safeNumber:courseInfo[@"QuestionType"]].integerValue;
+    _questionInfo = [NSMutableDictionary dictionaryWithDictionary:courseInfo];
+    
     [_QuestionInfoTable reloadData];
 }
 
@@ -46,7 +52,7 @@ static NSString *CellID = @"answerCellID";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return ((NSArray *)_courseInfo[@"QuestionOptionList"]).count;
+    return ((NSArray *)_questionInfo[@"QuestionOptionList"]).count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -56,7 +62,7 @@ static NSString *CellID = @"answerCellID";
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 //    NSString *SELItem = @"";
 //    for (NSDictionary *AnInfo in self.answerArray) {
-//        for (NSDictionary *questionInfo in self.courseInfo[@"QuestionOptionList"]) {
+//        for (NSDictionary *questionInfo in self.questionInfo[@"QuestionOptionList"]) {
 //            if ([AnInfo[@"Id"] isEqualToString:questionInfo[@"Id"]]) {
 //                SELItem = [NSString stringWithFormat:@"%@%@",SELItem,questionInfo[@"ABCorderNum"]];
 //                break;
@@ -65,9 +71,9 @@ static NSString *CellID = @"answerCellID";
 //    }
 //
     QuestionHeaderView *gradeView = [[NSBundle mainBundle] loadNibNamed:@"QuestionHeaderView" owner:nil options:nil].lastObject;
-    gradeView.question.text = [NSString stringWithFormat:@"%@", self.courseInfo[@"Content"]];
-    gradeView.type = [self.courseInfo[@"QuestionType"] integerValue];
-    self.QUEType = [self.courseInfo[@"QuestionType"] integerValue];
+    gradeView.question.text = [NSString stringWithFormat:@"%@", self.questionInfo[@"Content"]];
+    gradeView.type = [self.questionInfo[@"QuestionType"] integerValue];
+    self.QUEType = [self.questionInfo[@"QuestionType"] integerValue];
     gradeView.tag = QUE_TAG;
     return gradeView;
 }
@@ -75,45 +81,101 @@ static NSString *CellID = @"answerCellID";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     SelecteAnswerTableViewCell  *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
    
-    NSDictionary *optionsInfo = [NSDictionary safeDictionary:_courseInfo[@"QuestionOptionList"][indexPath.row]];
-    cell.selecteItem.text = optionsInfo[@"ABCorderNum"];
-    cell.selecteAnswer.text = optionsInfo[@"Content"];
+    NSDictionary *optionsInfo = [NSDictionary safeDictionary:_questionInfo[@"QuestionOptionList"][indexPath.row]];
+    NSString *coderNum = self.QUEType == TestQuestionTypeJudge ?[NSString safeString:optionsInfo[@"Content"]]: [NSString safeString:optionsInfo[@"ABCorderNum"]];
+    NSString *contentStr = self.QUEType == TestQuestionTypeJudge ?@"  ":[NSString safeString:optionsInfo[@"Content"]];
+    cell.selecteItem.text = coderNum;
+    cell.selecteAnswer.text = contentStr;
     cell.selecteItem.layer.backgroundColor = [UIColor whiteColor].CGColor;
     cell.selecteItem.textColor = MainTextColor_DarkBlack;
-
-    for (NSDictionary *dic in self.answerArray) {
-        if ([optionsInfo[@"Id"] isEqualToString:dic[@"Id"]]) {
+    NSArray *answerArray = [NSArray safeArray:[self getAnswerSelectedtOptionId:_questionInfo[@"LastStudentAnswer"]]];
+    for (NSString *selectedId in answerArray) {
+        if ([optionsInfo[@"Id"] isEqualToString:selectedId]) {
             cell.selecteItem.layer.backgroundColor = MainThemeColor_Blue.CGColor;
             cell.selecteItem.textColor = [UIColor whiteColor];
         }
     }
+    UIView *backView = [[UIView alloc]initWithFrame:cell.bounds];
+    backView.backgroundColor = [UIColor clearColor];
+    cell.selectedBackgroundView = backView;
     
+    
+    NSMutableArray *finishedArray = [NSMutableArray arrayWithArray:[NSArray safeArray:[_questionInfo[@"LastStudentAnswer"] componentsSeparatedByString:@","]]];
+    if (finishedArray.count>0) {
+        cell.userInteractionEnabled = NO;
+    }
+
     return cell;
 }
 
+- (NSArray *)getAnswerSelectedtOptionId:(NSString *)optionId {
+    NSMutableArray *finishedArray = [NSMutableArray arrayWithArray:[NSArray safeArray:[optionId componentsSeparatedByString:@","]]];
+    
+    NSArray *answerArray = [NSArray safeArray:self.questionInfo[STU_SELE_ANSWER]];
+
+    for (NSDictionary *itemInfo in answerArray) {
+        [finishedArray addObject:itemInfo[@"Id"]];
+    }
+    
+    return finishedArray;
+}
+
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSMutableArray *finishedArray = [NSMutableArray arrayWithArray:[NSArray safeArray:[_questionInfo[@"LastStudentAnswer"] componentsSeparatedByString:@","]]];
+    if (finishedArray.count>0) {
+        return;
+    }
     
-    NSString *answerId = self.courseInfo[@"QuestionOptionList"][indexPath.row][@"Id"];
-    if (self.QUEType == TestQuestionTypeSigle) {//单选
-        NSDictionary *anInfo = @{@"Item":self.answerArray[indexPath.row][@"Item"],
-                                 @"Id":answerId};
-        [self.answerArray replaceObjectAtIndex:0 withObject:anInfo];
-        [tableView reloadData];
-    } else if (self.QUEType == TestQuestionTypeMultiple) {//多选
-        
-        NSDictionary *selectedItem = self.answerArray[indexPath.row];
-        if ([selectedItem[@"Id"] isEqualToString:answerId]) {
-            [self.answerArray replaceObjectAtIndex:indexPath.row withObject:@{@"Item":selectedItem[@"Item"],@"Id":@""}];
-        } else {
-            [self.answerArray replaceObjectAtIndex:indexPath.row withObject:@{@"Item":selectedItem[@"Item"],@"Id":answerId}];
-        }
 
-        [tableView reloadData];
+    NSString *answerId = self.questionInfo[@"QuestionOptionList"][indexPath.row][@"Id"];
+    NSString *answerItem = self.questionInfo[@"QuestionOptionList"][indexPath.row][@"ABCorderNum"];
+    NSString *contentStr = self.questionInfo[@"QuestionOptionList"][indexPath.row][@"Content"];
 
-//    NSString *SELItem = @"";
+    NSMutableArray *ansArr = [NSMutableArray arrayWithArray:self.questionInfo[STU_SELE_ANSWER]];
+    
+    /*
+     {
+     "Id": "ddb0b2bf-e4ae-4372-a3e1-3ac37853892d",
+     "ABCorderNum": "A",
+     "Content": "1",
+     "OrderNum": 1
+     },
+     */
+    NSDictionary *anInfo;
+    
+    if (self.QUEType == TestQuestionTypeJudge) {
+        anInfo = @{@"Item":contentStr,
+                   @"Id":answerId};
+    } else {
+        anInfo = @{@"Item":answerItem,
+                   @"Id":answerId};
+    }
+
+    if (ansArr.count == 0) {
+        [ansArr addObject:anInfo];
+    } else {
+    
+        if (self.QUEType == TestQuestionTypeSigle || self.QUEType == TestQuestionTypeJudge) {//单选
+            [ansArr replaceObjectAtIndex:0 withObject:anInfo];
+        } else if (self.QUEType == TestQuestionTypeMultiple) {//多选
+            NSInteger index=0;
+            NSArray *arr = [NSArray arrayWithArray:ansArr];
+            for (NSDictionary *itemINfo in arr) {
+                if (![itemINfo[@"Id"] isEqualToString:answerId]) {
+                    [ansArr addObject:anInfo];
+                } else {
+                    [ansArr removeObject:itemINfo];
+                }
+                index++;
+            }
+
+    }
+   //    NSString *SELItem = @"";
 //    for (NSDictionary *AnInfo in self.answerArray) {
-//        for (NSDictionary *questionInfo in self.courseInfo[@"QuestionOptionList"]) {
+//        for (NSDictionary *questionInfo in self.questionInfo[@"QuestionOptionList"]) {
 //            if ([AnInfo[@"Id"] isEqualToString:questionInfo[@"Id"]]) {
 //                SELItem = [NSString stringWithFormat:@"%@%@",SELItem,questionInfo[@"ABCorderNum"]];
 //                break;
@@ -123,9 +185,13 @@ static NSString *CellID = @"answerCellID";
 //    
     
 //    QuestionHeaderView *headerView = [_QuestionInfoTable viewWithTag:QUE_TAG];
-//    headerView.question.text = [NSString stringWithFormat:@"%@(%@)",self.courseInfo[@"Content"],SELItem];
+//    headerView.question.text = [NSString stringWithFormat:@"%@(%@)",self.questionInfo[@"Content"],SELItem];
     }
-    self.selectedAnswer(self.answerArray);
+    
+    [self.questionInfo setValue:ansArr forKey:STU_SELE_ANSWER];
+    [tableView reloadData];
+    
+    self.selectedAnswer(ansArr);
   
 }
 

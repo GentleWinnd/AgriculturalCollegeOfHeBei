@@ -316,7 +316,6 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         return UIEdgeInsetsMake(0, 0, 0, 0);
     } else {
         return UIEdgeInsetsMake(1, 1, 0, 1);
-
     }
 }
 
@@ -324,17 +323,12 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (collectionView == self.attachmentsCollection) {
         return CGSizeMake(90 , 90);
-
     } else {
         return CGSizeMake(WIDTH, 300);
-
     }
 }
 
-
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
     return YES;
 }
 
@@ -394,13 +388,11 @@ static NSString *attachmentCellID= @"AttachmentCellID";
             finisedView.selectedNum = ^(NSInteger index) {
                 _courseCollectionView.contentOffset = CGPointMake(WIDTH * index, 0);
                 [_finishedRateBtn setTitle:[NSString stringWithFormat:@"%d/%tu",index+1,[_allAssignmentInfo[COURSE] count]] forState:UIControlStateNormal];
-
             };
 
             [self.view addSubview:finisedView];
             
         }];
-    
     }
 }
 
@@ -431,7 +423,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     [self.view endEditing:YES];
     NSInteger num=0;
     for (NSDictionary *dic in _answersInfoArray) {
-        if ([dic[@"Answer"] length] >0) {
+        if ([[NSString safeString:dic[@"Answer"]] length] >0) {
             num++;
         }
     }
@@ -475,26 +467,6 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     return NO;
 }
 
-/*******************view mothed*******************/
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.navigationController.interactivePopGestureRecognizer.enabled = false;
-    });
-//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-//        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-//        self.navigationController.interactivePopGestureRecognizer.delegate = self;
-//    }
-}
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
-        return NO;
-    }
-    // add whatever logic you would otherwise have
-    return YES;
-}
-
 /*************get image************/
 
 - (void)composePicAdd {
@@ -516,7 +488,6 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     if (notice.userInfo.count>0) {
         [self dealAttachmentImage:nil images:[NSArray safeArray:notice.userInfo[@"image"]]];
     }
-  
 }
 
 #pragma mark - JKImagePickerControllerDelegate
@@ -556,8 +527,9 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         return;
     }
     BOOL haveAttach = NO;
+    NSInteger index = 0;
     for (NSDictionary *attachDic in attachments) {
-        if ([attachments indexOfObject:attachDic] == 0) {
+        if (index == 0) {
             NSData *imageData = attachDic[ATTACHMENT_IMAGE];
             if (imageData) {
                 imageStr = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
@@ -570,6 +542,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
                 haveAttach = YES;
             }
         }
+        index++;
     }
     if (haveAttach == NO) {
         return;
@@ -583,11 +556,10 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     
     [NetServiceAPI postUploadHomeWorkAttachmentsWithParameters:parameter success:^(id responseObject) {
     
-        if ([responseObject[@"state"] integerValue] == 1) {
-            [Progress progressShowcontent:responseObject[@"Message"] currView:self.view];
+        if ([responseObject[@"State"] integerValue] == 1) {
 
         } else {
-            [Progress progressShowcontent:responseObject[@"Message"] currView:self.view];
+            [Progress progressShowcontent:@"作业附件上传失败" currView:self.view];
         }
     } failure:^(NSError *error) {
         [KTMErrorHint showNetError:error inView:self.view];
@@ -629,6 +601,26 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 //    }
 //
 //}
+
+/*******************view mothed*******************/
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.navigationController.interactivePopGestureRecognizer.enabled = false;
+    });
+    //    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+    //        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    //        self.navigationController.interactivePopGestureRecognizer.delegate = self;
+    //    }
+}
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
+        return NO;
+    }
+    // add whatever logic you would otherwise have
+    return YES;
+}
 
 
 - (void)didReceiveMemoryWarning {
