@@ -14,6 +14,7 @@
 #define ASSIGNMENT_KEY @"Key"
 #define LOCAL_ATTACHMENT @"local"
 #define ATTACHMENT_IMAGE @"attachmentImage"
+#define ATTAH_IMAGES @"attachImages"
 
 #import "StuTaskViewController.h"
 #import "CourseInfoCollectionViewCell.h"
@@ -99,6 +100,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationSelectedImage:) name:@"sendSelectedImages" object:nil];
 
     _TPScrollView.scrollEnabled = NO;
     currentIndex = 0;
@@ -284,14 +286,13 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         NSString *imageUrl = [NSString safeString:attachInfo[ATTACHMENT_URL]];
         NSData *imageData = attachInfo[ATTACHMENT_IMAGE];
         if (imageData) {
-            ACell.attachmentType.image = [UIImage imageWithData:attachInfo[ATTACHMENT_IMAGE]];
+            ACell.attachmentType.image = [UIImage imageWithData:imageData];
         } else {
             NSURL *url = [NSURL URLWithString:imageUrl];
             [ACell.attachmentType sd_setImageWithURL:url];
         }
         ACell.deletedAttachment = ^(){
             [self removeHomeWorkAttachments:[self getCurrentAssignmentInfo][ASSIGNMENT_KEY] attachmentId:attachInfo[ATTACHMENR_ID] indexPath:indexPath];
-            
         };
         cell = ACell;
     } else {
@@ -337,33 +338,24 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     NSMutableDictionary *assignInfo = [NSMutableDictionary dictionaryWithDictionary:_answersInfoArray[indexPath.row]];
     [assignInfo setValue:answer forKey:ANSWER];
     [_answersInfoArray replaceObjectAtIndex:indexPath.row withObject:assignInfo];
-//    [self updateCourseFinishedState];
 
 }
 
-- (void)dealAttachmentImage:(NSIndexPath *)indexPath images:(NSArray *)images {
+- (void)dealAttachmentImages:(NSArray *)images {
     NSMutableDictionary *assignInfo = [NSMutableDictionary dictionaryWithDictionary:_answersInfoArray[currentIndex]];
-    NSMutableArray *attachments = [NSMutableArray arrayWithArray:[NSArray safeArray:assignInfo[ATTACHMENTS]]];
-   
+    NSMutableArray *attImageArr = [NSMutableArray arrayWithArray:assignInfo[ATTAH_IMAGES]];
     if (images.count>0) {
         for (UIImage *image in images) {
             NSDictionary *attachInfo = @{ATTACHMENT_IMAGE:UIImageJPEGRepresentation(image, 0.5)};
-            [attachments addObject:attachInfo];
+            [attImageArr addObject:attachInfo];
         }
     } else {
-        if (indexPath.row>attachments.count-1) {
-            return;
-        }
-
-        [attachments removeObjectAtIndex:indexPath.row];
+        [attImageArr removeAllObjects];
     }
   
-    [assignInfo setValue:attachments forKey:ATTACHMENTS];
+    [assignInfo setValue:attImageArr forKey:ATTAH_IMAGES];
     [_answersInfoArray replaceObjectAtIndex:currentIndex withObject:assignInfo];
     
-    [_attachmentsCollection reloadData];
-    
-    [self uploadAttachmentData];
 }
 
 
@@ -412,10 +404,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 #pragma mark - update finihsed rate
 
 - (void)updateCourseFinishedState {
-
-//    [_finishedRateBtn setTitle:[NSString stringWithFormat:@"%tu/%tu",[self getFinishedNumber],[_allAssignmentInfo[COURSE] count]] forState:UIControlStateNormal];
     [_finishedRateBtn setTitle:[NSString stringWithFormat:@"%d/%tu",1,[_allAssignmentInfo[COURSE] count]] forState:UIControlStateNormal];
-
 }
 
 #pragma mark - get finished question num
@@ -448,6 +437,8 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否放弃已完成的作业" preferredStyle:UIAlertControllerStyleAlert];
     [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         [self.navigationController popViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+
     }]];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -462,6 +453,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         [self createAlertView];
     } else {
         [self.navigationController popViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
 
     }
     return NO;
@@ -479,14 +471,14 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 //    imagePickerController.selectedAssetArray = self.attachmentsArray;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
     [self presentViewController:navigationController animated:YES completion:NULL];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationSelectedImage:) name:@"sendSelectedImages" object:nil];
     
 }
 
 - (void)notificationSelectedImage:(NSNotification *)notice {
 
     if (notice.userInfo.count>0) {
-        [self dealAttachmentImage:nil images:[NSArray safeArray:notice.userInfo[@"image"]]];
+        [self dealAttachmentImages:[NSArray safeArray:notice.userInfo[@"image"]]];
+        [self uploadAttachmentData:nil];
     }
 }
 
@@ -499,8 +491,8 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 }
 
 - (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source {
-
     [imagePicker dismissViewControllerAnimated:YES completion:^{
+        
     }];
 }
 
@@ -512,14 +504,14 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 
 #pragma mark - upload homework attaments
 
-- (void)uploadAttachmentData {
+- (void)uploadAttachmentData:(NSArray *)imageData {
     NSString *imageStr ;
     if (_allAssignmentInfo.count == 0) {
         [Progress progressShowcontent:@"此课程暂无作业" currView:self.view];
     }
     
     NSDictionary *assignInfo = [NSDictionary safeDictionary:_answersInfoArray[currentIndex]];
-    NSArray *attachments = [NSArray safeArray:assignInfo[ATTACHMENTS]];
+    NSArray *attachments = [NSArray safeArray:assignInfo[ATTAH_IMAGES]];
     
     
     if (attachments.count == 0) {
@@ -538,7 +530,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         } else {
             NSData *imageData = attachDic[ATTACHMENT_IMAGE];
             if (imageData) {
-                imageStr = [NSString stringWithFormat:@"||%@",[imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength]];
+                imageStr = [NSString stringWithFormat:@"%@||%@",imageStr,[imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength]];
                 haveAttach = YES;
             }
         }
@@ -557,13 +549,37 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     [NetServiceAPI postUploadHomeWorkAttachmentsWithParameters:parameter success:^(id responseObject) {
     
         if ([responseObject[@"State"] integerValue] == 1) {
-
+            [self setUploadedAttachs:[NSArray safeArray:responseObject[@"DataObject"]]];
         } else {
             [Progress progressShowcontent:@"作业附件上传失败" currView:self.view];
+            [self dealAttachmentImages:nil];
+
         }
+
     } failure:^(NSError *error) {
         [KTMErrorHint showNetError:error inView:self.view];
+        [self dealAttachmentImages:nil];
     }];
+}
+
+- (void)setUploadedAttachs:(NSArray *)attachIdArr {
+
+    NSMutableDictionary *assignInfo = [NSMutableDictionary dictionaryWithDictionary:_answersInfoArray[currentIndex]];
+    NSMutableArray *attachments = [NSMutableArray arrayWithArray:[NSArray safeArray:assignInfo[ATTACHMENTS]]];
+    NSArray *attImageArr = [NSArray safeArray:assignInfo[ATTAH_IMAGES]];
+    
+    NSInteger index = 0;
+    for (NSString *attId in attachIdArr) {
+        [attachments addObject:@{ATTACHMENT_IMAGE: attImageArr[index][ATTACHMENT_IMAGE],
+                                ATTACHMENR_ID: attachIdArr[index]}];
+        index++;
+        
+    }
+    
+    [assignInfo setValue:attachments forKey:ATTACHMENTS];
+    [_answersInfoArray replaceObjectAtIndex:currentIndex withObject:assignInfo];
+    [_attachmentsCollection reloadData];
+    [self dealAttachmentImages:nil];
 
 }
 
@@ -582,8 +598,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         
         if ( [responseObject[@"State"] integerValue] == 1) {
             [Progress progressShowcontent:@"删除成功" currView:self.view];
-            [self dealAttachmentImage:indexPath images:nil];
-
+            [self deletedAttachmentImageURL:indexPath];
         } else {
             [Progress progressShowcontent:[NSString safeString:responseObject[@"Message"]] currView:self.view];
         }
@@ -592,6 +607,18 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     }];
 
 }
+
+- (void)deletedAttachmentImageURL:(NSIndexPath *)indexPath {
+    NSMutableDictionary *assignInfo = [NSMutableDictionary dictionaryWithDictionary:_answersInfoArray[currentIndex]];
+    NSMutableArray *attachments = [NSMutableArray arrayWithArray:[NSArray safeArray:assignInfo[ATTACHMENTS]]];
+    [attachments removeObjectAtIndex:indexPath.row];
+    
+    [assignInfo setValue:attachments forKey:ATTACHMENTS];
+    [_answersInfoArray replaceObjectAtIndex:currentIndex withObject:assignInfo];
+    [_attachmentsCollection reloadData];
+    
+}
+
 
 
 //- (void)viewWillDisappear:(BOOL)animated {
@@ -614,6 +641,12 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     //        self.navigationController.interactivePopGestureRecognizer.delegate = self;
     //    }
 }
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+
+}
+
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
         return NO;

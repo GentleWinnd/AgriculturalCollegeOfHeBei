@@ -23,7 +23,6 @@
 #import "SignedSuccessView.h"
 #import "NSString+Date.h" 
 #import "NSDate+Formatter.h"
-#import "RecentCourseManager.h"
 #import "UserData.h"
 
 @interface SigninViewController ()
@@ -367,8 +366,6 @@
         scheduleView.theSelectedClass = ^(NSDictionary *courseDic) {
             _className.text = courseDic[@"Name"];
             [courseInfo setValuesForKeysWithDictionary:courseDic];
-            [RecentCourseManager saveRecentCourse:courseDic];
-            [self getRecentActvity];
 
         };
         

@@ -124,8 +124,9 @@
                 return;
             }
         }
-        [self dismissViewControllerAnimated:YES completion:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"sendSelectedImages" object:nil userInfo:@{@"image":changeArray}];
+
+        [self dismissViewControllerAnimated:YES completion:nil];
     } else {//确定
         if (currentIndex>self.imagesArr.count-1) {
             [Progress progressShowcontent:@"没有更多的照片了" currView:self.view];

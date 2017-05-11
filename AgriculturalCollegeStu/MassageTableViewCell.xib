@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,6 +25,12 @@
                         <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fub-v1-eOb">
+                        <rect key="frame" x="84" y="8" width="216" height="81"/>
+                        <connections>
+                            <action selector="reloadCurrentClass:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Kef-F6-Bzr"/>
+                        </connections>
+                    </button>
                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dg-gn-VPF">
                         <rect key="frame" x="324" y="34" width="66" height="23"/>
                         <constraints>
@@ -62,9 +69,12 @@
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="fub-v1-eOb" firstAttribute="leading" secondItem="6ke-Sb-BO4" secondAttribute="leading" id="6Z8-95-R9e"/>
                     <constraint firstItem="4dg-gn-VPF" firstAttribute="leading" secondItem="6ke-Sb-BO4" secondAttribute="trailing" constant="12" id="9Ve-lB-TUC"/>
+                    <constraint firstItem="fub-v1-eOb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Ju0-BZ-5ba"/>
                     <constraint firstItem="4dg-gn-VPF" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Pqx-Sz-pVF"/>
                     <constraint firstItem="6ke-Sb-BO4" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Qxw-1h-yoi"/>
+                    <constraint firstItem="fub-v1-eOb" firstAttribute="trailing" secondItem="6ke-Sb-BO4" secondAttribute="trailing" constant="-12" id="fes-RA-SHW"/>
                     <constraint firstAttribute="trailing" secondItem="eWr-De-kDw" secondAttribute="trailing" id="fon-lZ-BWs"/>
                     <constraint firstAttribute="trailing" secondItem="4dg-gn-VPF" secondAttribute="trailing" constant="5" id="h3i-jW-T3N"/>
                     <constraint firstItem="EKy-dG-pgM" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hUq-El-t7M"/>
@@ -72,6 +82,7 @@
                     <constraint firstItem="EKy-dG-pgM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="ocW-iQ-ivZ"/>
                     <constraint firstItem="6ke-Sb-BO4" firstAttribute="leading" secondItem="EKy-dG-pgM" secondAttribute="trailing" id="t11-h2-XyA"/>
                     <constraint firstItem="eWr-De-kDw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="u2o-Gp-oKU"/>
+                    <constraint firstItem="eWr-De-kDw" firstAttribute="top" secondItem="fub-v1-eOb" secondAttribute="bottom" id="xHj-Kj-k2C"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

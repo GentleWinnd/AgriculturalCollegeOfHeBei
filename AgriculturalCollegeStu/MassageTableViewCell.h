@@ -16,5 +16,7 @@ typedef void (^classScheduleClick)(UIButton *clickBtn);
 @property (strong, nonatomic) IBOutlet UIImageView *logoImageView;
 
 @property (copy, nonatomic) classScheduleClick classSchedule;
+@property (copy, nonatomic) void(^reloadCurrentClass)();
+
 
 @end

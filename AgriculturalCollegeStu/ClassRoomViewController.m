@@ -131,7 +131,6 @@ static NSString  *thirdCellID = @"thirdCellID";
 
 - (void)observerUserRoleChanged {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshedUserRole) name:NOTICE_USERROLE_CHANGED object:nil];
-
 }
 
 - (void)viewDidLoad {
@@ -186,9 +185,8 @@ static NSString  *thirdCellID = @"thirdCellID";
             labelWeak.text = [NSString stringWithFormat:@"%@ %@",timeStr,coursesInfo[COURSE_RECENTACTICE_DEPENDENT][COURSE_RECENTACTICE_DEPENDENT_NAME]];
 
         } failure:^(NSString *failMessage) {
-             labelWeak.text = @"获取最近的课程失败了😭";
+             labelWeak.text = @"获取最近的课程失败了";
         }];
-       
     });
 }
 
@@ -226,9 +224,7 @@ static NSString  *thirdCellID = @"thirdCellID";
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    if (userRole == UserRoleStudent) {
-//        return 2;
-//    }
+
     return 3;
 }
 
@@ -243,7 +239,6 @@ static NSString  *thirdCellID = @"thirdCellID";
             rowHeight = 36;
             break;
         case 1:
-            //rowHeight = userRole == UserRoleStudent? WIDTH*3/4+23: 120;
             rowHeight = 120;
             break;
         case 2:
@@ -300,12 +295,13 @@ static NSString  *thirdCellID = @"thirdCellID";
         cell = [[NSBundle mainBundle] loadNibNamed:@"MassageTableViewCell" owner:self options:nil].lastObject;
     }
     [self getRecentCourseInfoShowOnLabel:cell.massageLabel];
+    cell.massageLabel.text = @"获取课程中...";
+
     @WeakObj(cell);
     cell.classSchedule = ^(UIButton *clickBtn) {
         ClassScheduleViewController *classView = [[ClassScheduleViewController alloc] init];
         classView.theSelectedClass = ^(NSDictionary *courseDic) {
             if (courseDic != nil) {
-                cellWeak.massageLabel.text = [NSString stringWithFormat:@"%@",courseDic[COURSE_RECENTACTICE_DEPENDENT][COURSE_RECENTACTICE_DEPENDENT_NAME]];
                 NSString *startD = [NSString  stringFromTDateString:[NSString safeString:courseDic[@"StartDate"]]];
                 NSString *endD = [NSString stringFromTDateString:[NSString safeString:courseDic[@"EndDate"]]];
                 
@@ -318,9 +314,13 @@ static NSString  *thirdCellID = @"thirdCellID";
             
         };
         
-        [self pushViewController:classView animated:YES hiddenTabbar:YES];
+               [self pushViewController:classView animated:YES hiddenTabbar:YES];
     };
-    
+    cell.reloadCurrentClass = ^(){
+        cellWeak.massageLabel.text = @"获取课程中...";
+        [self getRecentCourseInfoShowOnLabel:cellWeak.massageLabel];
+    };
+
     return cell;
 }
 

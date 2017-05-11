@@ -156,7 +156,7 @@ static NSString *lineViewID = @"lineViewId";
 
 - (void)getCourseWithParameter:(NSDictionary *)parameter isDailyClassSCH:(BOOL)daily {
     MBProgressManager *progress = [[MBProgressManager alloc] init];
-    [progress loadingWithTitleProgress:@"加载中。。。"];
+    [progress loadingWithTitleProgress:@"加载中..."];
     
     [NetServiceAPI getClassScheduleWithParameters:parameter success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue] == 1) {

@@ -27,8 +27,14 @@
         } failure:^(NSString *failMessage) {
             
         }];
-        
     }
+}
+
+- (IBAction)reloadCurrentClass:(UIButton *)sender {
+    if (_reloadCurrentClass) {
+        self.reloadCurrentClass();
+    }
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
