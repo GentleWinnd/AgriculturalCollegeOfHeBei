@@ -5,9 +5,10 @@
 //  Created by YH on 2016/12/30.
 //  Copyright © 2016年 YH. All rights reserved.
 //
-#define UMAPPKEY @"583e3383c62dca08e2002070"
-#define UMMASSAGE_ALIAS_TYPE @"nongxuewang"
+//#define UMAPPKEY @"583e3383c62dca08e2002070"
 
+#define UMAPPKEY @"59155ce28f4a9d515f0006c6"
+#define UMMASSAGE_ALIAS_TYPE @"nongxuewang"
 
 
 #import "AppDelegate+UMComponent.h"

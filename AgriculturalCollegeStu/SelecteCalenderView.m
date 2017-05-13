@@ -39,6 +39,10 @@ static NSString *cellIDD = @"CellIDDay";
 }
 
 - (void)cancleSelf:(UIGestureRecognizer *)tap {
+    if (self.currentDate) {
+        self.currentDate(_selectedDate);
+    }
+
     [self removeFromSuperview];
 
 }
@@ -75,7 +79,7 @@ static NSString *cellIDD = @"CellIDDay";
 /****************calender table*****************/
 
 - (void)setCalenderView {
-    CGRect frame = CGRectMake(1, 1, CGRectGetWidth(self.calenderView.bounds)-2, CGRectGetHeight(self.calenderView.bounds)-2);
+    CGRect frame = CGRectMake(1, 1, WIDTH-26, CGRectGetHeight(self.calenderView.bounds)-2);
     //公历日期选择器
     IDJDatePickerView *djdateGregorianView=[[IDJDatePickerView alloc]initWithFrame:frame type:Gregorian1];
     [self.calenderView addSubview:djdateGregorianView];

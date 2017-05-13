@@ -124,7 +124,7 @@ static NSString *approvalCell =  @"approvalCell";
     [NetServiceAPI postAgreeApprovalInfoWithParameters:parameter success:^(id responseObject) {
         [progress hiddenProgress];
         if ([responseObject[@"State"] integerValue]!= 1) {
-            [Progress progressShowcontent:responseObject[@"Massage"] currView:self.view];
+            [Progress progressShowcontent:responseObject[@"Message"] currView:self.view];
         } else{
             [Progress progressShowcontent:@"提交成功" currView:self.view];
             [self performSelector:@selector(backUp) withObject:nil afterDelay:3];
@@ -153,7 +153,7 @@ static NSString *approvalCell =  @"approvalCell";
     [NetServiceAPI postTurndownApprovalInfoWithParameters:parameter success:^(id responseObject) {
         [progress hiddenProgress];
         if ([responseObject[@"State"] integerValue]!= 1) {
-            [Progress progressShowcontent:responseObject[@"Massage"] currView:self.view];
+            [Progress progressShowcontent:responseObject[@"Message"] currView:self.view];
         } else{
             [Progress progressShowcontent:@"提交成功" currView:self.view];
             [self performSelector:@selector(backUp) withObject:nil afterDelay:3];

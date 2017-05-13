@@ -130,8 +130,7 @@
     
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     //1.2.7版本开始不需要用户再手动注册devicetoken，SDK会自动注册
      //[UMessage registerDeviceToken:deviceToken];
     

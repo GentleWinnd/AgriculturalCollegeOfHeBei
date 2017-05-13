@@ -129,7 +129,7 @@
             }
             //每个IDJScrollComponent上有3个内容重复的UITableView，但这个细节在内部隐藏，对于使用这个类的人来说，只传递一份数据。在滚轮滚动的时候，我们永远使第2个UITableView上的Cell展示在选中区域，也就是说第1个和第3个UITableView只是用来向上向下滚动的时候，不出现空白而准备的。
             for (int j=0; j<3; j++) {
-                UITableView *tv=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, [[_scrollWidthProportion objectAtIndex:i]floatValue]*wheelCenterView.bounds.size.width, height) style:UITableViewStylePlain];
+                UITableView *tv=[[UITableView alloc]initWithFrame:CGRectMake(0, 0, [[_scrollWidthProportion objectAtIndex:i] floatValue]*wheelCenterView.bounds.size.width, height) style:UITableViewStylePlain];
                 tv.dataSource=self;
                 tv.delegate=self;
                 tv.scrollEnabled=NO;//禁止滚动，因为UITableView此时只是用来作为一个数据承载的视图，滚动的事情交给它的父视图IDJScrollComponent来做

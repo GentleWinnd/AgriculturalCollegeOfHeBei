@@ -109,7 +109,7 @@ static NSString  *thirdCellID = @"thirdCellID";
     
     NoticeViewController *noticeView = [[NoticeViewController alloc] init];
     noticeView.userRole = userRole;
-    noticeView.showUnreadNews = YES;
+    noticeView.showUnreadNews = NO;
     noticeView.refreshed = ^(){
         [self haveNewMessage];
     };

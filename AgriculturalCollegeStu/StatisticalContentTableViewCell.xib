@@ -31,11 +31,21 @@
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lq1-Kx-df3">
+                        <rect key="frame" x="0.0" y="138.5" width="325" height="1"/>
+                        <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="70z-8f-s6q"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="lq1-Kx-df3" secondAttribute="trailing" constant="-38" id="0sV-If-K6S"/>
                     <constraint firstItem="JeG-ub-m7C" firstAttribute="leading" secondItem="vKy-va-I5s" secondAttribute="trailing" constant="5" id="B6R-R4-1mt"/>
+                    <constraint firstAttribute="bottom" secondItem="lq1-Kx-df3" secondAttribute="bottom" id="BwJ-1u-ocF"/>
                     <constraint firstItem="JeG-ub-m7C" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="NHn-SH-p8y"/>
                     <constraint firstItem="vKy-va-I5s" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="QIp-Gr-9YI"/>
+                    <constraint firstItem="lq1-Kx-df3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="mac-ja-rQZ"/>
                     <constraint firstItem="vKy-va-I5s" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xzj-ZW-5iL"/>
                 </constraints>
             </tableViewCellContentView>

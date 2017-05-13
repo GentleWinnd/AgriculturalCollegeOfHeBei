@@ -172,7 +172,7 @@
         if ([responseObject[@"State"] integerValue]!= 1) {
             [Progress progressShowcontent:responseObject[@"Message"]];
         } else {
-            [courseInfo setValuesForKeysWithDictionary:responseObject[@"RecentestActivity"]];
+            [courseInfo setValuesForKeysWithDictionary:[NSDictionary safeDictionary:responseObject[@"RecentestActivity"]]];
             [self getRecentActvity];
             
         }
@@ -195,6 +195,7 @@
         } else {
             [activityInfo setValuesForKeysWithDictionary:[NSDictionary safeDictionary:responseObject[@"RecentestCheckInActivity"]]];
             [self analysisCourseData];
+            [self verifyTheSignedLocation];
         }
         
     } failure:^(NSError *error) {
@@ -202,17 +203,20 @@
         [KTMErrorHint showNetError:error inView:self.view];
         // NSLog(@"%@",error.description);
     }];
-
-    
 }
 
 #pragma mark - verifyTheSignedLoacation
 
 - (void)verifyTheSignedLocation {
     isRefreshedLoacal = YES;
+    NSString *activeId = [NSString safeString:activityInfo[@"Activity"][@"Id"]];
+    NSString *courseId = [NSString safeString:courseInfo[@"Dependent"][@"DependentId"]];
+    if (activeId.length == 0 || courseId.length == 0) {
+        return;
+    }
     NSMutableDictionary *parameter = [NSMutableDictionary dictionaryWithDictionary: @{@"GPSCoordinate":[NSString stringWithFormat:@"%@%@%@",locationInfo[L_LATITUUDE],@"%2C",locationInfo[L_LONGITUDE]]}];
-    [parameter setValue:courseInfo[@"Dependent"][@"DependentId"] forKey:@"OfflineCourseId"];
-    [parameter setValue:activityInfo[@"Activity"][@"Id"] forKey:@"CheckInActivityId"];
+    [parameter setValue:courseId forKey:@"OfflineCourseId"];
+    [parameter setValue:activeId forKey:@"CheckInActivityId"];
     
     [NetServiceAPI getLocationInRangeWithParameters:parameter success:^(id responseObject) {
         requestNewPostion = NO;

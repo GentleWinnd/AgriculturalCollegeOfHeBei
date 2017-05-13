@@ -15,6 +15,8 @@
 #import "SourceSearchViewController.h"
 #import "ClassScheduleViewController.h"
 
+#import "NoDataView.h"
+
 @interface SourceLoadViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UIButton *FeilClassify;
@@ -38,12 +40,16 @@
 @property (strong, nonatomic) IBOutlet UIView *backView;
 @property (strong, nonatomic) IBOutlet UIView *topCourseView;
 
+@property (strong, nonatomic)  NoDataView *noView;
+
 @property (assign, nonatomic) SourceType SType;
 @property (copy, nonatomic) NSString *currentSourceType;
 @property (strong, nonatomic) NSMutableDictionary *selectedFeilInfo;
 @property (strong, nonatomic) NSMutableArray *urls;
 @property (copy, nonatomic) NSString *courseId;
 @property (copy, nonatomic) NSString *courseName;
+
+
 @end
 
 static NSString  *cellID = @"feilCellID";
@@ -70,6 +76,16 @@ static NSString  *cellID = @"feilCellID";
     self.courseId = [RecentCourseManager getRecentCourseDataWithDateItem:DataItemDependentId];
     self.courseName = [RecentCourseManager getRecentCourseDataWithDateItem:DataItemDependentName];
     [self getClassSourceWithSourceType:_currentSourceType];
+}
+
+#pragma mark - add no data view
+
+- (void)createNodataView:(NoDataType)type {
+    _noView = [NoDataView layoutNoDataView];
+    _noView.type = NoDataTypeDefualt;
+    _noView.frame = self.feilTable.frame;
+    
+    [self.view addSubview:_noView];
 }
 
 #pragma mark - 定义classView
@@ -99,22 +115,33 @@ static NSString  *cellID = @"feilCellID";
 #pragma mark - get class source
 - (void)getClassSourceWithSourceType:(NSString *)source {
     _currentSourceType = source;
+    [_noView removeNoDataView];
     NSDictionary *parameter = @{@"OfflineCourseId":self.courseId,
                                 @"Keyword":@"",
                                 @"ResourceType":source};
     MBProgressManager *progress = [[MBProgressManager alloc] init];
     [progress loadingWithTitleProgress:@"加载中..."];
     [NetServiceAPI getClassSourcesWithParameters:parameter success:^(id responseObject) {
+        [progress hiddenProgress];
+
         if ([responseObject[@"State"] integerValue] == 1) {
             [self.urls removeAllObjects];
             [self.urls addObjectsFromArray:[NSArray safeArray:responseObject[@"DataObject"]]];
-            [_feilTable reloadData];
+            if (self.urls.count == 0) {
+                [self createNodataView:NoDataTypeDefualt];
+                return ;
+            } else {
+                [_feilTable reloadData];
+            }
         } else {
+            [self createNodataView:NoDataTypeLoadFailed];
+
             [Progress progressShowcontent:responseObject[@"Message"]];
         }
-        [progress hiddenProgress];
         
     } failure:^(NSError *error) {
+        [self createNodataView:NoDataTypeLoadFailed];
+
         [progress hiddenProgress];
         [KTMErrorHint showNetError:error inView:self.view];
     }];
@@ -305,6 +332,7 @@ static NSString  *cellID = @"feilCellID";
     
     } else {//搜索
         SourceSearchViewController *searchView = [[SourceSearchViewController alloc] init];
+        searchView.courseId = self.courseId;
         [self.navigationController pushViewController:searchView animated:NO];
     }
 }

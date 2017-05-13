@@ -9,11 +9,15 @@
 #import "SourceSearchViewController.h"
 #import "MCDownloadManager.h"
 #import "FeilTableViewCell.h"
+#import "NoDataView.h"
 
 @interface SourceSearchViewController ()<UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UITextField *inputTextFeild;
 @property (strong, nonatomic) IBOutlet UIButton *searchBtn;
 @property (strong, nonatomic) IBOutlet UITableView *resultTableView;
+@property (strong, nonatomic) NoDataView *noView;
+
+
 @property (strong, nonatomic) NSMutableArray *urls;
 
 @end
@@ -28,31 +32,54 @@ static NSString *CellID = @"cellID";
     [self.inputTextFeild setDelegate:self];
     [self initTableView];
     
-    
 }
+
+#pragma mark - add no data view
+
+- (void)createNodataView:(NoDataType)type {
+    _noView = [NoDataView layoutNoDataView];
+    _noView.type = NoDataTypeDefualt;
+    _noView.frame = self.resultTableView.frame;
+    @WeakObj(self)
+    _noView.reloadData = ^(){
+        [selfWeak getClassSourceWithKeyWord:_inputTextFeild.text];
+    };
+    
+    [self.view addSubview:_noView];
+}
+
 
 #pragma mark - get class source
 - (void)getClassSourceWithKeyWord:(NSString *)word {
     NSDictionary *parameter = @{@"OfflineCourseId":_courseId,
                                 @"Keyword":word,
                                 @"ResourceType":@""};
+    [_noView removeNoDataView];
     MBProgressManager *progress = [[MBProgressManager alloc] init];
     [progress loadingWithTitleProgress:@"加载中..."];
     [NetServiceAPI getClassSourcesWithParameters:parameter success:^(id responseObject) {
+        [progress hiddenProgress];
+
         if ([responseObject[@"State"] integerValue] == 1) {
             [self.urls removeAllObjects];
             [self.urls addObjectsFromArray:[NSArray safeArray:responseObject[@"DataObject"]]];
-            [_resultTableView reloadData];
+            
+            if (self.urls.count == 0) {
+                [self createNodataView:NoDataTypeDefualt];
+            } else {
+                [_resultTableView reloadData];
+            }
         } else {
+            [self createNodataView:NoDataTypeLoadFailed];
+
             [Progress progressShowcontent:responseObject[@"Message"]];
         }
-        [progress hiddenProgress];
         
     } failure:^(NSError *error) {
+        [self createNodataView:NoDataTypeLoadFailed];
         [progress hiddenProgress];
         [KTMErrorHint showNetError:error inView:self.view];
     }];
-    
 }
 
 

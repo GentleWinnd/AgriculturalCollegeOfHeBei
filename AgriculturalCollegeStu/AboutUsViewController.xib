@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -60,7 +60,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="软件版本：v 1.0.0.0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDC-sj-dcF">
-                                    <rect key="frame" x="15" y="26" width="132.5" height="18"/>
+                                    <rect key="frame" x="121.5" y="26" width="132.5" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <color key="textColor" red="0.29803922770000002" green="0.29803922770000002" blue="0.29803922770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -69,7 +69,7 @@
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="oDC-sj-dcF" firstAttribute="centerY" secondItem="sG1-R9-Q46" secondAttribute="centerY" constant="10" id="11q-77-Aen"/>
-                                <constraint firstItem="oDC-sj-dcF" firstAttribute="leading" secondItem="YJo-aH-iVL" secondAttribute="trailing" constant="-20" id="C95-iV-dSM"/>
+                                <constraint firstItem="oDC-sj-dcF" firstAttribute="centerX" secondItem="sG1-R9-Q46" secondAttribute="centerX" id="GoK-mg-ZeL"/>
                                 <constraint firstItem="2EV-4c-Ous" firstAttribute="leading" secondItem="sG1-R9-Q46" secondAttribute="leading" constant="8" id="I4Z-Fk-7hA"/>
                                 <constraint firstItem="YJo-aH-iVL" firstAttribute="leading" secondItem="2EV-4c-Ous" secondAttribute="trailing" constant="6" id="LDy-8a-ewW"/>
                                 <constraint firstItem="YJo-aH-iVL" firstAttribute="top" secondItem="sG1-R9-Q46" secondAttribute="top" constant="6" id="XVY-bY-AlA"/>
@@ -79,7 +79,7 @@
                                 <constraint firstItem="YJo-aH-iVL" firstAttribute="centerY" secondItem="sG1-R9-Q46" secondAttribute="centerY" id="vcC-Y8-n7Y"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2016 河北农业大学 Limited All Rights Reserved." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Tt-dn-rLe">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2016 河北农业大学 Limited All Rights Reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="6Tt-dn-rLe">
                             <rect key="frame" x="18" y="644" width="340" height="15"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -89,14 +89,14 @@
                             <rect key="frame" x="0.0" y="97" width="375" height="117"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <string key="text"> 
- 地址：保定市灵雨寺街289号
- 邮编：071001 
- 学院办公室电话(传真)：0312-7521495  
- 研招办电话：0312—7521303 
- 农大研究生资讯平台微信号：guauhweixin
+      地址：保定市灵雨寺街289号
+      邮编：071001 
+      学院办公室电话(传真)：0312-7521495  
+      研招办电话：0312—7521303 
+      农大研究生资讯平台微信号：guauhweixin
 </string>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>

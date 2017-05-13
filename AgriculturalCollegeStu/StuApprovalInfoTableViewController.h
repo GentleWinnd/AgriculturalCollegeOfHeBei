@@ -10,4 +10,6 @@
 
 @interface StuApprovalInfoTableViewController : UITableViewController
 
+@property (nonatomic, assign) BOOL needToRootView;
+
 @end

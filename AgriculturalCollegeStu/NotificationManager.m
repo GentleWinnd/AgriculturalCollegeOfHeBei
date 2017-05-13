@@ -150,7 +150,7 @@ static NotificationManager *pushNotice;
 
 - (void)pushTemporaryTestView {
     StuClassTestViewController *stuTest = [[StuClassTestViewController alloc] init];
-    stuTest.testInfo = _userInfo;
+    stuTest.testInfo = [NSDictionary safeDictionary:_userInfo[@"extra"]];
     _selectedVC = stuTest;
 }
 
@@ -158,7 +158,7 @@ static NotificationManager *pushNotice;
 
 - (void)updateTemporaryView {
     StuClassTestViewController *stuTest = (StuClassTestViewController *)[self getCurrentVC];
-    stuTest.testInfo = _userInfo;
+    stuTest.testInfo = [NSDictionary safeDictionary:_userInfo[@"extra"]];
     [stuTest updateTestCourse];
 }
 

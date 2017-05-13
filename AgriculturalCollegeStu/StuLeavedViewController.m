@@ -121,6 +121,7 @@
 //        ApprovalStateViewController *stateView = [[ApprovalStateViewController alloc] init];
 //        stateView.userRole = UserRoleStudent;
         StuApprovalInfoTableViewController *approvalView = [[StuApprovalInfoTableViewController alloc] init];
+        approvalView.needToRootView = YES;
         [selfWeak.navigationController pushViewController:approvalView animated:YES];
     
     }]];

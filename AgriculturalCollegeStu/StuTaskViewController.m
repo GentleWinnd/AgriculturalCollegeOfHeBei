@@ -621,13 +621,12 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 
 
 
-//- (void)viewWillDisappear:(BOOL)animated {
-//    [super viewWillDisappear:animated];
-//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-//        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-//    }
-//
-//}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    }
+}
 
 /*******************view mothed*******************/
 
@@ -640,11 +639,6 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     //        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     //        self.navigationController.interactivePopGestureRecognizer.delegate = self;
     //    }
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {

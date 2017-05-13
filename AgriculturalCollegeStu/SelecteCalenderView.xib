@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -62,11 +62,11 @@
                         <constraint firstAttribute="bottom" secondItem="hlj-Pd-aRA" secondAttribute="bottom" constant="12" id="Nm9-Ur-qzq"/>
                         <constraint firstItem="m23-wb-xnZ" firstAttribute="centerY" secondItem="o2y-1X-Q8S" secondAttribute="centerY" id="NnD-wq-ycM"/>
                         <constraint firstItem="m23-wb-xnZ" firstAttribute="centerX" secondItem="vlr-IV-LU9" secondAttribute="centerX" id="QjJ-yS-427"/>
-                        <constraint firstItem="hlj-Pd-aRA" firstAttribute="leading" secondItem="o2y-1X-Q8S" secondAttribute="leading" id="TKG-y7-LFF"/>
                         <constraint firstItem="m23-wb-xnZ" firstAttribute="leading" secondItem="o2y-1X-Q8S" secondAttribute="trailing" id="WUK-Xo-Fvh"/>
                         <constraint firstItem="uSO-Dh-HFx" firstAttribute="width" secondItem="o2y-1X-Q8S" secondAttribute="width" id="bIv-mK-ayd"/>
-                        <constraint firstItem="uSO-Dh-HFx" firstAttribute="trailing" secondItem="hlj-Pd-aRA" secondAttribute="trailing" id="pXq-Jm-aDT"/>
+                        <constraint firstItem="hlj-Pd-aRA" firstAttribute="leading" secondItem="vlr-IV-LU9" secondAttribute="leading" constant="12" id="bSx-68-ZLF"/>
                         <constraint firstItem="hlj-Pd-aRA" firstAttribute="top" secondItem="o2y-1X-Q8S" secondAttribute="bottom" constant="12" id="sV9-NU-XpD"/>
+                        <constraint firstAttribute="trailing" secondItem="hlj-Pd-aRA" secondAttribute="trailing" constant="12" id="trD-QB-JES"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i7x-T2-mMf">

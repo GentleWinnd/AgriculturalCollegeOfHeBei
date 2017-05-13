@@ -129,7 +129,7 @@ static NSString *secondCellID = @"secondCellID";
     [progress loadingWithTitleProgress:@"处理中..."];
     [NetServiceAPI postAgreeApprovalInfoWithParameters:parameter success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue]!= 1) {
-            [Progress progressShowcontent:responseObject[@"Massage"] currView:self.view];
+            [Progress progressShowcontent:responseObject[@"Message"] currView:self.view];
         } else{
             [Progress progressShowcontent:@"提交成功" currView:self.view];
             [self getWaitApprovalList];
@@ -154,7 +154,7 @@ static NSString *secondCellID = @"secondCellID";
 
     [NetServiceAPI postTurndownApprovalInfoWithParameters:parameter success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue]!= 1) {
-            [Progress progressShowcontent:responseObject[@"Massage"] currView:self.view];
+            [Progress progressShowcontent:responseObject[@"Message"] currView:self.view];
         } else{
             [Progress progressShowcontent:@"提交成功" currView:self.view];
             [self getWaitApprovalList];

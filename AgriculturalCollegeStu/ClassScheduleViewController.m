@@ -83,9 +83,6 @@ static NSString *lineViewID = @"lineViewId";
     
     UIButton *rightBtn = [[UIButton alloc] init];
     rightBtn.frame = CGRectMake(0, 0, 28,28);
-//    [rightBtn setTitle:@"单日" forState:UIControlStateNormal];
-//    rightBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
-//    rightBtn.titleLabel.font = [UIFont systemFontOfSize:16];
 
     [rightBtn setImage:[UIImage imageNamed:@"daycelendar"] forState:UIControlStateNormal];
     [rightBtn setTitleColor:MainTextColor_DarkBlack forState:UIControlStateNormal];
@@ -621,7 +618,6 @@ static NSString *lineViewID = @"lineViewId";
       
     };
     [self.view addSubview:calenderView];
-
 }
 
 

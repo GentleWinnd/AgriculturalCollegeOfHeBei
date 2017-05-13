@@ -71,7 +71,7 @@
 -(void)setVideoInfo:(NSDictionary *)videoInfo
 {
     _videoInfo = videoInfo;
-    [_iconImageView setImageWithURL:[NSURL URLWithString:videoInfo[@"Cover"]] placeholderImage:[UIImage imageNamed:@"默认图"]];
+    [_iconImageView setImageWithURL:[NSURL URLWithString:videoInfo[@"Cover"]] placeholderImage:[UIImage imageNamed:@"placehodlerimg"]];
     _detailLabel.text = videoInfo[@"Title"];
     if ([_videoInfo[@"downloadFinish"] isEqualToString:@"1"]) {
         _progressView.progress = 1.f;

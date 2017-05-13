@@ -42,7 +42,7 @@
                         </userDefinedRuntimeAttributes>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BgZ-aw-1l3">
-                        <rect key="frame" x="204" y="20" width="1" height="135"/>
+                        <rect key="frame" x="204" y="17" width="1" height="69"/>
                         <color key="backgroundColor" red="0.92549019607843142" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="1" id="u9G-Ba-rh0"/>
@@ -59,11 +59,11 @@
             <constraints>
                 <constraint firstItem="cfU-BM-Zil" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="5oh-kg-1ba"/>
                 <constraint firstAttribute="trailing" secondItem="BgZ-aw-1l3" secondAttribute="trailing" id="Muf-X2-mBr"/>
-                <constraint firstItem="BgZ-aw-1l3" firstAttribute="bottom" secondItem="pGN-gv-Yzk" secondAttribute="bottom" id="Nw7-jc-pRx"/>
+                <constraint firstItem="BgZ-aw-1l3" firstAttribute="bottom" secondItem="cfU-BM-Zil" secondAttribute="bottom" constant="3" id="Oa8-h5-iEE"/>
                 <constraint firstAttribute="bottom" secondItem="pGN-gv-Yzk" secondAttribute="bottom" constant="12" id="Uws-eb-t4Y"/>
                 <constraint firstItem="BgZ-aw-1l3" firstAttribute="leading" secondItem="pGN-gv-Yzk" secondAttribute="trailing" id="gex-zA-CcG"/>
                 <constraint firstItem="cfU-BM-Zil" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="20" id="mvZ-dM-jFF"/>
-                <constraint firstItem="BgZ-aw-1l3" firstAttribute="top" secondItem="cfU-BM-Zil" secondAttribute="top" id="qUc-1c-7Jv"/>
+                <constraint firstItem="BgZ-aw-1l3" firstAttribute="top" secondItem="cfU-BM-Zil" secondAttribute="top" constant="-3" id="qUc-1c-7Jv"/>
                 <constraint firstItem="pGN-gv-Yzk" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="tYd-CY-rYR"/>
             </constraints>
             <size key="customSize" width="205" height="167"/>
@@ -71,7 +71,7 @@
                 <outlet property="countLabel" destination="cfU-BM-Zil" id="h2w-i7-BO1"/>
                 <outlet property="titleView" destination="pGN-gv-Yzk" id="Bxs-FL-aeQ"/>
             </connections>
-            <point key="canvasLocation" x="-10" y="95"/>
+            <point key="canvasLocation" x="-10.5" y="94.5"/>
         </collectionViewCell>
     </objects>
 </document>
