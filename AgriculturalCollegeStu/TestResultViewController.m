@@ -43,9 +43,17 @@ static NSString *cellID = @"testCellID";
 #pragma mark initData 
 
 - (void)initData {
-//    self.courseArray = [NSMutableArray arrayWithObjects:@"1.图像虚化函数",@"2.图像高斯模糊",@"4.图像数字合成",@"5.线性代数",@"6.高等数学",@"7.数学分析", nil];
-    
-    [self getTestResultRate];
+    if (self.assignmentType != ClassAssignmentTypeTemporaryTest) {
+        [self getTestResultRate];
+ 
+    } else {
+        NSArray *rightArr = [NSArray safeArray:self.temporaryInfo[@"RightStudents"]];
+        NSArray *allTestArr = [NSArray safeArray:self.temporaryInfo[@"ShouldStudents"]];
+        self.courseArray = @[@{@"courseName":self.courseName,
+                               @"testRate":[NSNumber numberWithFloat:(rightArr.count/allTestArr.count)]
+                               }];
+        [_TestResultInfoTab reloadData];
+    }
 }
 
 #pragma mark - get  class test rightwrong rate
@@ -64,7 +72,6 @@ static NSString *cellID = @"testCellID";
     if (self.courseId == nil) {
         return;
     }
-    //@"23c6434e-1dac-44f0-868e-de938be3100a"
     [NetServiceAPI getTheExerciseStateRightWrongRateWithParameters:@{@"ActivityId":self.courseId} success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue] == 1) {
             self.courseArray = [NSArray safeArray:responseObject[@"DataObject"]];
@@ -104,10 +111,21 @@ static NSString *cellID = @"testCellID";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     TestResultTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     NSDictionary *rateInfo = [NSDictionary safeDictionary:self.courseArray[indexPath.row]];
-    cell.quenstionName.text = rateInfo[@"Content"];
-    cell.proporteLabel.text = [NSString stringWithFormat:@"%@/%@",rateInfo[@"RightNum"],rateInfo[@"ShouldNumber"]];
-    cell.progressView.progress = [rateInfo[@"RightNum"] floatValue]/[rateInfo[@"ShouldNumber"] floatValue];
+    NSString *rateText = [NSString stringWithFormat:@"%@/%@",rateInfo[@"RightNum"],rateInfo[@"ShouldNumber"]];
+    CGFloat rateNum = [rateInfo[@"RightNum"] floatValue]/[rateInfo[@"ShouldNumber"] floatValue];
+    NSString *countentStr = [NSString safeString:rateInfo[@"Content"]];
+    if (self.assignmentType == ClassAssignmentTypeTemporaryTest) {
+        NSArray *rightArr = [NSArray safeArray:self.temporaryInfo[@"RightStudents"]];
+        NSArray *allTestArr = [NSArray safeArray:self.temporaryInfo[@"ShouldStudents"]];
+
+        rateText = [NSString stringWithFormat:@"%tu/%tu",rightArr.count, allTestArr.count];
+        rateNum = [rateInfo[@"testRate"] floatValue];
+        countentStr = rateInfo[@"courseName"];
+    }
     
+    cell.quenstionName.text = countentStr;
+    cell.proporteLabel.text = rateText;
+    cell.progressView.progress = rateNum;
     return cell;
 }
 

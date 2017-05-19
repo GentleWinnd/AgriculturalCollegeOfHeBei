@@ -13,5 +13,6 @@
 @property (nonatomic, assign) BOOL hasSignUp;
 @property (nonatomic, copy) NSString *subTitle;
 @property (nonatomic, copy) NSString *subId;
+@property (nonatomic, assign) UserRole useRoler;
 
 @end

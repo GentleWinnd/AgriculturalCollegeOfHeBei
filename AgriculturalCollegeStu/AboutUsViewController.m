@@ -11,6 +11,7 @@
 
 @interface AboutUsViewController ()
 @property (strong, nonatomic) IBOutlet UILabel *versionLable;
+@property (strong, nonatomic) IBOutlet UILabel *rightLabel;
 
 @end
 
@@ -21,6 +22,7 @@
     // Do any additional setup after loading the view from its nib.
     self.title = @"关于我们";
 //    [self getAboutUsInfo];
+    self.rightLabel.adjustsFontSizeToFitWidth = YES;
     
 }
 

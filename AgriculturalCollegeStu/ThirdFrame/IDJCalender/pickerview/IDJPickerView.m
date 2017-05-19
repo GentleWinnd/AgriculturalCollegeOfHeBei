@@ -330,6 +330,7 @@
 
 //处理滚动列表停止滚动的事件-普通滚动
 -(void)scrollViewDidEndDragging:(UIScrollView *)sc willDecelerate:(BOOL)decelerate{
+    
     if (!decelerate) {
         [self stopScrollNoLoop:sc];
     }
@@ -337,6 +338,7 @@
 
 //处理滚动列表停止滚动的事件-普通滚动
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)sc{
+    
     [self stopScrollNoLoop:sc];
 }
 

@@ -85,7 +85,7 @@ static NSString *cellID = @"studentInfoCell";
 
 - (void)getSponsorStudentsInfo {
     if (self.courseId == nil) {
-        [Progress progressPlease:@"未知错误" showView:self.view];
+        [Progress progressShowcontent:@"未知错误" currView:self.view];
         return;
     }
     NSDictionary *parameter = @{@"OfflineCourseId":_courseId};

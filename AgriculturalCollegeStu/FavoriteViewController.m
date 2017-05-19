@@ -91,7 +91,7 @@ static NSString *cellID = @"CellID";
     self.Favoritetable.dataSource = self;
     [self.Favoritetable registerNib:[UINib nibWithNibName:@"FavoriteTableViewCell" bundle:nil]forCellReuseIdentifier:cellID];
     self.Favoritetable.rowHeight = UITableViewAutomaticDimension;
-    self.Favoritetable.estimatedRowHeight = 70;
+    self.Favoritetable.estimatedRowHeight = 66.f;
     [self initRefreshWithTableView:self.Favoritetable];
 }
 

@@ -438,7 +438,7 @@ ALAssetsFilter * ALAssetsFilterFromJKImagePickerControllerFilterType(JKImagePick
 - (void)finishPhotoDidSelected
 {
     if ([_delegate respondsToSelector:@selector(imagePickerController:didSelectAssets:isSource:)]) {
-        if (self.selectedAssetArray.count>0) {
+        if (self.selectedAssetArray.count>0 && self.originPicture == NO) {
             [self cropImageView];
             return;
         }

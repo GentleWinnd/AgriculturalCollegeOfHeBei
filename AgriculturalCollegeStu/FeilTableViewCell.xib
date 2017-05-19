@@ -30,6 +30,10 @@
                         <state key="normal">
                             <color key="titleColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                         </state>
+                        <state key="selected">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
                         <connections>
                             <action selector="btnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="hEI-Gc-SGV"/>
                         </connections>
@@ -97,15 +101,25 @@
                         <rect key="frame" x="394" y="32.5" width="30" height="30"/>
                         <color key="backgroundColor" red="0.70355902777777779" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRw-ta-lcP">
+                        <rect key="frame" x="41" y="12" width="302" height="70.5"/>
+                        <connections>
+                            <action selector="openSourceBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="0Ly-An-NdE"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailingMargin" secondItem="5KT-0H-RdJ" secondAttribute="trailing" constant="-8" id="1QU-1s-8mL"/>
                     <constraint firstItem="G3p-Tx-hsd" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="7lV-1g-BDX"/>
+                    <constraint firstItem="aKI-hi-jvB" firstAttribute="leading" secondItem="VRw-ta-lcP" secondAttribute="trailing" constant="13.5" id="9dH-Rb-NaT"/>
+                    <constraint firstAttribute="bottom" secondItem="VRw-ta-lcP" secondAttribute="bottom" constant="12" id="B6C-Yu-zzA"/>
                     <constraint firstItem="7mv-aR-EYJ" firstAttribute="trailing" secondItem="OPK-FE-efC" secondAttribute="trailing" id="ETr-ta-NC8"/>
                     <constraint firstItem="vFG-wg-toc" firstAttribute="leading" secondItem="G3p-Tx-hsd" secondAttribute="leading" id="FzP-LR-3K0"/>
                     <constraint firstItem="7mv-aR-EYJ" firstAttribute="bottom" secondItem="OPK-FE-efC" secondAttribute="bottom" id="J3v-bu-aB7"/>
+                    <constraint firstItem="VRw-ta-lcP" firstAttribute="leading" secondItem="pMx-aI-yYZ" secondAttribute="trailing" constant="43" id="KT9-sK-gr1"/>
                     <constraint firstItem="7mv-aR-EYJ" firstAttribute="top" secondItem="OPK-FE-efC" secondAttribute="top" id="Lpd-bK-KfN"/>
                     <constraint firstItem="pMx-aI-yYZ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Mok-X3-RFT"/>
+                    <constraint firstItem="VRw-ta-lcP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="SHZ-eX-3ot"/>
                     <constraint firstItem="5KT-0H-RdJ" firstAttribute="leading" secondItem="7mv-aR-EYJ" secondAttribute="trailing" constant="-20" id="T4y-vF-Ool"/>
                     <constraint firstItem="5KT-0H-RdJ" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="WVO-ma-EEo"/>
                     <constraint firstItem="G3p-Tx-hsd" firstAttribute="leading" secondItem="HUV-fl-JXo" secondAttribute="trailing" constant="3" id="f7W-1S-Wkc"/>
@@ -130,6 +144,7 @@
                 <outlet property="leadingPace" destination="x5o-92-str" id="Van-DB-7QF"/>
                 <outlet property="loadProgress" destination="OPK-FE-efC" id="NBf-cV-0bt"/>
                 <outlet property="logoImage" destination="HUV-fl-JXo" id="hbI-p9-UJ6"/>
+                <outlet property="openBtn" destination="VRw-ta-lcP" id="tai-ir-WZy"/>
                 <outlet property="selectedBtn" destination="pMx-aI-yYZ" id="vIo-cc-2kk"/>
                 <outlet property="shareBtn" destination="5KT-0H-RdJ" id="xLs-bj-y0r"/>
             </connections>

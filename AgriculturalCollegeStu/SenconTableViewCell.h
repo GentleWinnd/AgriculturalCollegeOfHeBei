@@ -13,5 +13,9 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) IBOutlet UIPageControl *progressView;
 @property (strong, nonatomic) NSArray *dayScheduleArray;
+@property (copy, nonatomic) void(^reloadData)(BOOL reload);
+
+@property (strong, nonatomic) IBOutlet UIButton *nodataBtn;
+
 
 @end

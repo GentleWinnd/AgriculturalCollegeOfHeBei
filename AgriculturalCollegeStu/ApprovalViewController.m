@@ -280,6 +280,8 @@ static NSString *secondCellID = @"secondCellID";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     ApprovalStateViewController *infoView = [[ApprovalStateViewController alloc] initWithNibName:@"ApprovalStateViewController" bundle:nil];
     if (tableView == _firstTable) {
         infoView.approvalInfo = [self.waitArray objectAtIndex:indexPath.row];

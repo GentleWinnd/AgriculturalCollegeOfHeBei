@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="402" height="148"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="402" height="147.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="402" height="148"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="KwD-S9-gxR">
@@ -37,20 +37,35 @@
                         <color key="pageIndicatorTintColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <color key="currentPageIndicatorTintColor" white="0.33121744790000002" alpha="1" colorSpace="calibratedWhite"/>
                     </pageControl>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UC9-by-JxS">
+                        <rect key="frame" x="0.0" y="0.0" width="402" height="147.5"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <state key="normal" title="加载中...">
+                            <color key="titleColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="nodataBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7hY-PU-A3D"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" red="0.92549019607843142" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="KwD-S9-gxR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Eyd-i9-Dnh"/>
                     <constraint firstItem="VTT-57-Kpr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="JF6-Gx-J9T"/>
                     <constraint firstAttribute="bottom" secondItem="VTT-57-Kpr" secondAttribute="bottom" constant="1" id="MQS-RW-CdA"/>
+                    <constraint firstItem="UC9-by-JxS" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="aya-e0-6JF"/>
                     <constraint firstItem="KwD-S9-gxR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="bRt-Ri-4x2"/>
+                    <constraint firstItem="UC9-by-JxS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="pqA-rk-zRL"/>
                     <constraint firstAttribute="trailing" secondItem="VTT-57-Kpr" secondAttribute="trailing" id="srC-3v-kWa"/>
+                    <constraint firstAttribute="trailing" secondItem="UC9-by-JxS" secondAttribute="trailing" id="tyP-oI-tc6"/>
                     <constraint firstItem="VTT-57-Kpr" firstAttribute="top" secondItem="KwD-S9-gxR" secondAttribute="bottom" constant="1" id="wup-hD-2gd"/>
                     <constraint firstAttribute="trailing" secondItem="KwD-S9-gxR" secondAttribute="trailing" id="xWS-Ge-nw4"/>
+                    <constraint firstAttribute="bottom" secondItem="UC9-by-JxS" secondAttribute="bottom" id="yId-v4-Tm1"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="collectionView" destination="KwD-S9-gxR" id="XGk-ee-lSB"/>
+                <outlet property="nodataBtn" destination="UC9-by-JxS" id="ffh-Ol-NPh"/>
                 <outlet property="progressView" destination="VTT-57-Kpr" id="c9l-fv-AAe"/>
             </connections>
             <point key="canvasLocation" x="105" y="111"/>

@@ -111,30 +111,51 @@ static NSString *CellID = @"cellID";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FeilTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
     
-    cell.logoImage.image = indexPath.row == 1?[UIImage imageNamed:@"word"]:[UIImage imageNamed:@"PDF"];
     cell.feilName.text = self.urls[indexPath.row][@"Title"];
     cell.capacityTrail.text = [self caculateSourceSize:[self.urls[indexPath.row][@"FileSize"] integerValue]];
     cell.Stype =  [self getTheSourceType:self.urls[indexPath.row][@"ResourceType"]];
+    cell.SType =  [NSString safeString:self.urls[indexPath.row][@"ResourceType"]];
 
-    cell.url = self.urls[indexPath.row][@"Url"];
     cell.totalSize = [self.urls[indexPath.row][@"FileSize"] longLongValue];
 
+    cell.capacitylabel.hidden = YES;
+    cell.downLoadBtn.hidden = YES;
+    
     cell.selectedBtnType = ^(FeilBtn btnType, BOOL selected) {
         if (btnType == FeilBtnShare) {//share
             
         } else if (btnType == FeilBtnDownload) {//download
-            if (self.searchResult) {
-                self.searchResult(self.urls[indexPath.row]);
-            }
-            [self downloadWithUrl:self.urls[indexPath.row][@"Url"]];
-            [Progress progressShowcontent:[NSString stringWithFormat:@"%@已加入到下载队列",self.urls[indexPath.row][@"Title"]]];
-            [self.navigationController popViewControllerAnimated:NO];
+//            if (self.searchResult) {
+//                self.searchResult(self.urls[indexPath.row]);
+//            }
+           
         } else {
 //            [self.selectedFeilInfo setValue:self.urls[indexPath.row] forKey:[NSString stringWithFormat:@"%tu",indexPath.row]];
         }
     };
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSDictionary *sourceInfo = [NSDictionary safeDictionary:self.urls[indexPath.row]];
+    
+    BOOL loaded = NO;
+    MCDownloadReceipt *receipt = [[MCDownloadManager defaultInstance] downloadReceiptForURL:[NSString safeString:sourceInfo[@"Url"]]];
+ 
+    if (receipt.state == MCDownloadStateNone || receipt.state == MCDownloadStateFailed) {
+        if (self.searchResult) {
+            self.searchResult(sourceInfo);
+            [Progress progressShowcontent:[NSString stringWithFormat:@"%@已加入到下载队列",self.urls[indexPath.row][@"Title"]]];
+        }
+    } else {
+        [Progress progressShowcontent:[NSString stringWithFormat:@"%@已在下载队列",self.urls[indexPath.row][@"Title"]]];
+    }
+    self.navigationController.navigationBarHidden = NO;
+  
+    [self.navigationController popViewControllerAnimated:NO];
+
 }
 
 #pragma mark - caculate source size
@@ -172,19 +193,24 @@ static NSString *CellID = @"cellID";
 }
 
 
-
 - (IBAction)btnAction:(UIButton *)sender {
     if (sender.tag == 1) {//search
         [self.inputTextFeild resignFirstResponder];
+        if (_inputTextFeild.text.length == 0) {
+            return;
+        }
         [self getClassSourceWithKeyWord:self.inputTextFeild.text];
     } else {//cancle
+        self.navigationController.navigationBarHidden = NO;
+
         [self.navigationController  popViewControllerAnimated:NO];
     }
 }
 
-
 - (void)textFieldDidEndEditing:(UITextField *)textField {//停止编辑
-    
+    if (textField.text.length == 0) {
+        return;
+    }
     [self getClassSourceWithKeyWord:textField.text];
 }
 
@@ -210,31 +236,6 @@ static NSString *CellID = @"cellID";
     self.navigationController.navigationBarHidden = NO;
 
 }
-
-#pragma mark - load source
-
-- (void)downloadWithUrl:(NSString *)url {
-    [[MCDownloadManager defaultInstance] downloadFileWithURL:url
-                                                    progress:^(NSProgress * _Nonnull downloadProgress, MCDownloadReceipt *receipt) {
-                                                        
-                                                        if ([receipt.url isEqualToString:url]) {
-                                                            //                                                            [self.loadProgress updateProgressWithNumber:downloadProgress.fractionCompleted];
-                                                            
-                                                        }
-                                                        
-                                                    }
-                                                 destination:nil
-                                                     success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSURL * _Nonnull filePath) {
-                                                         //                                                         [self.downLoadBtn setTitle:@"完成" forState:UIControlStateNormal];
-                                                     }
-                                                     failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
-                                                         //                                                         [self.downLoadBtn setTitle:@"重新下载" forState:UIControlStateNormal];
-                                                     }];
-    
-    
-}
-
-
 
 
 - (void)didReceiveMemoryWarning {

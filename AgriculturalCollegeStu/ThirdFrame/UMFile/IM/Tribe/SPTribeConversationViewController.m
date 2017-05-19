@@ -18,7 +18,7 @@
     
     NSArray *aryItems = self.navigationItem.rightBarButtonItems;
     NSMutableArray *aryNewItems = [NSMutableArray array];
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"more_icon"]
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"tribeMember"]
                                                              style:UIBarButtonItemStylePlain
                                                             target:self
                                                             action:@selector(tribeProfileBarButtonItemPressed:)];

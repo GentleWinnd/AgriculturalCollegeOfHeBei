@@ -24,7 +24,7 @@ static NSString *cellID = @"StatisticalCellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.title = @"统计报表";
+    self.navigationItem.title = @"课程记录表";
 
     [_yearInfoTable registerNib:[UINib nibWithNibName:@"StatisticalByYearTableViewCell" bundle:nil] forCellReuseIdentifier:cellID];
     _yearInfoTable.delegate = self;

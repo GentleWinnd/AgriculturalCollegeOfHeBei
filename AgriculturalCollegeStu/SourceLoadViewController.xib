@@ -19,6 +19,7 @@
                 <outlet property="RVImageBtn" destination="A8H-u0-d2h" id="4s6-34-udz"/>
                 <outlet property="RVedioBtn" destination="wGn-Le-s0H" id="N0W-fN-70y"/>
                 <outlet property="backView" destination="5D2-By-gnN" id="cwB-AI-AdX"/>
+                <outlet property="deleted" destination="BjS-Uw-Cg9" id="B0H-VK-IqY"/>
                 <outlet property="feilTable" destination="sus-a6-oMC" id="wnr-8B-Wgm"/>
                 <outlet property="filetabBottomSpace" destination="UL2-NZ-FKh" id="kG3-TX-Fdw"/>
                 <outlet property="rangeView" destination="bZe-EB-Fb7" id="jmi-GQ-yYU"/>
@@ -140,7 +141,7 @@
                 <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T4h-1o-U3V">
                     <rect key="frame" x="0.0" y="617" width="375" height="50"/>
                     <subviews>
-                        <button opaque="NO" tag="111" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Bn-8o-LEN">
+                        <button hidden="YES" opaque="NO" tag="111" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Bn-8o-LEN">
                             <rect key="frame" x="105" y="6" width="46" height="23"/>
                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                             <inset key="titleEdgeInsets" minX="-22" minY="40" maxX="-1" maxY="0.0"/>
@@ -152,7 +153,7 @@
                                 <action selector="bottomBtnAction:" destination="-1" eventType="touchUpInside" id="lYE-BM-x1l"/>
                             </connections>
                         </button>
-                        <button opaque="NO" tag="112" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAQ-kg-JXf">
+                        <button hidden="YES" opaque="NO" tag="112" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAQ-kg-JXf">
                             <rect key="frame" x="225" y="13" width="46" height="23"/>
                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                             <inset key="titleEdgeInsets" minX="0.0" minY="0.0" maxX="-1" maxY="-22"/>
@@ -161,12 +162,26 @@
                                 <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                         </button>
+                        <button opaque="NO" tag="113" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BjS-Uw-Cg9">
+                            <rect key="frame" x="164" y="13" width="46" height="23"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                            <inset key="titleEdgeInsets" minX="-24" minY="0.0" maxX="0.0" maxY="-27"/>
+                            <inset key="imageEdgeInsets" minX="8" minY="-16" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="删除" image="deletebtn.png">
+                                <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="bottomBtnAction:" destination="-1" eventType="touchUpInside" id="O9n-Vn-HTI"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.20000000300000001" green="0.20000000300000001" blue="0.20000000300000001" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="BjS-Uw-Cg9" firstAttribute="centerY" secondItem="T4h-1o-U3V" secondAttribute="centerY" id="An4-oW-1FM"/>
                         <constraint firstItem="MAQ-kg-JXf" firstAttribute="centerY" secondItem="T4h-1o-U3V" secondAttribute="centerY" id="BE8-Ja-7sV"/>
                         <constraint firstItem="4Bn-8o-LEN" firstAttribute="centerY" secondItem="T4h-1o-U3V" secondAttribute="centerY" constant="-8" id="fhK-Sf-3tJ"/>
                         <constraint firstItem="MAQ-kg-JXf" firstAttribute="centerX" secondItem="T4h-1o-U3V" secondAttribute="centerX" constant="60" id="gOQ-rK-h8m"/>
+                        <constraint firstItem="BjS-Uw-Cg9" firstAttribute="centerX" secondItem="T4h-1o-U3V" secondAttribute="centerX" id="hgp-KI-C6v"/>
                         <constraint firstItem="4Bn-8o-LEN" firstAttribute="centerX" secondItem="T4h-1o-U3V" secondAttribute="centerX" constant="-60" id="rnU-c0-lfL"/>
                         <constraint firstAttribute="height" constant="50" id="zBq-1C-m3P"/>
                     </constraints>
@@ -370,6 +385,7 @@
         </view>
     </objects>
     <resources>
+        <image name="deletebtn.png" width="23" height="23"/>
         <image name="download_arrow.png" width="23" height="23"/>
         <image name="range.png" width="24" height="24"/>
         <image name="search.png" width="24" height="24"/>

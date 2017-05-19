@@ -116,19 +116,33 @@ static NSString *lineViewID = @"lineViewId";
 - (void)initData {
     classesArray = [NSMutableArray arrayWithCapacity:0];
     dayCourseArray = [NSMutableArray arrayWithCapacity:0];
-//    [classesArray addObjectsFromArray:@[@"高等数学（一）",@"大学英语英语下（一）",@"大学物理（大二）",@"离散数学（三）",@"数据统计与应用（一）"]];
-    classTimeArray = @[@[@"8:00",@"9:00"],@[@"10:00",@"11:00"],@[@"12:00",@"13:00"],@[@"14:00",@"15:00"],@[@"16:00",@"17:00"],@[@"18:00",@"19:00",@"20:00"],];
-    [RecentCourseManager getRecentCourseSuccess:^(NSDictionary *coursesInfo) {
-        recentCourseInfo = [NSDictionary dictionaryWithDictionary:coursesInfo];
-    } failure:^(NSString *failMessage) {
-        
-    }];
+    classTimeArray = @[@[@"08:00",@"09:00"],@[@"10:00",@"11:00"],@[@"12:00",@"13:00"],@[@"14:00",@"15:00"],@[@"16:00",@"17:00"],@[@"18:00",@"19:00"],@[@"20:00",@"21:00",@"22:00"]];
     SCurrentDate = [NSDate date];
-    [self analysisCurrentDate:NO];
+    [self analysisCurrentDate:NO withData:SCurrentDate];
     //[self getAllClassCourse];
     [self getClasSchedule];
-
 }
+
+- (void)getRecentCourse {
+    MBProgressManager *progress = [[MBProgressManager alloc] init];
+    [progress loadingWithTitleProgress:@"加载中..."];
+
+    [NetServiceAPI getRecentCourseWithParameters:nil success:^(id responseObject) {
+        if ([responseObject[@"State"] integerValue]!= 1) {
+            [Progress progressShowcontent:responseObject[@"Message"]];
+        } else {
+            recentCourseInfo = [NSDictionary dictionaryWithDictionary:[NSDictionary safeDictionary:responseObject[@"RecentestActivity"]]];
+            [_DayCalenderTab reloadData];
+        }
+        [progress hiddenProgress];
+
+    } failure:^(NSError *error) {
+        [progress hiddenProgress];
+
+        [KTMErrorHint showNetError:error inView:self.view];
+    }];
+}
+
 
 #pragma mark -  get week course
 
@@ -378,23 +392,46 @@ static NSString *lineViewID = @"lineViewId";
 
 #pragma mark - get week num
 
-- (void)analysisCurrentDate:(BOOL)changDay {
+- (void)analysisCurrentDate:(BOOL)changDay withData:(NSDate *)date {
     NSCalendar *calendar = [NSCalendar currentCalendar];
+    [calendar setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"CET"]];
+    [calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+28800]];
     NSDateComponents *comps = [[NSDateComponents alloc] init];
     
-    comps = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitWeekOfYear | NSCalendarUnitWeekOfMonth) fromDate:SCurrentDate];
+    comps = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitWeekday | NSCalendarUnitWeekOfYear | NSCalendarUnitWeekOfMonth) fromDate:date];
     NSInteger year = [comps year];
     NSInteger month = [comps month];
     NSInteger day = [comps day];
     NSInteger dayOfWeek = [comps weekday];
     NSInteger weekOfMonth = [comps weekOfMonth];
+    dayOfWeek--;
+    
+    NSString *dayOfweekStr = [NSString stringWithFormat:@"%tu",dayOfWeek];
+    if (dayOfWeek == 1) {
+        dayOfweekStr = @"一";
+    }if (dayOfWeek == 2) {
+        dayOfweekStr = @"二";
+    }if (dayOfWeek == 3) {
+        dayOfweekStr = @"三";
+    }if (dayOfWeek == 4) {
+        dayOfweekStr = @"四";
+    }if (dayOfWeek == 5) {
+        dayOfweekStr = @"五";
+    }
+    
+    if (dayOfWeek == 0) {
+      dayOfweekStr = @"日";
+    }
+    if (dayOfWeek == 6) {
+        dayOfweekStr = @"六";
+    }
     weekNUM = [comps weekOfYear];
     if (!changDay) {
         lastWeekNUM = weekNUM;
     }
     if (self.contentScrollView.contentOffset.x>0) {
         NAVView.titleLabel.text = [NSString stringWithFormat:@"%tu月%tu日",month,day];
-        NAVView.detailLabel.text = [NSString stringWithFormat:@"%tu年%tu月第%tu周 周%tu",year,month,weekOfMonth,dayOfWeek];
+        NAVView.detailLabel.text = [NSString stringWithFormat:@"%tu年%tu月第%tu周 周%@",year,month,weekOfMonth,dayOfweekStr];
     } else {
         NAVView.titleLabel.text = [NSString stringWithFormat:@"%tu年%tu月第%tu周",year,month,weekOfMonth];
     }
@@ -406,7 +443,8 @@ static NSString *lineViewID = @"lineViewId";
 
 - (NSInteger)getCurrentWeekInfo {
     NSCalendar *initCalendar = [NSCalendar currentCalendar];
-    NSDateComponents *comps;
+    [initCalendar setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"CET"]];
+    [initCalendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+28800]];    NSDateComponents *comps;
     NSDate *currentDate = [NSDate dateWithTimeIntervalSinceNow:0];
 //    [initCalendar setFirstWeekday:2];
 //    [initCalendar setMinimumDaysInFirstWeek:7];
@@ -419,6 +457,8 @@ static NSString *lineViewID = @"lineViewId";
 - (NSDate *)getCurrentWeekMonday {
     NSInteger week = [self getCurrentWeekInfo];
     NSCalendar *initCalendar = [NSCalendar currentCalendar];
+    [initCalendar setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"CET"]];
+    [initCalendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+28800]];
     NSDateComponents *comps = [[NSDateComponents alloc] init];
     [comps setDay:-(week-2)];
     NSDate *monday = [initCalendar dateByAddingComponents:comps toDate:SCurrentDate options:0];
@@ -429,6 +469,8 @@ static NSString *lineViewID = @"lineViewId";
 - (NSDate *)getCurrentWeekSunday {
     NSInteger week = [self getCurrentWeekInfo];
     NSCalendar *initCalendar = [NSCalendar currentCalendar];
+    [initCalendar setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"CET"]];
+    [initCalendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+28800]];
     NSDateComponents *comps = [[NSDateComponents alloc] init];
 
     [comps setDay:7-week+1];
@@ -441,7 +483,7 @@ static NSString *lineViewID = @"lineViewId";
 - (void)getNextWeek {
     weekNUM++;
     SCurrentDate = [NSDate dateWithTimeInterval:60*60*24*7 sinceDate:SCurrentDate];
-    [self analysisCurrentDate:NO];
+    [self analysisCurrentDate:NO withData:SCurrentDate];
     [self getClasSchedule];
     NSLog(@"---=====DATE===%@",SCurrentDate);
 }
@@ -451,7 +493,7 @@ static NSString *lineViewID = @"lineViewId";
         weekNUM--;
     }
     SCurrentDate = [NSDate dateWithTimeInterval:-60*60*24*7 sinceDate:SCurrentDate];
-    [self analysisCurrentDate:NO];
+    [self analysisCurrentDate:NO withData:SCurrentDate];
     [self getClasSchedule];
     NSLog(@"---=====DATE===%@",SCurrentDate);
 
@@ -459,21 +501,24 @@ static NSString *lineViewID = @"lineViewId";
 
 - (void)getNextDay {
     SCurrentDate = [NSDate dateWithTimeInterval:60*60*24 sinceDate:SCurrentDate];
-    [self analysisCurrentDate:YES];
-    [self getClasSchedule];
+    [self analysisCurrentDate:NO withData:SCurrentDate];
+    [self displayDailyCourse];
 
 }
 
 - (void)getPreviousDay {
     SCurrentDate = [NSDate dateWithTimeInterval:-60*60*24 sinceDate:SCurrentDate];
-    [self analysisCurrentDate:YES];
-    [self getClasSchedule];
+    [self analysisCurrentDate:NO withData:SCurrentDate];
+    [self displayDailyCourse];
 
 }
 
 - (NSDate *)getTheDateWeekSunDay {
 
     NSCalendar *initCalendar = [NSCalendar currentCalendar];
+    [initCalendar setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"CET"]];
+    [initCalendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+28800]];
+    
     NSDateComponents *comps = [[NSDateComponents alloc] init];
     
     [comps setDay:6];
@@ -486,6 +531,9 @@ static NSString *lineViewID = @"lineViewId";
 
 - (BOOL)isCurrentWeek {
     NSCalendar *calendar = [NSCalendar currentCalendar];
+    [calendar setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"CET"]];
+    [calendar setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:+28800]];
+    
     NSDate *endDate = [NSDate date];
     unsigned int unitFlags2 = NSCalendarUnitMonth | NSCalendarUnitDay;
     NSDateComponents *comps2 = [calendar components:unitFlags2 fromDate:SCurrentDate  toDate:endDate  options:0];
@@ -518,10 +566,13 @@ static NSString *lineViewID = @"lineViewId";
         sender.selected = YES;
         [self setBottomBtnState:sender];
     }
-    if (sender.tag<3) {
-        [self analysisCurrentDate:sender.tag==1?YES:NO];
-       
+    if (sender.tag == 3) {
+        [self analysisCurrentDate:NO withData:[NSDate date]];
+
+    } else {
+        [self analysisCurrentDate:sender.tag==1?YES:NO withData:SCurrentDate];
     }
+    
     NAVView.leftBtn.hidden = sender.tag<3?NO:YES;
     NAVView.rightBtn.hidden = sender.tag<3?NO:YES;
 }
@@ -560,7 +611,6 @@ static NSString *lineViewID = @"lineViewId";
         _CWView.backgroundColor = [UIColor whiteColor];
         [self changeNavDetailHidden:NO];
         [self displayRecentClass];
-    
     }
     sender.backgroundColor = RulesLineColor_DarkGray;
 
@@ -571,13 +621,9 @@ static NSString *lineViewID = @"lineViewId";
 - (void)displayRecentClass {
     showRecentCourse = YES;
     if ([recentCourseInfo allKeys].count == 0) {
-        [RecentCourseManager getRecentCourseSuccess:^(NSDictionary *coursesInfo) {
-            recentCourseInfo = [NSDictionary dictionaryWithDictionary:coursesInfo];
-            [_DayCalenderTab reloadData];
-        } failure:nil];
+        [self getRecentCourse];
     } else {
         [_DayCalenderTab reloadData];
-    
     }
 }
 
@@ -599,7 +645,6 @@ static NSString *lineViewID = @"lineViewId";
 - (void)changeNavDetailHidden:(BOOL)hidden {
     NAVView.datePsace.constant = hidden?0:-8;
     NAVView.detailLabel.hidden = hidden?YES:NO;
-
 }
 
 #pragma mark - pushup selectecalenderView
@@ -676,6 +721,7 @@ static NSString *lineViewID = @"lineViewId";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CDayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CDCellID forIndexPath:indexPath];
+   
     
     return [self setCell:cell cellForRowAtIndexPath:indexPath];
 
@@ -687,6 +733,7 @@ static NSString *lineViewID = @"lineViewId";
     CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5; //0.5 to 1.0,away from black
     cell.backView.backgroundColor = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:0.6];
     cell.VLIne.backgroundColor = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
+    
     cell.firstTime.text = classTimeArray[indexPath.row][0];
     cell.secondTime.text = classTimeArray[indexPath.row][1];
     if (indexPath.row == classTimeArray.count-1) {
@@ -714,18 +761,24 @@ static NSString *lineViewID = @"lineViewId";
     cell.DTime.text = [courseDic[@"LessonTime"] componentsSeparatedByString:@" "].lastObject;
     cell.courseLabel.text = courseDic[@"Dependent"][@"DependentName"];
     
+    UIView *backVIew = [[UIView alloc] initWithFrame:cell.bounds];
+    backVIew.backgroundColor = [UIColor clearColor];
+    cell.backgroundView = backVIew;
     return cell;
 }
 
 - (BOOL)whetherTheTimeCourse:(NSString *)timeStr courseTime:(NSString *)CTime {
     NSString *CTimeStr = [[CTime componentsSeparatedByString:@" " ].lastObject componentsSeparatedByString:@"~"].firstObject;
-    if ([timeStr isEqualToString:CTimeStr]) {
+    NSString *firstChar = [CTimeStr componentsSeparatedByString:@":"].firstObject;
+    NSString *firstCharPro = [timeStr componentsSeparatedByString:@":"].firstObject;
+    if ([firstChar isEqualToString:firstCharPro]) {
         return YES;
     }
     return NO;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     CDayTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     NSDictionary *courseDic;
     if (showRecentCourse) {
@@ -741,12 +794,11 @@ static NSString *lineViewID = @"lineViewId";
             }
         }
     }
-    if (self.theSelectedClass) {
+    
+    if (self.theSelectedClass && courseDic) {
         self.theSelectedClass(courseDic);
         [self.navigationController popViewControllerAnimated:YES];
     }
-
-
 }
 
 

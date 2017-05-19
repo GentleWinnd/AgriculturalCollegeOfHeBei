@@ -18,7 +18,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *name;
 @property (strong, nonatomic) IBOutlet UITableView *taskInfoTab;
 @property (strong, nonatomic) SetNavigationItem *setNav;
-@property (strong, nonatomic) NSString *ActivityId;
 @property (strong, nonatomic) NSDictionary *allAssignmentInfo;
 
 @end
@@ -31,16 +30,16 @@ static NSString *cellID = @"taskCellID";
     _setNav = [[SetNavigationItem alloc] init];
     
     [_setNav setNavTitle:self withTitle:@"作业" subTitle:@""];
-    @WeakObj(self);
-    [_setNav setNavRightItem:self withItemTitle:@"提交" textColor:MainTextColor_DarkBlack];
-    _setNav.rightClick = ^(){
-       HintMassageView *hintView = [HintMassageView initLayoutView];
-        [hintView.hintLabel setTitle:@"提交成功" forState:UIControlStateNormal];
-        hintView.hiddenSelf = ^(){
-            [selfWeak back];
-        };
-        [selfWeak.view addSubview:hintView];
-    };
+//    @WeakObj(self);
+//    [_setNav setNavRightItem:self withItemTitle:@"提交" textColor:MainTextColor_DarkBlack];
+//    _setNav.rightClick = ^(){
+//       HintMassageView *hintView = [HintMassageView initLayoutView];
+//        [hintView.hintLabel setTitle:@"提交成功" forState:UIControlStateNormal];
+//        hintView.hiddenSelf = ^(){
+//            [selfWeak back];
+//        };
+//        [selfWeak.view addSubview:hintView];
+//    };
 }
 
 - (void)viewDidLoad {
@@ -54,17 +53,10 @@ static NSString *cellID = @"taskCellID";
 #pragma mark - initdata
 
 - (void)initData {
-    [RecentCourseManager getRecentCourseSuccess:^(NSDictionary *coursesInfo) {
-        if (coursesInfo == nil) return ;
-        self.ActivityId = coursesInfo[@"RecentestActivity"][@"Id"];
-    } failure:^(NSString *failMessage) {
-        
-    }];
     [self  getSchollAssignment];
     [self showStuInfo];
 
 }
-
 
 #pragma  mark - inittableView
 
@@ -84,7 +76,6 @@ static NSString *cellID = @"taskCellID";
 
     MBProgressManager *progress = [[MBProgressManager alloc] init];
     [progress loadingWithTitleProgress:@"努力加载中..."];
-    self.ActivityId = @"23c6434e-1dac-44f0-868e-de938be3100a";
     NSDictionary *parameter = @{@"ActivityId":self.ActivityId,
                                 @"StudentId":self.studentId};
     [NetServiceAPI getHomeWorkDetailsByTeacherWithParameters:parameter success:^(id responseObject) {

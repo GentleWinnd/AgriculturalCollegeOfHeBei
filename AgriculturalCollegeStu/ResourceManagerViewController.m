@@ -62,8 +62,8 @@ static NSString *CellID = @"CellId";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self customNavigationBar];
-    [self initData];
-    [self initTableView];
+//    [self initData];
+//    [self initTableView];
     
 }
 
@@ -72,15 +72,15 @@ static NSString *CellID = @"CellId";
 - (void)initData {
     self.sourceArray = [NSMutableArray arrayWithCapacity:0];
     self.deleteArray =  [NSMutableArray arrayWithCapacity:0];
-    NSArray *loadedSources = [MCDownloadManager defaultInstance].allDownloadReceipts;
-    if (loadedSources) {
-        for (MCDownloadReceipt *recp in loadedSources) {
-            if (recp.state != MCDownloadStateNone) {
-                [self.sourceArray addObject:recp];
-            }
-        }
-        [self.sourceMTableView reloadData];
-    }
+//    NSArray *loadedSources = [MCDownloadManager defaultInstance].allDownloadReceipts;
+//    if (loadedSources) {
+//        for (MCDownloadReceipt *recp in loadedSources) {
+//            if (recp.state != MCDownloadStateNone) {
+//                [self.sourceArray addObject:recp];
+//            }
+//        }
+//        [self.sourceMTableView reloadData];
+//    }
     
 }
 
@@ -129,7 +129,6 @@ static NSString *CellID = @"CellId";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FeilTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
-    cell.isDownload = YES;
     
     if (_deleteBtn.hidden) {
         cell.selectedBtn.hidden = YES;

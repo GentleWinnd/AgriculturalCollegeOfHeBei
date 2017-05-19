@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,7 +16,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="单选题" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hOK-RT-waP">
-                    <rect key="frame" x="3" y="322" width="46" height="23"/>
+                    <rect key="frame" x="3" y="8" width="46" height="23"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="46" id="hUe-dH-Fyt"/>
                         <constraint firstAttribute="height" constant="23" id="z7c-1D-ENQ"/>
@@ -26,24 +26,26 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="企业规格的特性" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fde-bw-1YQ">
-                    <rect key="frame" x="52" y="325" width="320" height="17"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <rect key="frame" x="55" y="8" width="312" height="651"/>
+                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                     <color key="textColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="Fde-bw-1YQ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="6Wg-f5-GAw"/>
-                <constraint firstItem="hOK-RT-waP" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="P5R-fE-SUQ"/>
+                <constraint firstItem="Fde-bw-1YQ" firstAttribute="top" secondItem="hOK-RT-waP" secondAttribute="top" id="EGW-2O-v0f"/>
+                <constraint firstAttribute="bottom" secondItem="Fde-bw-1YQ" secondAttribute="bottom" constant="8" id="Mhn-oB-eHT"/>
                 <constraint firstItem="hOK-RT-waP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="3" id="a3p-uH-lVw"/>
-                <constraint firstItem="Fde-bw-1YQ" firstAttribute="leading" secondItem="hOK-RT-waP" secondAttribute="trailing" constant="3" id="tga-UG-B6P"/>
-                <constraint firstAttribute="trailing" secondItem="Fde-bw-1YQ" secondAttribute="trailing" constant="3" id="vfa-EW-cTg"/>
+                <constraint firstItem="hOK-RT-waP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="g60-Xg-xk9"/>
+                <constraint firstItem="Fde-bw-1YQ" firstAttribute="leading" secondItem="hOK-RT-waP" secondAttribute="trailing" constant="6" id="tga-UG-B6P"/>
+                <constraint firstAttribute="trailing" secondItem="Fde-bw-1YQ" secondAttribute="trailing" constant="8" id="vfa-EW-cTg"/>
             </constraints>
             <connections>
                 <outlet property="question" destination="Fde-bw-1YQ" id="5V0-OD-EvX"/>
                 <outlet property="questionType" destination="hOK-RT-waP" id="ogH-p8-1l5"/>
             </connections>
+            <point key="canvasLocation" x="34.5" y="53.5"/>
         </view>
     </objects>
 </document>

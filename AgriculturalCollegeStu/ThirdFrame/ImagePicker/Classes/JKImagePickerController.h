@@ -38,5 +38,6 @@ UIKIT_EXTERN ALAssetsFilter * ALAssetsFilterFromJKImagePickerControllerFilterTyp
 @property (nonatomic, assign) NSUInteger minimumNumberOfSelection;
 @property (nonatomic, assign) NSUInteger maximumNumberOfSelection;
 @property (nonatomic, strong) NSMutableArray     *selectedAssetArray;
+@property (nonatomic, assign) BOOL originPicture;
 
 @end

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,10 +26,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hHx-eX-Rf6">
-                            <rect key="frame" x="20" y="38.5" width="275" height="33"/>
+                            <rect key="frame" x="20" y="37" width="275" height="36"/>
                             <subviews>
                                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="60y-yv-FSg">
-                                    <rect key="frame" x="12" y="4" width="30" height="25"/>
+                                    <rect key="frame" x="12" y="5.5" width="30" height="25"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="25" id="1Rd-VU-QPo"/>
                                         <constraint firstAttribute="width" constant="30" id="jEB-2h-gJl"/>
@@ -40,9 +40,12 @@
                                         <action selector="btnAction:" destination="-1" eventType="touchUpInside" id="SSC-B0-Kmk"/>
                                     </connections>
                                 </button>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XPf-qF-O8s">
-                                    <rect key="frame" x="50" y="8" width="220" height="17"/>
-                                    <nil key="textColor"/>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="输入搜索关键字" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XPf-qF-O8s">
+                                    <rect key="frame" x="50" y="4" width="220" height="28"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="28" id="Hxd-uS-gf4"/>
+                                    </constraints>
+                                    <color key="textColor" red="0.12549019607843137" green="0.12549019607843137" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                     <connections>
@@ -54,7 +57,7 @@
                             <constraints>
                                 <constraint firstItem="XPf-qF-O8s" firstAttribute="leading" secondItem="60y-yv-FSg" secondAttribute="trailing" constant="8" id="5Ky-3L-iIr"/>
                                 <constraint firstItem="60y-yv-FSg" firstAttribute="leading" secondItem="hHx-eX-Rf6" secondAttribute="leading" constant="12" id="OAd-5x-coP"/>
-                                <constraint firstAttribute="height" constant="33" id="VbZ-pU-ng7"/>
+                                <constraint firstAttribute="height" constant="36" id="VbZ-pU-ng7"/>
                                 <constraint firstAttribute="trailing" secondItem="XPf-qF-O8s" secondAttribute="trailing" constant="5" id="rGC-FJ-WYi"/>
                                 <constraint firstItem="60y-yv-FSg" firstAttribute="centerY" secondItem="hHx-eX-Rf6" secondAttribute="centerY" id="vgh-9a-IMA"/>
                                 <constraint firstItem="XPf-qF-O8s" firstAttribute="centerY" secondItem="hHx-eX-Rf6" secondAttribute="centerY" id="vjM-CY-4py"/>

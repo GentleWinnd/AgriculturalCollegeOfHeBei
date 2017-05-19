@@ -90,7 +90,12 @@ static NSString *cellID = @"CellID";
     courseView.courceName.text = @"";
     self.courseTypeLable.text = self.testInfo[@"QuestionType"];
     NSString *answerstr = self.testInfo[@"QuestionOptions"];
-    [_answerArray addObjectsFromArray:[answerstr  componentsSeparatedByString:@","]];
+    if ([self.testInfo[@"QuestionType"] isEqualToString:@"判断题"]) {
+        [_answerArray addObjectsFromArray:@[@"对",@"错"]];
+    } else {
+        [_answerArray addObjectsFromArray:[answerstr  componentsSeparatedByString:@","]];
+
+    }
     [self.selecteAnswerCollectionView reloadData];
 }
 
@@ -142,20 +147,29 @@ static NSString *cellID = @"CellID";
     cell.optionClick = ^(UIButton *sender) {
     
         NSInteger count = _selectedAnswers.count;
-        if (_selectedAnswers.count >0) {
-            for (NSInteger i=0; i<count; i++) {
-                NSString *text = _selectedAnswers[i];
-                if ([text isEqualToString:seletedItem]) {
-                    [_selectedAnswers removeObject:text];
-                    break;
-                }
-                if (i == count-1) {
-                    [_selectedAnswers addObject:seletedItem];
-                }
-            }
+        if ([self.testInfo[@"QuestionType"] isEqualToString:@"判断题"]) {
+            [_selectedAnswers insertObject:seletedItem atIndex:0];
+            NSIndexPath *index = [NSIndexPath indexPathForRow:indexPath.row==0?1:0 inSection:0];
+            AnswerOptionCollectionViewCell *proCell = (AnswerOptionCollectionViewCell *)[_selecteAnswerCollectionView cellForItemAtIndexPath:index];
+            proCell.optionBtn.selected = NO;
+            
         } else {
-            [_selectedAnswers addObject:seletedItem];
+            if (_selectedAnswers.count >0) {
+                for (NSInteger i=0; i<count; i++) {
+                    NSString *text = _selectedAnswers[i];
+                    if ([text isEqualToString:seletedItem]) {
+                        [_selectedAnswers removeObject:text];
+                        break;
+                    }
+                    if (i == count-1) {
+                        [_selectedAnswers addObject:seletedItem];
+                    }
+                }
+            } else {
+                [_selectedAnswers addObject:seletedItem];
+            }
         }
+
     };
     
     return cell;

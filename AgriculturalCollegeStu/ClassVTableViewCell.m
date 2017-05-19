@@ -90,8 +90,8 @@ static NSString *cellID = @"videoCellID";
 
 //通过协议方法设置单元格尺寸
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    float width = (WIDTH-10)/7;
-    return CGSizeMake(width*3, width*2);
+    float width = (WIDTH-10)/5;
+    return CGSizeMake(width*2.1, width*1.5);
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldDeselectItemAtIndexPath:(NSIndexPath *)indexPath {

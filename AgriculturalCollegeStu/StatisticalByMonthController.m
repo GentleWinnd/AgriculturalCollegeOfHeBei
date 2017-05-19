@@ -23,7 +23,7 @@ static NSString *cellId = @"monthInfoCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.title = @"统计报表";
+    self.navigationItem.title = @"教学统计";
     [_StatisticalMonthTable registerNib:[UINib nibWithNibName:@"StatisticalMonthInfoTableViewCell" bundle:nil] forCellReuseIdentifier:cellId];
     _StatisticalMonthTable.delegate = self;
     _StatisticalMonthTable.dataSource = self;

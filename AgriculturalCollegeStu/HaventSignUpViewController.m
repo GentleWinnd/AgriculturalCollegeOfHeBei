@@ -31,8 +31,9 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
-    
+    [super viewWillAppear:animated];
     self.navigationController.tabBarController.tabBar.hidden = YES;
+    [self getSignState:_subId];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -181,9 +182,10 @@
         cell.superViewController = self;
         cell.name.text = _dataDic[@"Name"];
         if (_hasSignUp) {
-            [cell.signUpBtn setTitle:@"已报名，进入学习" forState:UIControlStateNormal];
-            cell.signUpBtn.backgroundColor = RGB_COLOR(131, 176, 17);
+            [cell.signUpBtn setTitle:@"立即观看" forState:UIControlStateNormal];
+//            cell.signUpBtn.backgroundColor = RGB_COLOR(131, 176, 17);
         }
+        
         if ([_dataDic[@"Batchs"] count] >0) {
             if ((BOOL)_dataDic[@"Batchs"][0][@"RegistrationAtAnyTime"] == YES) {
                 NSTimeInterval startTimeInterval = [[NSDate date] timeIntervalSinceDate:[[_dataDic[@"Batchs"][0][@"StartDate"] componentsSeparatedByString:@"T"] componentsJoinedByString:@" "].HOMETransformToDate];
@@ -260,43 +262,21 @@
     }
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    if (indexPath.row ==4) {
-//        _HUD.labelText = @"正在报名";
-//        if ([_dataDic[@"Batchs"] count] >0) {
-//            NSDictionary *para = @{@"BatchId" :_dataDic[@"Batchs"][0][@"Id"] , @"AccessToken":[_userDefaults objectForKey:USERINFO][@"AccessToken"]};
-//            _AFNManager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//            [_AFNManager POST:URL_SIGN_IN parameters:para success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-//
-//                if ([dic[@"State"] integerValue] ==1) {
-//                    _HUD.mode = MBProgressHUDModeText;
-//                    _HUD.labelText = @"报名成功";
-//                    [_HUD showAnimated:YES whileExecutingBlock:^{
-//                        [_HUD hide:YES afterDelay:1];
-//                    } completionBlock:^{
-//                        MukeDetailViewController *dvc = [[MukeDetailViewController alloc]init];
-//                        dvc.subTitle = _subTitle;
-//                        dvc.subId = _subId;
-//                        [self.navigationController pushViewController:dvc animated:YES];
-//                    }];
-//
-//                } else {
-//                    _HUD.mode = MBProgressHUDModeText;
-//                    _HUD.labelText = @"该课程未开放学习";
-//                    [_HUD hide:YES afterDelay:1];
-//                }
-//            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                ALERT_HOME(nil, error.localizedDescription);
-//            }];
-//        } else {
-//            _HUD.mode = MBProgressHUDModeText;
-//            _HUD.labelText = @"该课程未开放学习";
-//            [_HUD show:YES];
-//            [_HUD hide:YES afterDelay:1];
-//        }
-//    }
+#pragma  mark - 获取是否签到
+
+- (void)getSignState:(NSString *)courseId {
+
+    [NetServiceAPI getStudentSignStateWithParameters:@{@"Id":courseId} success:^(id responseObject) {
+        if ([responseObject[@"State"] intValue] == 1) {
+            self.hasSignUp = YES;
+        } else {
+            self.hasSignUp = NO;
+        }
+        [_tableView reloadData];
+    } failure:^(NSError *error) {
+        [KTMErrorHint showNetError:error inView:self.view];
+    }];
+    
 }
 
 

@@ -31,6 +31,7 @@
 @property (nonatomic, copy) NSString *Description;//用户描述
 @property (nonatomic, copy) NSString *period;//用户课程级数
 @property (nonatomic, copy) NSString *CourseType;//课程类型
+@property (nonatomic, copy) NSString *temporaryTestId;//临时测验ID
 
 
 

@@ -12,7 +12,7 @@
 
 + (instancetype)initLayoutView {
     HintMassageView *OSelf = [[NSBundle mainBundle] loadNibNamed:@"HintMassageView" owner:nil options:nil].lastObject;
-    
+    OSelf.frame = CGRectMake(0, 0, WIDTH, HEIGHT);
     return OSelf;
 }
 

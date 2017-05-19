@@ -8,7 +8,8 @@
 typedef NS_ENUM(NSInteger, FeilBtn) {
     FeilBtnSelected,
     FeilBtnShare,
-    FeilBtnDownload
+    FeilBtnDownload,
+    FeilBtnDeleted
 };
 
 typedef void(^SelectedFeilBtnType)(FeilBtn btnType,BOOL selected);
@@ -29,15 +30,20 @@ typedef void(^SelectedFeilBtnType)(FeilBtn btnType,BOOL selected);
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *leadingPace;
 @property (nonatomic, strong) IBOutlet DownloadProgress *loadProgress;
+@property (strong, nonatomic) IBOutlet UIButton *openBtn;
+
+@property (copy, nonatomic) void(^openSource)(BOOL open);
 
 @property (nonatomic, copy) NSString *url;
 @property (assign, nonatomic) long long totalSize;
 @property (copy, nonatomic) SelectedFeilBtnType selectedBtnType;
 @property (assign, nonatomic) SourceType Stype;
 @property (assign, nonatomic) NSString * SType;
+@property (assign, nonatomic) BOOL loadSource;
 
-@property (assign, nonatomic) BOOL isDownload;
+//@property (assign, nonatomic) BOOL isDownload;
 @property (strong, nonatomic) UIViewController *superViewM;
-
+- (void)openLoadedSource;
+- (void)downloadSource;
 
 @end

@@ -120,7 +120,7 @@
                         <constraint firstItem="Awb-wb-B8H" firstAttribute="leading" secondItem="nWQ-Ro-FnK" secondAttribute="leading" id="w6h-yQ-vNW"/>
                     </constraints>
                 </view>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" tag="123" contentMode="scaleToFill" pagingEnabled="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lcw-Bt-dF2">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" tag="123" contentMode="scaleToFill" bounces="NO" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lcw-Bt-dF2">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="619"/>
                     <subviews>
                         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i5M-Pr-FkT">
@@ -129,7 +129,7 @@
                                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="classScheduleBack.png" translatesAutoresizingMaskIntoConstraints="NO" id="cNd-hv-kwy">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 </imageView>
-                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Qo2-Ww-ume">
+                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="Qo2-Ww-ume">
                                     <rect key="frame" x="0.0" y="44" width="375" height="575"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dqh-tX-5mW">
                                         <size key="itemSize" width="50" height="50"/>
@@ -323,7 +323,7 @@
                                 <constraint firstItem="Qo2-Ww-ume" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="rYa-5P-52i"/>
                             </constraints>
                         </view>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xN5-LT-06n">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xN5-LT-06n">
                             <rect key="frame" x="375" y="0.0" width="375" height="619"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </tableView>

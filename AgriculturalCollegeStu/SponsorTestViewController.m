@@ -165,7 +165,9 @@ typedef NS_ENUM(NSInteger ,QuestionType) {
             _hintView.delegate = self;
             [_hintView.hintLabel  setTitle:@"测试发布成功" forState:UIControlStateNormal];
             [self.view addSubview:_hintView];
-
+            User * user = [UserData getUser];
+            user.temporaryTestId = [NSString safeString:responseObject[@"TemporaryTestQuestionId"]];
+            [UserData storeUserData:user];
         }
         
     } failure:^(NSError *error) {

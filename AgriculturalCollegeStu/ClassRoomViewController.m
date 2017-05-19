@@ -47,7 +47,6 @@
 #import "UserData.h"
 #import "NSString+Date.h"
 
-
 @interface ClassRoomViewController ()<UITableViewDelegate, UITableViewDataSource>
 {
     UITableView *classTable;
@@ -101,6 +100,52 @@ static NSString  *thirdCellID = @"thirdCellID";
     setNav.leftClick = ^(){
     [weakSel alertClickAction];
     };
+    [self setAddActivityBtn];
+}
+
+#pragma mark - 添加添加活动按钮
+
+- (void)setAddActivityBtn {
+    UIButton *addActiveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    addActiveBtn.frame = CGRectMake(0, 0, 60, 45);
+    [addActiveBtn setImage:[UIImage imageNamed:@"add_activity"] forState:UIControlStateNormal];
+    [addActiveBtn addTarget:self action:@selector(addActivityAction) forControlEvents:UIControlEventTouchUpInside];
+    addActiveBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 33, 0, 0);
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:addActiveBtn];
+    self.navigationItem.rightBarButtonItem = rightItem;
+}
+
+#pragma mark - 创建添加活动的提示框
+
+- (void)addActivityAction {
+
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"加入活动" preferredStyle:UIAlertControllerStyleAlert];
+    //增加取消按钮；
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    
+    
+    //增加确定按钮；
+    [alertController addAction:[UIAlertAction actionWithTitle:@"添加" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        //获取第1个输入框；
+        UITextField *userNameTextField = alertController.textFields.firstObject;
+        
+        NSLog(@"支付密码 = %@",userNameTextField.text);
+        
+    }]];
+    
+    
+    //定义第一个输入框；
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"请输入活动邀请码";
+
+        
+    }];
+    
+    [self presentViewController:alertController animated:true completion:nil];
 }
 
 #pragma mark - 提醒消息事件
@@ -120,11 +165,8 @@ static NSString  *thirdCellID = @"thirdCellID";
 
 - (void)refreshedUserRole {
     userRole = [UserData getUser].userRole;
-    [self getClassDaySchedule];
     [self customNavigationBar];
     [self initData];
-
-    [classTable reloadData];
 }
 
 #pragma mark - observer userrole chaneged
@@ -136,14 +178,14 @@ static NSString  *thirdCellID = @"thirdCellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self initTableView];
+
     [self observerUserRoleChanged];
     [self addOberverForIMLogState];
     [self observeNewNotice];
     [self judgeUserLoginState];
     
-    [self initTableView];
     [self refreshedUserRole];
-
 }
 
 #pragma mark - 初始化数据
@@ -157,10 +199,9 @@ static NSString  *thirdCellID = @"thirdCellID";
     } else {
         itemsIconArray = @[@"signed",@"leave",@"sourseload",@"task",@"classchat",@"test",@"postQuestion@2x",@"minegroupo",@"statisticaltab",@"evaluation",@"notice"];
         itemsTitleAray = @[@"签到",@"请假审批",@"资源下载",@"作业",@"课堂交流",@"测验",@"发起提问",@"我的群组",@"统计报表",@"教学评价",@"通知公告"];
-
     }
-   
-    
+    [classTable reloadData];
+
     [self getToolsInfo];
     [self postCrashLog];
     [self getClassDaySchedule];
@@ -178,12 +219,17 @@ static NSString  *thirdCellID = @"thirdCellID";
              "StartDate": "2017-01-06T10:00:00",
              "EndDate": "2017-01-06T12:00:00",
              */
-            NSString *startD = [NSString  stringFromTDateString:[NSString safeString:coursesInfo[@"StartDate"]]];
-            NSString *endD = [NSString stringFromTDateString:[NSString safeString:coursesInfo[@"EndDate"]]];
-            
-            NSString *timeStr = [NSString stringWithFormat:@"%@ %@~%@",[NSString stringMDFromTDateString:startD],[NSString stringHMFromTDateString:startD],[NSString stringHMFromTDateString:endD]];
-            labelWeak.text = [NSString stringWithFormat:@"%@ %@",timeStr,coursesInfo[COURSE_RECENTACTICE_DEPENDENT][COURSE_RECENTACTICE_DEPENDENT_NAME]];
+            if (coursesInfo.count == 0) {
+                labelWeak.text = @"暂无最近课程";
 
+            } else {
+                NSString *startD = [NSString  stringFromTDateString:[NSString safeString:coursesInfo[@"StartDate"]]];
+                NSString *endD = [NSString stringFromTDateString:[NSString safeString:coursesInfo[@"EndDate"]]];
+                
+                NSString *timeStr = [NSString stringWithFormat:@"%@ %@~%@",[NSString stringMDFromTDateString:startD],[NSString stringHMFromTDateString:startD],[NSString stringHMFromTDateString:endD]];
+                labelWeak.text = [NSString stringWithFormat:@"%@ %@",timeStr,coursesInfo[COURSE_RECENTACTICE_DEPENDENT][COURSE_RECENTACTICE_DEPENDENT_NAME]];
+            }
+           
         } failure:^(NSString *failMessage) {
              labelWeak.text = @"获取最近的课程失败了";
         }];
@@ -193,16 +239,25 @@ static NSString  *thirdCellID = @"thirdCellID";
 #pragma mark - get class day schedule
 
 - (void)getClassDaySchedule {
+    SenconTableViewCell *cell = [classTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
 
     [NetServiceAPI getClassDayScheduleWithParameters:nil success:^(id responseObject) {
+
         if ([responseObject[@"State"] integerValue] == 1) {
-            SenconTableViewCell *cell = [classTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
             cell.dayScheduleArray = [NSArray safeArray:responseObject[@"DataObject"]];
+            cell.nodataBtn.hidden = YES;
+            cell.nodataBtn.selected = NO;
             [cell.collectionView reloadData];
         } else {
-        
+            [cell.nodataBtn setTitle:@"获取数据失败，点击重新加载" forState:UIControlStateNormal];
+            cell.nodataBtn.selected = YES;
+            cell.nodataBtn.hidden = NO;
         }
     } failure:^(NSError *error) {
+        cell.nodataBtn.selected = YES;
+        cell.nodataBtn.hidden = NO;
+
+        [cell.nodataBtn setTitle:@"获取数据失败，点击重新加载" forState:UIControlStateNormal];
         [KTMErrorHint showNetError:error inView:self.view];
     }];
 }
@@ -330,6 +385,12 @@ static NSString  *thirdCellID = @"thirdCellID";
     SenconTableViewCell *cell  = [tablebView dequeueReusableCellWithIdentifier:secondCellID];
     if (cell == nil) {
         cell = [[NSBundle mainBundle] loadNibNamed:@"SenconTableViewCell" owner:self options:nil].lastObject;
+        cell.reloadData = ^(BOOL reload) {
+            
+            if (reload) {
+                [self getClassDaySchedule];
+            }
+        };
     }
     return cell;
 }

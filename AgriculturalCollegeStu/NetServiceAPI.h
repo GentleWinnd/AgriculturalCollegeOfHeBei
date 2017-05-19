@@ -87,6 +87,16 @@
                                   success:(void(^)(id responseObject))success
                                   failure:(void(^)(NSError *error))failure;
 
+//get student sign look state
++ (void)getStudentSignStateWithParameters:(id)parameters
+                                  success:(void(^)(id responseObject))success
+                                  failure:(void(^)(NSError *error))failure;
+
+//post student signed
++ (void)postStudentLookStateWithParameters:(id)parameters
+                                   success:(void(^)(id responseObject))success
+                                   failure:(void(^)(NSError *error))failure;
+
 /********************NewCourseVideo********************/
 //get courseListInfo
 + (void)getMOOCSCourseWithParameters:(id)parameters

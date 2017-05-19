@@ -56,7 +56,25 @@ static NSString *CellID = @"answerCellID";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 40;
+    
+    //根据label文字获取CGRect
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+    //set the line break mode
+    paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    NSDictionary *attrDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [UIFont systemFontOfSize:15],
+                              NSFontAttributeName,
+                              paragraphStyle,
+                              NSParagraphStyleAttributeName,
+                              nil];
+    
+    //assume your maximumSize contains {250, MAXFLOAT}
+    CGRect lblRect = [[NSString stringWithFormat:@"%@", self.questionInfo[@"Content"]] boundingRectWithSize:(CGSize){WIDTH - 66, MAXFLOAT}
+                                              options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                           attributes:attrDict
+                                              context:nil];
+    return lblRect.size.height+12;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -99,12 +117,9 @@ static NSString *CellID = @"answerCellID";
     backView.backgroundColor = [UIColor clearColor];
     cell.selectedBackgroundView = backView;
     
-    
-    NSMutableArray *finishedArray = [NSMutableArray arrayWithArray:[NSArray safeArray:[_questionInfo[@"LastStudentAnswer"] componentsSeparatedByString:@","]]];
-    if (finishedArray.count>0) {
-        cell.userInteractionEnabled = NO;
-    }
-
+    NSString *lastAnswer = [NSString safeString:_questionInfo[@"LastStudentAnswer"]];
+    cell.userInteractionEnabled = lastAnswer.length>0?NO:YES;
+   
     return cell;
 }
 
@@ -124,10 +139,6 @@ static NSString *CellID = @"answerCellID";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSMutableArray *finishedArray = [NSMutableArray arrayWithArray:[NSArray safeArray:[_questionInfo[@"LastStudentAnswer"] componentsSeparatedByString:@","]]];
-    if (finishedArray.count>0) {
-        return;
-    }
     
 
     NSString *answerId = self.questionInfo[@"QuestionOptionList"][indexPath.row][@"Id"];

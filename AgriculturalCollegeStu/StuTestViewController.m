@@ -63,14 +63,14 @@ static NSString *cellID = @"questionCellID";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self setNavigationBar];
-    [self initData];
 
     [self customCourseView];
     [self creatCustomCollectioView];
     
 }
 
-- (void)initData {
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 //    [self createDisplayLink];
     [self getRecentCourse];
     [self getClassExercises];
@@ -98,7 +98,7 @@ static NSString *cellID = @"questionCellID";
     [NetServiceAPI getTheExerciseDetailsWithParameters:@{@"ActivityId":self.courseId} success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue] == 1) {
             _questionDic = [[NSMutableDictionary alloc] initWithDictionary:[NSDictionary safeDictionary:responseObject[@"DataObject"]]];
-            BOOL finished = [NSString safeNumber:_questionDic[@"ExistRecord"]];
+            BOOL finished = [[NSString safeNumber:_questionDic[@"ExistRecord"]] boolValue];
             if (finished) {
                 [_putupBtn setTitle:@"查看成绩" forState:UIControlStateNormal];
             }
@@ -155,6 +155,7 @@ static NSString *cellID = @"questionCellID";
         NSArray * answers = [NSArray safeArray:queInfo[STU_SELE_ANSWER]];
         NSString *queId = [NSString safeString:queInfo[@"Id"]];
         NSInteger anIndex = 0;
+        
         if (index == [queArray count]-2) {
             for (NSDictionary *anInfo in answers) {
                 if ([NSString safeString:anInfo[@"Id"]].length>0) {
@@ -290,13 +291,23 @@ static NSString *cellID = @"questionCellID";
 
 - (IBAction)putupBtnAction:(UIButton *)sender {
     if (sender.tag == 1) {//提交作业
-        BOOL finished = [NSString safeNumber:_questionDic[@"ExistRecord"]];
+        if (_questionDic == nil) {
+            [Progress progressShowcontent:@"没有作业，可以提交"];
+            return;
+        }
+
+        BOOL finished = [[NSString safeNumber:_questionDic[@"ExistRecord"]] boolValue];
         if (finished) {
             [self hiddenSelfView];
         } else {
             [self postExerciseAnswers];
         }
     } else {//查看
+        if (_questionDic == nil) {
+            [Progress progressShowcontent:@"没有作业，可以查看"];
+            return;
+        }
+
         [UIView animateWithDuration:0.3 animations:^{
             FinishedCourseView *finisedView = [[NSBundle mainBundle] loadNibNamed:@"FinishedCourseView" owner:nil options:nil].lastObject;
             [finisedView.courseBtn setTitle:[NSString stringWithFormat:@"%tu/%tu",[self getFinishedNumbersIndex].count,[_questionDic[QUESTION_LIST] count]] forState:UIControlStateNormal];

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,17 +28,21 @@
                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="数字面向对象处理与分析" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f18-ZI-Ovb">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="数字面向对象处理与分析" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f18-ZI-Ovb">
                     <rect key="frame" x="96.5" y="325" width="168.5" height="18"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AET-lG-D1R">
-                    <rect key="frame" x="287" y="323" width="83" height="21"/>
+                    <rect key="frame" x="277" y="323" width="93" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="mor-BO-JH1"/>
+                        <constraint firstAttribute="width" constant="93" id="tQQ-Ea-nQh"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                    <inset key="titleEdgeInsets" minX="-51" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    <inset key="imageEdgeInsets" minX="61" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="titleEdgeInsets" minX="-50" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    <inset key="imageEdgeInsets" minX="67" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="重选课程" image="refresh.png">
                         <color key="titleColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
@@ -56,6 +60,7 @@
                 <constraint firstItem="AET-lG-D1R" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="cez-cF-DIi"/>
                 <constraint firstAttribute="trailing" secondItem="AET-lG-D1R" secondAttribute="trailing" constant="5" id="kNM-gV-a3M"/>
                 <constraint firstItem="lJP-v1-Iji" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="mi7-Yo-bps"/>
+                <constraint firstItem="AET-lG-D1R" firstAttribute="leading" secondItem="f18-ZI-Ovb" secondAttribute="trailing" constant="12" id="n0i-mv-qhR"/>
                 <constraint firstItem="f18-ZI-Ovb" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="yCN-67-3OU"/>
             </constraints>
             <connections>

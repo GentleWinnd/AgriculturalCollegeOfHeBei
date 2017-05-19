@@ -15,6 +15,7 @@
 #define LOCAL_ATTACHMENT @"local"
 #define ATTACHMENT_IMAGE @"attachmentImage"
 #define ATTAH_IMAGES @"attachImages"
+#define STU_ANSWER_LAST @"studentLastAnswer"
 
 #import "StuTaskViewController.h"
 #import "CourseInfoCollectionViewCell.h"
@@ -47,6 +48,8 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *attachmentsCollection;
 @property (strong, nonatomic) IBOutlet UIView *attachmentView;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *attachmentViewBottom;
+@property (strong, nonatomic) IBOutlet UIButton *originPictureBtn;
+
 
 @property (strong, nonatomic) NSMutableArray *answersInfoArray;
 @property (strong, nonatomic) NSDictionary *allAssignmentInfo;
@@ -158,9 +161,11 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 
 - (void)putupStudentShcoolAssignment {
     if (self.allAssignmentInfo == nil) {
+        [Progress progressShowcontent:@"没有作业可提交" currView:self.view];
         return;
     }
-    NSDictionary *CParameter = @{@"HomeWorkDataId":_allAssignmentInfo[@"HomeWorkDataId"]};
+    NSDictionary *CParameter = @{@"HomeWorkDataId":_allAssignmentInfo[@"HomeWorkDataId"],
+                                 @"ActivityId":self.courseId,};
     NSMutableDictionary *parameter = [NSMutableDictionary dictionaryWithDictionary:CParameter];
     [parameter setValue:[self joinAllAssignmentAnswers] forKey:@"StudentAnswers"];
     
@@ -179,7 +184,6 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         [KTMErrorHint showNetError:error inView:self.view];
         [progress hiddenProgress];
     }];
-
 }
 
 #pragma mark - join  assignment answer
@@ -188,11 +192,15 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     
     NSString *joinAnswer = @"";
     for (int i=0;i<_answersInfoArray.count;i++) {
+        NSString *proAnswer = [NSString safeString:_answersInfoArray[i][ANSWER]];
+        NSString *lastAsnwer = [NSString safeString:_answersInfoArray[i][STU_ANSWER_LAST]];
+
+        NSString *asnerInfo = lastAsnwer.length>0?lastAsnwer:proAnswer;
         if (i == 0) {
-            joinAnswer = [NSString stringWithFormat:@"%@^^%@",_answersInfoArray[i][@"Key"],_answersInfoArray[i][@"Answer"] ];
+            joinAnswer = [NSString stringWithFormat:@"%@^^%@",_answersInfoArray[i][@"Key"],asnerInfo ];
             
         } else {
-            joinAnswer = [NSString stringWithFormat:@"%@||%@^^%@",joinAnswer,_answersInfoArray[i][@"Key"],_answersInfoArray[i][@"Answer"] ];
+            joinAnswer = [NSString stringWithFormat:@"%@||%@^^%@",joinAnswer,_answersInfoArray[i][@"Key"],asnerInfo];
         }
     }
     return joinAnswer;
@@ -202,8 +210,13 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 
 - (IBAction)attachmentBtnClick:(UIButton *)sender {
     if (sender.tag == 1122) {//uploadattachment
+        if (self.answersInfoArray.count == 0) {
+            [Progress progressShowcontent:@"没有作业，无法添加附件" currView:self.view];
+            return ;
+        }
+
         [UIView animateWithDuration:1 animations:^{
-           
+            
             if (!sender.selected) {//弹出
                 self.attachmentViewBottom.constant = 0;
                 [_attachmentsCollection reloadData];
@@ -297,10 +310,14 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         cell = ACell;
     } else {
         CourseInfoCollectionViewCell *CCell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
+        NSString *proAnswer = [NSString safeString:_answersInfoArray[indexPath.row][ANSWER]];
+        NSString *lastAsnwer = [NSString safeString:_answersInfoArray[indexPath.row][STU_ANSWER_LAST]];
+
         CCell.courseLabel.text = [NSString safeString:_answersInfoArray[indexPath.row][@"Description"]];
-        CCell.answerTextView.text = [NSString safeString:_answersInfoArray[indexPath.row][ANSWER]];
-        CCell.answerStr = [NSString safeString:_answersInfoArray[indexPath.row][ANSWER]];;
+        CCell.answerTextView.text = lastAsnwer.length>0?lastAsnwer:proAnswer;
+        CCell.answerStr = lastAsnwer.length>0?lastAsnwer:proAnswer;
         CCell.getAnswer = ^(NSString *answer){
+            
             if (answer.length>0) {
                 [self setAnswerWithIndexPath:indexPath answer:answer];
 
@@ -336,7 +353,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 - (void)setAnswerWithIndexPath:(NSIndexPath *)indexPath answer:(NSString *)answer {
     
     NSMutableDictionary *assignInfo = [NSMutableDictionary dictionaryWithDictionary:_answersInfoArray[indexPath.row]];
-    [assignInfo setValue:answer forKey:ANSWER];
+    [assignInfo setValue:answer forKey:STU_ANSWER_LAST];
     [_answersInfoArray replaceObjectAtIndex:indexPath.row withObject:assignInfo];
 
 }
@@ -371,6 +388,11 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         [self.navigationController pushViewController:classView animated:YES];
         
     } else {//作业完成率
+        if (self.answersInfoArray.count == 0) {
+            [Progress progressShowcontent:@"没有作业" currView:self.view];
+            return ;
+        }
+
         [UIView animateWithDuration:0.3 animations:^{
             FinishedCourseView *finisedView = [[NSBundle mainBundle] loadNibNamed:@"FinishedCourseView" owner:nil options:nil].lastObject;
             [finisedView.courseBtn setTitle:[NSString stringWithFormat:@"%tu/%tu",[self getFinishedNumber],[_answersInfoArray count]] forState:UIControlStateNormal];
@@ -412,8 +434,10 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     [self.view endEditing:YES];
     NSInteger num=0;
     for (NSDictionary *dic in _answersInfoArray) {
-        if ([[NSString safeString:dic[@"Answer"]] length] >0) {
-            num++;
+        if ([[NSString safeString:dic[STU_ANSWER_LAST]] length] >0) {
+            if (![[NSString safeString:dic[STU_ANSWER_LAST]] isEqualToString:[NSString safeString:dic[ANSWER]]]) {
+                num++;
+            }
         }
     }
     return num;
@@ -423,8 +447,10 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     NSInteger index=0;
     NSMutableArray *indexArray = [NSMutableArray arrayWithCapacity:0];
     for (NSDictionary *dic in self.answersInfoArray) {
-        if ([dic[@"Answer"] length] >0) {
-            [indexArray addObject:[NSNumber numberWithInteger:index]];
+        if ([dic[STU_ANSWER_LAST] length] >0) {
+            if (![[NSString safeString:dic[STU_ANSWER_LAST]] isEqualToString:[NSString safeString:dic[ANSWER]]]) {
+                [indexArray addObject:[NSNumber numberWithInteger:index]];
+            }
         }
         index++;
     }
@@ -449,6 +475,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 }
 
 - (BOOL)navigationShouldPopOnBackButton {
+    [self.view resignFirstResponder];
     if ([self getFinishedNumber] >0) {
         [self createAlertView];
     } else {
@@ -468,6 +495,7 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     imagePickerController.allowsMultipleSelection = YES;
     imagePickerController.minimumNumberOfSelection = 1;
     imagePickerController.maximumNumberOfSelection = 9;
+    imagePickerController.originPicture = self.originPictureBtn.selected;
 //    imagePickerController.selectedAssetArray = self.attachmentsArray;
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
     [self presentViewController:navigationController animated:YES completion:NULL];
@@ -491,6 +519,8 @@ static NSString *attachmentCellID= @"AttachmentCellID";
 }
 
 - (void)imagePickerController:(JKImagePickerController *)imagePicker didSelectAssets:(NSArray *)assets isSource:(BOOL)source {
+    
+    [self getImageWithAsset:assets];
     [imagePicker dismissViewControllerAnimated:YES completion:^{
         
     }];
@@ -501,6 +531,27 @@ static NSString *attachmentCellID= @"AttachmentCellID";
         
     }];
 }
+
+- (void)getImageWithAsset:(NSArray *)assets {
+    NSMutableArray *currentImages = [NSMutableArray arrayWithCapacity:0];
+    for (JKAssets *asset in assets) {
+        ALAssetsLibrary   *lib = [[ALAssetsLibrary alloc] init];
+        [lib assetForURL:asset.assetPropertyURL resultBlock:^(ALAsset *asset) {
+            if (asset) {
+                UIImage *image = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
+                UIImage *imagePro = [UIImage imageWithData:UIImageJPEGRepresentation(image, 0.01)];
+                [currentImages addObject:imagePro];
+                if (currentImages.count == assets.count) {
+                    [self dealAttachmentImages:currentImages];
+                    [self uploadAttachmentData:nil];
+                }
+            }
+        } failureBlock:^(NSError *error) {
+            
+        }];
+    }
+}
+
 
 #pragma mark - upload homework attaments
 
@@ -619,6 +670,9 @@ static NSString *attachmentCellID= @"AttachmentCellID";
     
 }
 
+- (IBAction)originPictureAction:(UIButton *)sender {
+    sender.selected = !sender.selected;
+}
 
 
 - (void)viewWillDisappear:(BOOL)animated {

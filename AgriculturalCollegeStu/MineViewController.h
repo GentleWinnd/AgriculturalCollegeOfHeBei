@@ -11,8 +11,6 @@
 
 @interface MineViewController : UITableViewController
 
-@property (nonatomic, weak) IBOutlet UIScrollView *scl_contentContainer;
-
 - (void) checkLoginInfo;
 
 @end

@@ -32,19 +32,32 @@ static NSString *cellID = @"videoCellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self observerUserRoleChanged];
     [self initData];
+    [self initTableView];
+
     //[self getCategoryCourse];
     [self costomView];
-    [self initTableView];
+    [self getCategoryCourseInfo];
+    [self getMOOCSCCourseVideo];
+}
+
+#pragma mark - observer userrole chaneged
+
+- (void)observerUserRoleChanged {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshedUserRole) name:NOTICE_USERROLE_CHANGED object:nil];
+}
+
+#pragma mark - user login suceess
+
+- (void)refreshedUserRole {
     [self getCategoryCourseInfo];
     [self getMOOCSCCourseVideo];
 }
 
 - (void)costomView {
     self.indicator.layer.cornerRadius = 6;
-
 }
-
 
 #pragma mark - initData
 
@@ -154,7 +167,8 @@ static NSString *cellID = @"videoCellID";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 150;
+    float width = (WIDTH-10)/5;
+    return 1.6*width;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

@@ -46,7 +46,7 @@ static NSString *cellID = @"evaluationInfoCellID";
 
 - (void)initData {
     self.courseName = [RecentCourseManager getRecentCourseDataWithDateItem:DataItemDependentName];
-    self.activityId = [RecentCourseManager getRecentCourseDataWithDateItem:DataItemDependentId];
+    self.activityId = [RecentCourseManager getRecentCourseDataWithDateItem:DataItemCourseId];
     [self getTeacherEvaluationInfo];
 }
 
@@ -54,7 +54,7 @@ static NSString *cellID = @"evaluationInfoCellID";
     if (self.activityId == nil) {
         return;
     }
-    self.activityId = @"3E45D826-AA7B-452A-BE99-A6FDE7BAFF78";
+//    self.activityId = @"3E45D826-AA7B-452A-BE99-A6FDE7BAFF78";
     MBProgressManager *progress = [[MBProgressManager alloc] init];
     [progress loadingWithTitleProgress:@"加载中..."];
     [NetServiceAPI getTeachEvaluationContensWithParameters:@{@"ActivityId":self.activityId} success:^(id responseObject) {
@@ -116,29 +116,32 @@ static NSString *cellID = @"evaluationInfoCellID";
     };
     
     NSArray *contentInfo = [NSArray safeArray:_evaluationInfo[@"EvaluationAverageScoreItems"]];
-    long score;
+    float score;
     NSString *evaluationCount;
     for (NSDictionary *info in contentInfo) {
         
         if ([@"授课技能" isEqualToString:info[@"Name"]]) {
-            score = [contentInfo[0][@"AverageScore"] longValue];
+            NSString *sou = [NSString safeNumber:contentInfo[0][@"AverageScore"]];;
+            score = [sou floatValue];
             evaluationCount = [NSString safeString:contentInfo[0][@"EvaluationCount"]];
-            headerView.oneLabel.text = [NSString stringWithFormat:@"%ld",score];
+            headerView.oneLabel.text = [NSString stringWithFormat:@"%.1f",score];
             headerView.oneLabel.textColor = [headerView setEvaluationScoreColorWithScore:score][@"color"];
             headerView.EoneLabel.backgroundColor = [headerView setEvaluationScoreColorWithScore:score][@"color"];
             headerView.EoneLabel.text = [headerView setEvaluationScoreColorWithScore:score][@"gread"];
         } else if([@"教学态度" isEqualToString:info[@"Name"]]) {
-            score = [contentInfo[1][@"AverageScore"] longValue];
+            NSString *sou = [NSString safeNumber:contentInfo[1][@"AverageScore"]];;
+            score = [sou floatValue];
             evaluationCount = [NSString safeString:contentInfo[1][@"EvaluationCount"]];
             headerView.twoLabel.textColor = [headerView setEvaluationScoreColorWithScore:score][@"color"];
-            headerView.twoLabel.text = [NSString stringWithFormat:@"%ld",score ];
+            headerView.twoLabel.text = [NSString stringWithFormat:@"%.1f",score ];
             headerView.ETwoLabel.backgroundColor = [headerView setEvaluationScoreColorWithScore:score][@"color"];
             headerView.ETwoLabel.text = [headerView setEvaluationScoreColorWithScore:score][@"gread"];
         } else {
-            score = [contentInfo[2][@"AverageScore"] longValue];
+            NSString *sou = [NSString safeNumber:contentInfo[2][@"AverageScore"]];;
+            score = [sou floatValue];
             evaluationCount = [NSString safeString:contentInfo[2][@"EvaluationCount"]];
             headerView.threeLabel.textColor = [headerView setEvaluationScoreColorWithScore:score][@"color"];
-            headerView.threeLabel.text = [NSString stringWithFormat:@"%ld",score];
+            headerView.threeLabel.text = [NSString stringWithFormat:@"%.1f",score];
             headerView.EThreeLabel.backgroundColor = [headerView setEvaluationScoreColorWithScore:score][@"color"];
             headerView.EThreeLabel.text = [headerView setEvaluationScoreColorWithScore:score][@"gread"];
         }
@@ -174,9 +177,7 @@ static NSString *cellID = @"evaluationInfoCellID";
     } else {
         cell.stuName = stuInfo[@"FullName"];
         [cell.headerPortriat sd_setImageWithURL:stuInfo[@"Avatar"] placeholderImage:[UIImage imageNamed:@"name"]];
-
     }
-    
     
     return cell;
 }

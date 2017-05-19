@@ -12,6 +12,7 @@
 #import "ClassScheduleViewController.h"
 #import "ViewTestViewController.h"
 #import "RecentCourseManager.h"
+#import "UserData.h"
 
 @interface ClassTestViewController ()
 @property (strong, nonatomic) IBOutlet UIView *topView;
@@ -50,12 +51,18 @@
         [self.navigationController pushViewController:viewTestView animated:YES];
         
     } else if (sender.tag == 2){//查看临时测验
-        ViewTestViewController *viewTestView = [[ViewTestViewController alloc] init];
-        viewTestView.courseName = _courseTitle;
-        viewTestView.courseId = _courseId;
-        viewTestView.assignmentType = ClassAssignmentTypeTemporaryTest;
-        [self.navigationController pushViewController:viewTestView animated:YES];
+        NSString *temporaryId = [UserData getUser].temporaryTestId;
+        if (temporaryId.length>0) {
+            ViewTestViewController *viewTestView = [[ViewTestViewController alloc] init];
+            viewTestView.courseName = _courseTitle;
+            viewTestView.courseId = temporaryId;
+            viewTestView.assignmentType = ClassAssignmentTypeTemporaryTest;
+            [self.navigationController pushViewController:viewTestView animated:YES];
 
+        } else {
+            [Progress progressShowcontent:@"此课程，暂无测验" currView:self.view];
+        }
+      
     } else if (sender.tag == 3) {//发起测验
         SponsorTestViewController *sponsorTestView = [[SponsorTestViewController alloc] init];
         sponsorTestView.courseName = self.courseTitle;

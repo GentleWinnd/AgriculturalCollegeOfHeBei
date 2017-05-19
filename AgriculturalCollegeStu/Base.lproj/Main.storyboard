@@ -13,6 +13,7 @@
         <!--mine-->
         <scene sceneID="T3z-on-ugr">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Inj-9P-Zfm" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController restorationIdentifier="mine_vc" storyboardIdentifier="mine_sb" title="mine" id="uJn-EB-NiW" customClass="MineViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="LWT-WB-Wrx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -39,7 +40,7 @@
                                                         <action selector="settingBtnAction:" destination="uJn-EB-NiW" eventType="touchUpInside" id="foK-N8-VDm"/>
                                                     </connections>
                                                 </button>
-                                                <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headPortrait.png" translatesAutoresizingMaskIntoConstraints="NO" id="axC-iP-UvF">
+                                                <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placehodlerimg.png" translatesAutoresizingMaskIntoConstraints="NO" id="axC-iP-UvF">
                                                     <rect key="frame" x="147.5" y="25" width="80" height="80"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="80" id="duZ-ra-PfN"/>
@@ -338,7 +339,6 @@
                         <outlet property="setBtn" destination="Cm1-sN-1Sf" id="Otl-SA-X47"/>
                     </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Inj-9P-Zfm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="564" y="-1358.7706146926537"/>
         </scene>
@@ -514,10 +514,10 @@
     </scenes>
     <resources>
         <image name="aboutus.png" width="32" height="32"/>
-        <image name="headPortrait.png" width="113" height="115"/>
         <image name="leave.png" width="96" height="96"/>
         <image name="loved.png" width="32" height="32"/>
         <image name="massage.png" width="32" height="32"/>
+        <image name="placehodlerimg.png" width="245" height="163"/>
         <image name="set.png" width="32" height="32"/>
         <image name="update.png" width="32" height="32"/>
     </resources>

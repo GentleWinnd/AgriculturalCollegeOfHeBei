@@ -27,10 +27,7 @@
 
 - (void)back {
     [self.navigationController popViewControllerAnimated:YES];
-
 }
-
-
 
 
 - (void)didReceiveMemoryWarning {

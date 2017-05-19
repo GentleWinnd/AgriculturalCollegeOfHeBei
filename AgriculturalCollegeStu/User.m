@@ -26,6 +26,8 @@
     [aCoder encodeObject:self.userIcon forKey:@"userIcon"];
     [aCoder encodeObject:self.userToken forKey:@"userToken"];
     [aCoder encodeObject:self.userQuitTime forKey:@"userQuitTime"];
+    [aCoder encodeObject:self.temporaryTestId forKey:@"temporaryTestId"];
+
     
     [aCoder encodeObject:self.accessToken forKey:ACCESS_TOKEN];
     [aCoder encodeObject:[NSNumber numberWithInt:self.expiresIn] forKey:EXPIRES_IN];
@@ -49,6 +51,8 @@
         self.userIcon = [aDecoder decodeObjectForKey:@"userIcon"];
         self.userToken = [aDecoder decodeObjectForKey:@"userToken"];
         self.userQuitTime = [aDecoder decodeObjectForKey:@"userQuitTime"];
+        self.temporaryTestId = [aDecoder decodeObjectForKey:@"temporaryTestId"];
+
         
         self.accessToken = [aDecoder decodeObjectForKey:ACCESS_TOKEN];
         self.expiresIn = [[aDecoder decodeObjectForKey:EXPIRES_IN] intValue];
@@ -59,7 +63,7 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@, %@, %@, %@, %@, %@, %@, %@, %d, %@, %@, %tu", _userID, _IMUserID, _userName , _userPass, _nickName, _userIcon, _userToken, _accessToken, _expiresIn, _refreshToken, _accessTokenDate,_userRole];
+    return [NSString stringWithFormat:@"%@, %@, %@, %@, %@, %@, %@, %@, %d, %@, %@, %@, %tu", _userID, _IMUserID, _userName , _userPass, _nickName, _userIcon, _userToken, _accessToken, _expiresIn, _refreshToken, _accessTokenDate,_temporaryTestId,_userRole];
 }
 
 @end

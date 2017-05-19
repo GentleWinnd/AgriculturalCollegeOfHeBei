@@ -219,6 +219,43 @@
     }];
 }
 
+//get student sign look state
+
++ (void)getStudentSignStateWithParameters:(id)parameters
+                                  success:(void(^)(id responseObject))success
+                                  failure:(void(^)(NSError *error))failure {
+    NSString *sourseURL = [NSString stringWithFormat:@"Course/IsSign?Id=%@",[parameters allValues].lastObject];
+    NSString *URLStr = [NSString stringWithFormat:HOST_SERVICE,sourseURL];
+    [KTMWebService getWithURL:URLStr parameters:parameters sucess:^(id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+//post student signed
++ (void)postStudentLookStateWithParameters:(id)parameters
+                                   success:(void(^)(id responseObject))success
+                                   failure:(void(^)(NSError *error))failure {
+    NSString *taskActionStr = @"Batch/SignUp";
+    NSString *URLString = [NSString stringWithFormat:HOST_SERVICE, taskActionStr];
+    
+    [KTMWebService CMPostWithURL:URLString parameters:parameters sucess:^(id responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+
 
 /*******************userData*******************/
 #pragma mark - user data
@@ -1146,8 +1183,9 @@
     
     NSString *sourseUrl = [NSString stringWithFormat:@"OfflineCourse/ResourceList?Keyword=%@&ResourceType=%@&OfflineCourseId=%@&PageNum=1&PageSize=10&",parameters[@"Keyword"],parameters[@"ResourceType"],parameters[@"OfflineCourseId"]];
     NSString *URL = [NSString stringWithFormat:HOST_SERVICE,sourseUrl];
-    
-    [KTMWebService getWithURL:URL parameters:parameters sucess:^(id responseObject) {
+    NSString *reUrl = [URL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    [KTMWebService getWithURL:reUrl parameters:parameters sucess:^(id responseObject) {
         if (success) {
             success(responseObject);
         }

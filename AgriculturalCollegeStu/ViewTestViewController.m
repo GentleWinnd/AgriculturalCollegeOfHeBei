@@ -39,16 +39,16 @@
     _setNav = [[SetNavigationItem alloc] init];
     if (self.assignmentType == ClassAssignmentTypeHomeTask) {
         [_setNav setNavTitle:self withTitle:@"作业" subTitle:@""];
-        [_setNav setNavRightItem:self withItemTitle:@"提交" textColor:MaintextColor_LightBlack];
-        @WeakObj(self);
-        _setNav.rightClick = ^(){
-            HintMassageView *hintView = [HintMassageView initLayoutView];
-            [hintView.hintLabel setTitle:@"提交成功" forState:UIControlStateNormal];
-            hintView.hiddenSelf = ^(){
-                [selfWeak back];
-            };
-            [selfWeak.view addSubview:hintView];
-        };
+//        [_setNav setNavRightItem:self withItemTitle:@"提交" textColor:MaintextColor_LightBlack];
+//        @WeakObj(self);
+//        _setNav.rightClick = ^(){
+//            HintMassageView *hintView = [HintMassageView initLayoutView];
+//            [hintView.hintLabel setTitle:@"提交成功" forState:UIControlStateNormal];
+//            hintView.hiddenSelf = ^(){
+//                [selfWeak back];
+//            };
+//            [selfWeak.view addSubview:hintView];
+//        };
 
     } else {
         [_setNav setNavTitle:self withTitle:@"查看测验" subTitle:@""];
@@ -73,9 +73,9 @@
 #pragma mark - initdata 
 
 - (void)initData {
+    
     if (self.courseId == nil) {
         self.courseId = [RecentCourseManager getRecentCourseDataWithDateItem:DataItemCourseId];
-  
     }
     
     if (self.courseName == nil) {
@@ -94,7 +94,6 @@
         [Progress progressShowcontent:@"获取最近课程失败，请在课表获取"];
         return;
     }
- self.courseId = @"23c6434e-1dac-44f0-868e-de938be3100a";
 //    MBProgressManager *progress = [[MBProgressManager alloc] init];
 //    [progress loadingWithTitleProgress:@"加载中..."];
     [NetServiceAPI getHomeWorkStateDetailWithParameters:@{@"ActivityID":_courseId} success:^(id responseObject) {
@@ -105,7 +104,6 @@
 //            NSString *message = responseObject[@"Message"];
             [Progress progressShowcontent:responseObject[@"Message"]];
             [_timer setFireDate:[NSDate distantFuture]];
-
         }
 //        [progress hiddenProgress];
     } failure:^(NSError *error) {
@@ -180,7 +178,7 @@
         [Progress progressShowcontent:@"获取最近课程失败，请在课表获取"];
         return;
     }
-    self.courseId = @"23c6434e-1dac-44f0-868e-de938be3100a";
+//    self.courseId = @"23c6434e-1dac-44f0-868e-de938be3100a";
     //    MBProgressManager *progress = [[MBProgressManager alloc] init];
     //    [progress loadingWithTitleProgress:@"加载中..."];
     [NetServiceAPI getTheExerciseStateDetailWithParameters:@{@"ActivityID":self.courseId} success:^(id responseObject) {
@@ -251,6 +249,7 @@
             StuTaskInfoViewController *taskView = [[StuTaskInfoViewController alloc] init];
             taskView.role = UserRoleTeacher;
             taskView.courseId = self.courseId;
+            taskView.ActivityId = self.courseId;
             taskView.studentId = stuId;
             for (NSDictionary *stuDic in [NSArray safeArray:_testInfo[@"HomeWorkStudents"]]) {
                 if ([stuDic[@"Id"] isEqualToString:stuId]) {
@@ -259,7 +258,7 @@
                 }
             }
             [self.navigationController pushViewController:taskView animated:YES];
-        } else {
+        } else  if (self.assignmentType == ClassAssignmentTypeClassTest){
             TestGradeViewController *gradeView = [[TestGradeViewController alloc] init];
             gradeView.role = UserRoleTeacher;
             gradeView.courseId = self.courseId;
@@ -276,6 +275,8 @@
     TestResultViewController *testView = [[TestResultViewController alloc] init];
     testView.courseId = self.courseId;
     testView.courseName = self.courseName;
+    testView.temporaryInfo = _testInfo;
+    testView.assignmentType = self.assignmentType;
     [self.navigationController pushViewController:testView animated:YES];
     
 }

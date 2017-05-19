@@ -22,7 +22,7 @@ static NSString *CellIDSTU = @"cellIDSTU";
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.title = @"统计报表";
+    self.navigationItem.title = @"教学统计";
     [_statisticalStuTable registerNib:[UINib nibWithNibName:@"StatisticalStuInfoTableViewCell" bundle:nil] forCellReuseIdentifier:CellIDSTU];
     _statisticalStuTable.delegate = self;
     _statisticalStuTable.dataSource = self;

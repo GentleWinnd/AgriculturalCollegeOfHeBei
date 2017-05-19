@@ -45,7 +45,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *signLabel;
 @property (strong, nonatomic) IBOutlet UILabel *signedStuNum;
 
-@property (strong, nonatomic) IBOutlet UILabel *className;
+@property (strong, nonatomic) IBOutlet UIButton *classNameBtn;
 @property (strong, nonatomic) IBOutlet UIButton *selectClassBtn;
 
 @property (strong, nonatomic) IBOutlet UILabel *hourO;
@@ -171,13 +171,18 @@
     [NetServiceAPI getRecentCourseWithParameters:nil success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue]!= 1) {
             [Progress progressShowcontent:responseObject[@"Message"]];
+            [self.classNameBtn setTitle:@"获取失败，点击重新加载" forState:UIControlStateNormal];
+            self.classNameBtn.selected = YES;
+
         } else {
             [courseInfo setValuesForKeysWithDictionary:[NSDictionary safeDictionary:responseObject[@"RecentestActivity"]]];
             [self getRecentActvity];
             
         }
     } failure:^(NSError *error) {
-        
+        [self.classNameBtn setTitle:@"获取失败，点击重新加载" forState:UIControlStateNormal];
+        self.classNameBtn.selected = YES;
+
         [KTMErrorHint showNetError:error inView:self.view];
         // NSLog(@"%@",error.description);
     }];
@@ -192,14 +197,20 @@
     [NetServiceAPI getRecentSignActiveWithParameters:parameter success:^(id responseObject) {
         if ([responseObject[@"State"] integerValue]!= 1) {
             [Progress progressShowcontent:responseObject[@"Message"]];
+            [self.classNameBtn setTitle:@"获取失败，点击重新加载" forState:UIControlStateNormal];
+            self.classNameBtn.selected = YES;
+
         } else {
+            self.classNameBtn.selected = NO;
             [activityInfo setValuesForKeysWithDictionary:[NSDictionary safeDictionary:responseObject[@"RecentestCheckInActivity"]]];
             [self analysisCourseData];
             [self verifyTheSignedLocation];
         }
         
     } failure:^(NSError *error) {
-        
+        [self.classNameBtn setTitle:@"获取失败，点击重新加载" forState:UIControlStateNormal];
+        self.classNameBtn.selected = YES;
+
         [KTMErrorHint showNetError:error inView:self.view];
         // NSLog(@"%@",error.description);
     }];
@@ -333,7 +344,7 @@
 
 - (void)resetShowView {
     self.signedStuNum.text = [NSString stringWithFormat:@"%d/0",signedNum];
-    self.className.text = courseInfo[@"Dependent"][@"DependentName"];
+    [self.classNameBtn setTitle:courseInfo[@"Dependent"][@"DependentName"] forState:UIControlStateNormal];
 
 }
 
@@ -368,7 +379,7 @@
     } else if (sender.tag == 2) {//重新选课
         ClassScheduleViewController *scheduleView = [[ClassScheduleViewController alloc] init];
         scheduleView.theSelectedClass = ^(NSDictionary *courseDic) {
-            _className.text = courseDic[@"Name"];
+            [self.classNameBtn setTitle:courseInfo[@"Dependent"][@"DependentName"] forState:UIControlStateNormal];
             [courseInfo setValuesForKeysWithDictionary:courseDic];
 
         };
@@ -493,6 +504,14 @@
     [_timer invalidate];
     _timer = nil;
 
+}
+- (IBAction)classNameBtn:(UIButton *)sender {
+    
+    if (sender.selected) {
+        
+        [self getRecentCourseInfo];
+    }
+    
 }
 
 

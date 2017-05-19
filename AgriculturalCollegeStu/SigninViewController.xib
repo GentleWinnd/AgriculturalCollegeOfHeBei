@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SigninViewController">
             <connections>
-                <outlet property="className" destination="rSu-S2-IDj" id="Gkt-mR-Yir"/>
+                <outlet property="classNameBtn" destination="NHj-E1-TT0" id="fhh-zw-Ey5"/>
                 <outlet property="currentClassTop" destination="4Sm-PU-lOJ" id="TaM-Tl-kLK"/>
                 <outlet property="hourO" destination="EWv-Wz-mWE" id="7Vx-4N-TUA"/>
                 <outlet property="hourT" destination="Aj1-hS-dMb" id="HLb-xT-Eb7"/>
@@ -140,12 +140,6 @@
                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSu-S2-IDj">
-                            <rect key="frame" x="105.5" y="11.5" width="0.0" height="0.0"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <button hidden="YES" opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xd3-kE-dHv">
                             <rect key="frame" x="284" y="1" width="83" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -165,6 +159,16 @@
                                 <constraint firstAttribute="height" constant="1" id="nmY-4Z-cFJ"/>
                             </constraints>
                         </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHj-E1-TT0">
+                            <rect key="frame" x="105.5" y="-3" width="55" height="29"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="获取中...">
+                                <color key="titleColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="classNameBtn:" destination="-1" eventType="touchUpInside" id="Ld1-99-Jqu"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -174,12 +178,13 @@
                         <constraint firstAttribute="bottom" secondItem="Vgo-DI-cfd" secondAttribute="bottom" id="GZs-aT-ogs"/>
                         <constraint firstAttribute="height" constant="23" id="OQP-Df-4L7"/>
                         <constraint firstAttribute="trailing" secondItem="xd3-kE-dHv" secondAttribute="trailing" constant="8" id="Spi-6l-lmo"/>
-                        <constraint firstItem="rSu-S2-IDj" firstAttribute="leading" secondItem="Usj-Aj-bER" secondAttribute="trailing" constant="3" id="VAd-HM-Gg9"/>
+                        <constraint firstItem="NHj-E1-TT0" firstAttribute="leading" secondItem="Usj-Aj-bER" secondAttribute="trailing" constant="3" id="Xfw-ex-jq0"/>
                         <constraint firstAttribute="trailing" secondItem="Vgo-DI-cfd" secondAttribute="trailing" id="a0g-6f-9sh"/>
                         <constraint firstItem="Usj-Aj-bER" firstAttribute="centerY" secondItem="P2E-32-Tgh" secondAttribute="centerY" id="dWY-aQ-C3I"/>
+                        <constraint firstItem="NHj-E1-TT0" firstAttribute="centerY" secondItem="Usj-Aj-bER" secondAttribute="centerY" id="edF-pb-eMK"/>
                         <constraint firstItem="Vgo-DI-cfd" firstAttribute="leading" secondItem="P2E-32-Tgh" secondAttribute="leading" id="iza-tT-1IK"/>
-                        <constraint firstItem="rSu-S2-IDj" firstAttribute="centerY" secondItem="P2E-32-Tgh" secondAttribute="centerY" id="jZP-50-kXJ"/>
                         <constraint firstItem="OHw-4w-JKS" firstAttribute="centerY" secondItem="P2E-32-Tgh" secondAttribute="centerY" id="pRh-RW-Jet"/>
+                        <constraint firstItem="NHj-E1-TT0" firstAttribute="baseline" secondItem="Usj-Aj-bER" secondAttribute="baseline" id="pxi-7p-Y13"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x8o-Bk-2dm">

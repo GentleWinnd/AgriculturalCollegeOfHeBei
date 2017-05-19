@@ -20,6 +20,7 @@ static NSString * cacheFolder() {
         if (!cacheFolder) {
             NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
             cacheFolder = [cacheDir stringByAppendingPathComponent:MCDownloadCacheFolderName];
+
         }
         NSError *error = nil;
         if(![filemgr createDirectoryAtPath:cacheFolder withIntermediateDirectories:YES attributes:nil error:&error]) {
@@ -158,6 +159,9 @@ typedef void (^progressBlock)(NSProgress * _Nonnull,MCDownloadReceipt *);
     [aCoder encodeObject:@(self.totalBytesWritten) forKey:NSStringFromSelector(@selector(totalBytesWritten))];
     [aCoder encodeObject:@(self.totalBytesExpectedToWrite) forKey:NSStringFromSelector(@selector(totalBytesExpectedToWrite))];
 
+    [aCoder encodeObject:[NSNumber numberWithLong:self.totalSize] forKey:NSStringFromSelector(@selector(totalSize))];
+    [aCoder encodeObject:[NSNumber numberWithInteger:self.sourceType] forKey:@"sourceType"];
+
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -170,7 +174,10 @@ typedef void (^progressBlock)(NSProgress * _Nonnull,MCDownloadReceipt *);
         self.filename = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(filename))];
         self.totalBytesWritten = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(totalBytesWritten))] unsignedIntegerValue];
         self.totalBytesExpectedToWrite = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(totalBytesExpectedToWrite))] unsignedIntegerValue];
-
+        
+        self.totalSize = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:NSStringFromSelector(@selector(totalSize))] unsignedIntegerValue];
+        self.sourceType = [[aDecoder decodeObjectForKey:@"sourceType"] integerValue];
+        
     }
     return self;
 }
@@ -212,6 +219,7 @@ typedef void (^progressBlock)(NSProgress * _Nonnull,MCDownloadReceipt *);
 
 - (instancetype)init {
     
+
     NSURLSessionConfiguration *defaultConfiguration = [self.class defaultURLSessionConfiguration];
   
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
@@ -332,6 +340,7 @@ typedef void (^progressBlock)(NSProgress * _Nonnull,MCDownloadReceipt *);
         [self.queuedTasks addObject:task];
         
         [self resumeWithURL:receipt.url];
+        
         
         });
     return receipt;

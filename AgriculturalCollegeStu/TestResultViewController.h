@@ -14,5 +14,7 @@
 @property (nonatomic, strong) NSArray *courseArray;
 @property (nonatomic, copy) NSString *courseId;
 @property (nonatomic, copy) NSString *courseName;
+@property (assign, nonatomic) ClassAssignmentType assignmentType;
+@property (nonatomic, strong) NSDictionary *temporaryInfo;
 
 @end

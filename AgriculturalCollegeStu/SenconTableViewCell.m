@@ -91,5 +91,14 @@ static NSString *cellID = @"CellID";
     
 }
 
+- (IBAction)nodataBtnAction:(UIButton *)sender {
+    
+    if (self.reloadData) {
+        self.reloadData(sender.selected);
+    }
+}
+
+
+
 
 @end

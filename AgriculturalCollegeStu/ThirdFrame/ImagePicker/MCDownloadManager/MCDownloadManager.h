@@ -52,6 +52,11 @@ typedef NS_ENUM(NSInteger, MCDownloadPrioritization) {
 @property (assign, nonatomic, readonly) long long totalBytesWritten;
 @property (assign, nonatomic, readonly) long long totalBytesExpectedToWrite;
 
+@property (assign, nonatomic) long long totalSize;
+@property (assign, nonatomic) SourceType sourceType;
+
+
+
 @property (nonatomic, copy, readonly, nonnull) NSProgress *progress;
 
 @property (nonatomic, strong, readonly, nullable) NSError *error;

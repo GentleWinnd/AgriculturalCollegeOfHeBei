@@ -18,7 +18,7 @@ static NSString * cacheFolder() {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (!cacheFolder) {
-            NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            NSString *cacheDir = NSHomeDirectory();
             cacheFolder = [cacheDir stringByAppendingPathComponent:MCDownloadCacheFolderName];
         }
         NSError *error = nil;
@@ -212,6 +212,7 @@ typedef void (^progressBlock)(NSProgress * _Nonnull,MCDownloadReceipt *);
 
 - (instancetype)init {
     
+
     NSURLSessionConfiguration *defaultConfiguration = [self.class defaultURLSessionConfiguration];
   
     NSOperationQueue *queue = [[NSOperationQueue alloc] init];
@@ -332,6 +333,7 @@ typedef void (^progressBlock)(NSProgress * _Nonnull,MCDownloadReceipt *);
         [self.queuedTasks addObject:task];
         
         [self resumeWithURL:receipt.url];
+        
         
         });
     return receipt;

@@ -15,5 +15,6 @@
 @property (strong, nonatomic) NSDictionary *stuInfo;
 @property (copy, nonatomic) NSString *courseId;
 @property (copy, nonatomic) NSString *studentId;
+@property (strong, nonatomic) NSString *ActivityId;
 
 @end

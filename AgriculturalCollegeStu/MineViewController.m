@@ -30,14 +30,12 @@
 
 @implementation MineViewController
 
-
-@synthesize scl_contentContainer;
-
 - (void) viewDidLoad {
     [super viewDidLoad];
+    [self observerUserRoleChanged];
+
     [self changeHeaderPortrait];
     [self registUserInfoNotif];
-    [self observerUserRoleChanged];
     [self refreshedUserRole];
 
 }
@@ -53,9 +51,9 @@
 
 - (void)refreshedUserRole {
     [self.headPortrait setImageWithURL:[NSURL URLWithString:[NSString safeString:[UserData getUser].avater]] placeholderImage:nil];
-
     self.nameLabel.text = [NSString safeString:[UserData getUser].nickName];
-
+    
+    [self.tableView reloadData];
 }
 
 
@@ -163,7 +161,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    [self.navigationController pushViewController:[self getSelectedVCWith:indexPath] animated:YES];
+    [self pushViewController:[self getSelectedVCWith:indexPath] animated:YES hiddenTabbar:YES];
 }
 
 #pragma mark - getVC
@@ -173,20 +171,19 @@
     switch (indexPath.row) {
         case 2:{//收藏
             FavoriteViewController *favorView = [[FavoriteViewController alloc] init];
-            [self.navigationController pushViewController:favorView animated:YES];
+            view = favorView;
         }
             break;
         case 3:{//离线
 //            DownloadViewController *loadView = [[DownloadViewController alloc] init];
 //            [self.navigationController pushViewController:loadView animated:YES];
             ResourceManagerViewController *resource = [[ResourceManagerViewController alloc] init];
-            [self.navigationController pushViewController:resource animated:YES];
-            
+            view = resource;
         }
             break;
         case 5:{//关于我们
             AboutUsViewController *aboutView = [[AboutUsViewController alloc] init];
-            [self.navigationController pushViewController:aboutView animated:YES];
+            view = aboutView;
         }
             break;
         case 6:{//意见反馈
@@ -199,16 +196,16 @@
                 mailController.mailComposeDelegate = self;
                 [mailController setSubject:@"发送意见反馈"];
                 [mailController setToRecipients:@[email]];
+                [TabbarManager setTabBarHidden:YES];
+
                 [self presentViewController:mailController animated:YES completion:nil];
             }
-        
-        
         }
             break;
 
         case 8:{//请假
             StuApprovalInfoTableViewController *approvalView = [[StuApprovalInfoTableViewController alloc] init];
-            [self.navigationController pushViewController:approvalView animated:YES];
+            view = approvalView;
             
         }
             break;
@@ -227,19 +224,6 @@
     
 }
 
-
-- (void) viewDidAppear:(BOOL)animated {
-    
-//    v_titleBar.layer.shadowColor = [UIColor blackColor].CGColor;
-//    v_titleBar.layer.shadowOffset = CGSizeMake(0, 1);
-//    v_titleBar.layer.shadowOpacity = 0.5;
-//    v_titleBar.layer.shadowRadius = 1;
-//    
-//    lbl_title.font = [UIFont fontWithName:@"Microsoft Yahei" size:16];
-//    
-    
-    }
-
 - (void) checkLoginInfo {
     
     //[contentView checkLogin];
@@ -254,25 +238,20 @@
     NSLog(@"------- %@",noti.object);
 }
 
-
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [TabbarManager setTabBarHidden:NO];
-    
-    
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [TabbarManager setTabBarHidden:YES];
-}
 
 #pragma mark - push viewcontroller
 
 - (void)pushViewController:(UIViewController *)VC animated:(BOOL)animated hiddenTabbar:(BOOL)hidden {
-    [self.navigationController pushViewController:VC animated:YES];
-    [TabbarManager setTabBarHidden:hidden];
-}
+    if (VC) {
+        [self.navigationController pushViewController:VC animated:YES];
+        [TabbarManager setTabBarHidden:hidden];
+    }
+ }
 
 #pragma mark - system mail delegate
 

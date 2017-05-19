@@ -27,6 +27,9 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *subViewHeight;
 @property (strong, nonatomic) IBOutlet UIButton *subDownLoad;
 @property (strong, nonatomic) IBOutlet UIButton *subShareBtn;
+@property (strong, nonatomic) IBOutlet UIButton *deleted;
+
+
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *filetabBottomSpace;
 @property (strong, nonatomic) IBOutlet UIView *subView;
@@ -114,6 +117,10 @@ static NSString  *cellID = @"feilCellID";
 
 #pragma mark - get class source
 - (void)getClassSourceWithSourceType:(NSString *)source {
+    
+    if (self.courseId == nil) {
+        self.courseId = @"";
+    }
     _currentSourceType = source;
     [_noView removeNoDataView];
     NSDictionary *parameter = @{@"OfflineCourseId":self.courseId,
@@ -161,6 +168,8 @@ static NSString  *cellID = @"feilCellID";
 - (void)customNavigationBar {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(0, 0, 60, 50);
+    button.tag = 123;
+    
     [button setTitle:@"编辑" forState:UIControlStateNormal];
     [button setTitle:@"完成" forState:UIControlStateSelected];
     button.titleLabel.font = [UIFont systemFontOfSize:16];
@@ -240,18 +249,41 @@ static NSString  *cellID = @"feilCellID";
         if (btnType == FeilBtnShare) {//share
             
         } else if (btnType == FeilBtnDownload) {//download
-//             NSArray *loadedSources = [MCDownloadManager defaultInstance].allDownloadReceipts;
-//            for (MCDownloadReceipt *receipt in loadedSources) {
-//                
-//            }
-            [self downloadWithUrl:self.urls[indexPath.row][@"Url"]];
-            [Progress progressShowcontent:[NSString stringWithFormat:@"%@已加入到下载队列",self.urls[indexPath.row][@"Title"]]];
-        } else {
+//            [Progress progressShowcontent:[NSString stringWithFormat:@"%@已加入到下载队列",self.urls[indexPath.row][@"Title"]]];
+            
+        } else if (btnType == FeilBtnSelected){
             [self.selectedFeilInfo setValue:self.urls[indexPath.row] forKey:[NSString stringWithFormat:@"%tu",indexPath.row]];
+        } else {//删除
+            [self deletetSource:self.urls[indexPath.row]];
+            [tableView reloadData];
+
+        }
+    };
+    @WeakObj(cell)
+    cell.openBtn.hidden = !cell.selectedBtn.hidden;
+    cell.openSource = ^(BOOL open) {
+        if (open) {
+            [cellWeak openLoadedSource];
         }
     };
     
+    cell.selectedBtn.selected = NO;
+    [cell.selectedBtn setBackgroundColor:[UIColor clearColor]];
+
+    for (NSString *key in [self.selectedFeilInfo allKeys]) {
+        if ([key integerValue] == indexPath.row) {
+            cell.selectedBtn.selected = YES;
+            [cell.selectedBtn setBackgroundColor:MainThemeColor_Blue];
+            break;
+        }
+    }
+    
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    FeilTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+   
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -298,6 +330,8 @@ static NSString  *cellID = @"feilCellID";
             self.backView.hidden = NO;
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapAction)];
             [self.backView addGestureRecognizer:tap];
+            [self.view bringSubviewToFront:self.backView];
+            [self.view bringSubviewToFront:self.rangeView];
             
         }];
         switch (self.SType) {
@@ -333,13 +367,26 @@ static NSString  *cellID = @"feilCellID";
     } else {//搜索
         SourceSearchViewController *searchView = [[SourceSearchViewController alloc] init];
         searchView.courseId = self.courseId;
+        searchView.searchResult = ^(NSDictionary *sourceInfo) {
+            int index = 0;
+            for (int i=0; i<self.urls.count; i++) {
+                
+                NSDictionary *sourDIc = [NSDictionary safeDictionary:self.urls[i]];
+                if ([sourDIc[@"Id"] isEqualToString:sourceInfo[@"Id"]]) {
+                    index = i;
+                    break ;
+                }
+            }
+            FeilTableViewCell *cell = [_feilTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+            [cell downloadSource];
+        };
+        
         [self.navigationController pushViewController:searchView animated:NO];
     }
 }
 
 - (void)tapAction {
     [self rangeBtnAction:self.FeilClassify];
-
 }
 
 #pragma mark - caculate source size
@@ -364,7 +411,8 @@ static NSString  *cellID = @"feilCellID";
         btn.selected = NO;
     }
     
-    
+    [self.urls removeAllObjects];
+    [_feilTable reloadData];
     if (sender.tag == 11) {//all range
         self.SType = SourceTypeAll;
         [self getClassSourceWithSourceType:@""];
@@ -393,54 +441,60 @@ static NSString  *cellID = @"feilCellID";
     }];
     self.rangeView.hidden = YES;
     self.backView.hidden = YES;
-  
 }
-
 
 
 - (IBAction)bottomBtnAction:(UIButton *)sender {
     if (sender.tag == 111) {//下载
-        for (NSDictionary *sourceInfo in [self.selectedFeilInfo allValues]) {
-            [self downloadWithUrl:sourceInfo[@"Url"]];
-        }
+//        for (NSDictionary *sourceInfo in [self.selectedFeilInfo allValues]) {
+//            [self downloadWithUrl:sourceInfo[@"Url"]];
+//        }
         [Progress progressShowcontent:[NSString stringWithFormat:@"任务已添加到下载队列"]];
         [self.selectedFeilInfo removeAllObjects];
         _subView.hidden = YES;
         _filetabBottomSpace.constant = 0;
         sender.titleLabel.textColor = MainTextColor_DarkBlack;
         [_feilTable reloadData];
-    } else {//分享
+    } else if(sender.tag ==112){//分享
     
     
+    } else {//批量删除
+        [self deletedtSelectedCSource];
     }
-
 }
 
-#pragma mark - load source
+#pragma mark - 批量删删除
 
-- (void)downloadWithUrl:(NSString *)url {
-    [[MCDownloadManager defaultInstance] downloadFileWithURL:url
-                                                    progress:^(NSProgress * _Nonnull downloadProgress, MCDownloadReceipt *receipt) {
-                                                        
-                                                        if ([receipt.url isEqualToString:url]) {
-                                                            //                                                            [self.loadProgress updateProgressWithNumber:downloadProgress.fractionCompleted];
-                                                            
-                                                        }
-                                                            
-                                                        }
-                                                    destination:nil
-                                                    success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSURL * _Nonnull filePath) {
-                                                        //                                                         [self.downLoadBtn setTitle:@"完成" forState:UIControlStateNormal];
-                                                                                                             }
-                                                    failure:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, NSError * _Nonnull error) {
-                                                        //                                                         [self.downLoadBtn setTitle:@"重新下载" forState:UIControlStateNormal];
-                                                    }];
+- (void)deletedtSelectedCSource {
 
+    _subView.hidden = YES;
+    _filetabBottomSpace.constant = 0;
     
+    UIButton *buttun = [self.navigationController.navigationBar viewWithTag:123];
+    buttun.titleLabel.textColor = MainTextColor_DarkBlack;
+    buttun.selected = !buttun.selected;
+
+    NSArray *selectedArr = [NSArray arrayWithArray:[self.selectedFeilInfo allValues]];
+    for (id DSource in selectedArr) {
+        [self deletetSource:DSource];
+    }
+    [self.selectedFeilInfo removeAllObjects];
+
+    [_feilTable reloadData];
 }
 
+- (void)deletetSource:(NSDictionary *)source {
 
-
+    NSString *urlStr;
+    if ([source isKindOfClass:[NSDictionary class]]) {
+        NSDictionary *sourceDic = source;
+        urlStr = sourceDic[@"Url"];
+    } else {
+        MCDownloadReceipt *receipt = source;
+        urlStr = receipt.url;
+    }
+    [[MCDownloadManager defaultInstance] removeWithURL:urlStr];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
